@@ -46,8 +46,6 @@
 #include "stm32l0xx.h"
 #include "Legacy/stm32_hal_legacy.h"
 #include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
 
 /* Exported types ------------------------------------------------------------*/
 

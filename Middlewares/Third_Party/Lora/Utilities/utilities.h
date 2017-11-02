@@ -62,6 +62,12 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #include "hw_conf.h"
 
+// this should not be needed here :/
+#ifndef ARM_MATH_CM0
+#define ARM_MATH_CM0
+#endif
+
+#include "arm_math.h"
 
 /* BACKUP_PRIMASK MUST be implemented at the begining of the funtion 
    that implement a critical section                        
@@ -112,7 +118,7 @@ typedef uint32_t TimerTime_t;
  * \param [in]  value  Value to find least significant index
  * \retval bitIndex    Index of least significat bit at one
  */
-__STATIC_INLINE uint8_t __ffs( uint32_t value )
+static inline uint8_t __ffs( uint32_t value )
 {
     return( uint32_t )( 32 - __CLZ( value & ( -value ) ) );
 }

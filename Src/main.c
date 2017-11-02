@@ -112,6 +112,10 @@ static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed);
 /* call back when LoRa has received a frame*/
 static void LoraRxData(lora_AppData_t *AppData);
 
+uint8_t HW_GetBatteryLevel(void) {
+	return 254;
+}
+
 /* Private variables ---------------------------------------------------------*/
 /* load call backs*/
 static LoRaMainCallback_t LoRaMainCallbacks = {HW_GetBatteryLevel,
@@ -119,11 +123,6 @@ static LoRaMainCallback_t LoRaMainCallbacks = {HW_GetBatteryLevel,
                                                HW_GetRandomSeed,
                                                LoraTxData,
                                                LoraRxData};
-
-/*!
- * Specifies the state of the application LED
- */
-static uint8_t AppLedStateOn = RESET;
 
 
 #ifdef USE_B_L072Z_LRWAN1
@@ -145,6 +144,7 @@ static LoRaParam_t LoRaParamInit = {TX_ON_TIMER,
                                     JOINREQ_NBTRIALS};
 
 /* Private functions ---------------------------------------------------------*/
+
 
 /**
   * @brief  Main program
@@ -175,6 +175,7 @@ int main(void)
 
 	/* main loop*/
 	while (1) {
+
 		/* run the LoRa class A state machine*/
 		lora_fsm();
 
@@ -196,6 +197,7 @@ int main(void)
 static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 {
 	/* USER CODE BEGIN 3 */
+	PRINTF("Lora TX");
 
 	AppData->Port = LORAWAN_APP_PORT;
 
@@ -211,6 +213,8 @@ static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 static void LoraRxData(lora_AppData_t *AppData)
 {
 	/* USER CODE BEGIN 4 */
+	PRINTF("Lora RX");
+
 	switch (AppData->Port) {
 		case LORAWAN_APP_PORT:
 
