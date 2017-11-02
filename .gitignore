@@ -3,3 +3,4 @@ cmake-*
 *.o
 *.elf
 *.a
+.idea/
