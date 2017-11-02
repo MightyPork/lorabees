@@ -1,23 +1,10 @@
-/*
- / _____)             _              | |
-( (____  _____ ____ _| |_ _____  ____| |__
- \____ \| ___ |    (_   _) ___ |/ ___)  _ \
- _____) ) ____| | | || |_| ____( (___| | | |
-(______/|_____)_|_|_| \__)_____)\____)_| |_|
-    (C)2013 Semtech
 
-Description: Bleeper board GPIO driver implementation
-
-License: Revised BSD License, see LICENSE.TXT file include in the project
-
-Maintainer: Miguel Luis and Gregory Cristian
-*/
- /******************************************************************************
-  * @file    stm32l0xx_it.h
+/******************************************************************************
+  * @file    debug.c
   * @author  MCD Application Team
   * @version V1.1.2
   * @date    08-September-2017
-  * @brief   manages interupt
+  * @brief   debug API
   ******************************************************************************
   * @attention
   *
@@ -58,36 +45,75 @@ Maintainer: Miguel Luis and Gregory Cristian
   ******************************************************************************
   */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32L0xx_IT_H__
-#define __STM32L0xx_IT_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* Includes ------------------------------------------------------------------*/
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+#include "hw.h"
 
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
-void EXTI4_15_IRQHandler(void);
-void TIM21_IRQHandler(void);
+/**
+  * @brief Initializes the debug
+  * @param None
+  * @retval None
+  */
+void DBG_Init( void )
+{
+#ifdef DEBUG
+  GPIO_InitTypeDef  gpioinitstruct = {0};
+  
+  /* Enable the GPIO_B Clock */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-#ifdef __cplusplus
-}
+  /* Configure the GPIO pin */  
+  gpioinitstruct.Mode   = GPIO_MODE_OUTPUT_PP;
+  gpioinitstruct.Pull   = GPIO_PULLUP;
+  gpioinitstruct.Speed  = GPIO_SPEED_HIGH;
+  
+  gpioinitstruct.Pin    = (GPIO_PIN_12 | GPIO_PIN_13| GPIO_PIN_14 | GPIO_PIN_15);
+  HAL_GPIO_Init(GPIOB, &gpioinitstruct);
+
+  /* Reset debug Pins */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+#if 0
+  HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);  
 #endif
 
-#endif /* __STM32L0xx_IT_H__ */
+  __HAL_RCC_DBGMCU_CLK_ENABLE( );
+
+  HAL_DBGMCU_EnableDBGSleepMode( );
+  HAL_DBGMCU_EnableDBGStopMode( );
+  HAL_DBGMCU_EnableDBGStandbyMode( );
+  
+#else /* DEBUG */
+  /* sw interface off*/
+  GPIO_InitTypeDef GPIO_InitStructure ={0};
+  
+  GPIO_InitStructure.Mode   = GPIO_MODE_ANALOG;
+  GPIO_InitStructure.Pull   = GPIO_NOPULL;
+  GPIO_InitStructure.Pin    = (GPIO_PIN_13 | GPIO_PIN_14);
+  __GPIOA_CLK_ENABLE() ;  
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+  __GPIOA_CLK_DISABLE() ;
+  
+  __HAL_RCC_DBGMCU_CLK_ENABLE( );
+  HAL_DBGMCU_DisableDBGSleepMode( );
+  HAL_DBGMCU_DisableDBGStopMode( );
+  HAL_DBGMCU_DisableDBGStandbyMode( );
+  __HAL_RCC_DBGMCU_CLK_DISABLE( );
+#endif
+}
+
+/**
+  * @brief Error_Handler
+  * @param None
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  DBG_PRINTF("Error_Handler\n\r");
+  while(1);
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+

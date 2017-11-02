@@ -3,6 +3,8 @@ project(proj)
 
 set(CMAKE_CXX_STANDARD 11)
 
+add_definitions(-DSTM32L073xx)
+
 set(SOURCE_FILES
         Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h
         Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h
@@ -66,28 +68,93 @@ set(SOURCE_FILES
         Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c
         Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart.c
         Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.c
-        Inc/gpio.h
-        Inc/i2c.h
         Inc/main.h
-        Inc/rtc.h
-        Inc/spi.h
         Inc/stm32l0xx_hal_conf.h
         Inc/stm32l0xx_it.h
-        Inc/usart.h
-        Src/gpio.c
-        Src/i2c.c
+        Inc/Commissioning.h
+        Inc/debug.h
+        Inc/hw.h
+        Inc/hw_conf.h
+        Inc/hw_gpio.h
+        Inc/hw_msp.h
+        Inc/hw_rtc.h
+        Inc/hw_spi.h
+        Inc/stm32l0xx_hw_conf.h
+        Inc/vcom.h
         Src/main.c
-        Src/rtc.c
-        Src/spi.c
+        Src/debug.c
+        Src/hw_gpio.c
+        Src/hw_rtc.c
+        Src/hw_spi.c
+        Src/stm32l0xx_hw.c
+        Src/vcom.c
         Src/stm32l0xx_hal_msp.c
         Src/stm32l0xx_it.c
-        Src/system_stm32l0xx.c
-        Src/usart.c)
+        Drivers/BSP/Components/sx1272/sx1272.c
+        Drivers/BSP/Components/sx1272/sx1272.h
+        Drivers/BSP/Components/sx1272/sx1272Regs-Fsk.h
+        Drivers/BSP/Components/sx1272/sx1272Regs-LoRa.h
+        Drivers/BSP/sx1272mb2das/sx1272mb2das.c
+        Drivers/BSP/sx1272mb2das/sx1272mb2das.h
+        Middlewares/Third_Party/Lora/Core/lora.c
+        Middlewares/Third_Party/Lora/Core/lora.h
+        Middlewares/Third_Party/Lora/Core/lora_mac_version.h
+        Middlewares/Third_Party/Lora/Crypto/aes.c
+        Middlewares/Third_Party/Lora/Crypto/aes.h
+        Middlewares/Third_Party/Lora/Crypto/cmac.c
+        Middlewares/Third_Party/Lora/Crypto/cmac.h
+        Middlewares/Third_Party/Lora/Mac/region/Region.c
+        Middlewares/Third_Party/Lora/Mac/region/Region.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionAS923.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionAS923.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionAU915.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionAU915.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionCN470.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionCN470.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionCN779.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionCN779.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionCommon.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionCommon.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionEU433.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionEU433.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionEU868.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionEU868.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionIN865.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionIN865.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionKR920.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionKR920.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionUS915.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionUS915.h
+        Middlewares/Third_Party/Lora/Mac/region/RegionUS915-Hybrid.c
+        Middlewares/Third_Party/Lora/Mac/region/RegionUS915-Hybrid.h
+        Middlewares/Third_Party/Lora/Mac/LoRaMac.c
+        Middlewares/Third_Party/Lora/Mac/LoRaMac.h
+        Middlewares/Third_Party/Lora/Mac/LoRaMacCrypto.c
+        Middlewares/Third_Party/Lora/Mac/LoRaMacCrypto.h
+        Middlewares/Third_Party/Lora/Mac/LoRaMacTest.h
+        Middlewares/Third_Party/Lora/Mac/timer.h
+        Middlewares/Third_Party/Lora/Utilities/timeServer.c
+        Middlewares/Third_Party/Lora/Utilities/utilities.h
+        Middlewares/Third_Party/Lora/Utilities/low_power.h
+        Middlewares/Third_Party/Lora/Utilities/delay.h
+        Middlewares/Third_Party/Lora/Phy/radio.h
+        Middlewares/Third_Party/Lora/Utilities/utilities.c
+        Middlewares/Third_Party/Lora/Utilities/timeServer.h
+        Middlewares/Third_Party/Lora/Utilities/low_power.c
+        Middlewares/Third_Party/Lora/Utilities/delay.c
+        )
 
 include_directories(Drivers/CMSIS/Device/ST/STM32L0xx/Include)
 include_directories(Drivers/CMSIS/Include)
 include_directories(Drivers/STM32L0xx_HAL_Driver/Inc)
 include_directories(Drivers/STM32L0xx_HAL_Driver/Inc/Legacy)
-include_directories(Inc)
+include_directories(Inc
+        Middlewares/Third_Party/Lora/Core
+        Middlewares/Third_Party/Lora/Crypto
+        Middlewares/Third_Party/Lora/Mac
+        Middlewares/Third_Party/Lora/Phy
+        Middlewares/Third_Party/Lora/Utilities
+        Middlewares/Third_Party/Lora/Mac/region
+        )
 
 add_executable(proj ${SOURCE_FILES})

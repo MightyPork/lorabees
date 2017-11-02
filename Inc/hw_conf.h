@@ -6,18 +6,18 @@
 (______/|_____)_|_|_| \__)_____)\____)_| |_|
     (C)2013 Semtech
 
-Description: Bleeper board GPIO driver implementation
+Description: contains hardaware configuration Macros and Constants
 
 License: Revised BSD License, see LICENSE.TXT file include in the project
 
 Maintainer: Miguel Luis and Gregory Cristian
 */
  /******************************************************************************
-  * @file    stm32l0xx_it.h
+  * @file    hw_conf.h
   * @author  MCD Application Team
   * @version V1.1.2
   * @date    08-September-2017
-  * @brief   manages interupt
+  * @brief   contains hardware configuration Macros and Constants
   ******************************************************************************
   * @attention
   *
@@ -59,35 +59,90 @@ Maintainer: Miguel Luis and Gregory Cristian
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32L0xx_IT_H__
-#define __STM32L0xx_IT_H__
+#ifndef __HW_CONF_H__
+#define __HW_CONF_H__
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+
+#ifdef USE_STM32F0XX_NUCLEO
+  #include "stm32f0xx_hal.h"
+  #include "stm32f0xx_nucleo.h"
+  #include "stm32f0xx_hal_conf.h"
+  #error "create stm32f0xx_hw_conf.h "
+#endif
+
+#ifdef USE_STM32F1XX_NUCLEO
+  #include "stm32f1xx_hal.h"
+  #include "stm32f1xx_nucleo.h"
+  #include "stm32f1xx_hal_conf.h"
+  #error "create stm32f1xx_hw_conf.h "
+#endif
+
+#ifdef USE_STM32F3XX_NUCLEO
+  #include "stm32f3xx_hal.h"
+  #include "stm32f3xx_nucleo.h"
+  #include "stm32f3xx_hal_conf.h"
+  #error "create stm32f3xx_hw_conf.h "
+#endif
+
+#ifdef USE_STM32F4XX_NUCLEO
+  #include "stm32f4xx_hal.h"
+  #include "stm32f4xx_nucleo.h"
+  #include "stm32f4xx_hal_conf.h"
+  #error "create stm32f4xx_hw_conf.h "
+#endif
+
+#ifdef USE_STM32L0XX_NUCLEO
+  #include "stm32l0xx_hal.h"
+  #include "stm32l0xx_nucleo.h"
+  #include "stm32l0xx_hal_conf.h"
+  #include "stm32l0xx_hw_conf.h"
+#endif
+
+#ifdef USE_STM32L1XX_NUCLEO
+  #include "stm32l1xx_hal.h"
+  #include "stm32l1xx_nucleo.h"
+  #include "stm32l1xx_hal_conf.h"
+  #include "stm32l1xx_hw_conf.h"
+#endif
+
+#ifdef USE_STM32L4XX_NUCLEO
+  #include "stm32l4xx_hal.h"
+  #include "stm32l4xx_nucleo.h"
+  #include "stm32l4xx_hal_conf.h"
+  #include "stm32l4xx_hw_conf.h"
+#endif
+
+#ifdef USE_B_L072Z_LRWAN1
+  #include "stm32l0xx_hal.h"
+  #include "b-l072z-lrwan1.h"
+  #include "stm32l0xx_hal_conf.h"
+  #include "mlm32l0xx_hw_conf.h"
+#endif
+
+/* --------Preprocessor compile swicth------------ */
+/* debug swicthes in debug.h */
+//#define DEBUG
+//#define TRACE
+   
+/* uncomment below line to never enter lowpower modes in main.c*/
+//#define LOW_POWER_DISABLE
+
+/* debug swicthes in bsp.c */
+//#define SENSOR_ENABLED
+   
+   
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
-
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
-void EXTI4_15_IRQHandler(void);
-void TIM21_IRQHandler(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __STM32L0xx_IT_H__ */
+#endif /* __HW_CONF_H__ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

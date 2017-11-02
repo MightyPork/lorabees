@@ -6,18 +6,18 @@
 (______/|_____)_|_|_| \__)_____)\____)_| |_|
     (C)2013 Semtech
 
-Description: Bleeper board GPIO driver implementation
+Description: Header for driver hw spi module
 
 License: Revised BSD License, see LICENSE.TXT file include in the project
 
 Maintainer: Miguel Luis and Gregory Cristian
 */
  /******************************************************************************
-  * @file    stm32l0xx_it.h
+  * @file    hw_spi.h
   * @author  MCD Application Team
   * @version V1.1.2
   * @date    08-September-2017
-  * @brief   manages interupt
+  * @brief   Header for driver hw_spi.c module
   ******************************************************************************
   * @attention
   *
@@ -57,37 +57,70 @@ Maintainer: Miguel Luis and Gregory Cristian
   *
   ******************************************************************************
   */
-
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32L0xx_IT_H__
-#define __STM32L0xx_IT_H__
+#ifndef __HW_SPI_H__
+#define __HW_SPI_H__
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+/* External variables --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */ 
 
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
-void EXTI4_15_IRQHandler(void);
-void TIM21_IRQHandler(void);
+/*!
+ * @brief Initializes the SPI object and MCU peripheral
+ *
+ * @param [IN] none
+ */
+void HW_SPI_Init( void );
+
+/*!
+ * @brief De-initializes the SPI object and MCU peripheral
+ *
+ * @param [IN] none
+ */
+void HW_SPI_DeInit( void );
+
+/*!
+ * @brief Initializes the SPI IOs
+ *
+ * @param [IN] none
+ */
+void HW_SPI_IoInit( void );
+
+/*!
+ * @brief De-initializes the SPI IOs
+ *
+ * @param [IN] none
+ */
+void HW_SPI_IoDeInit( void );
+
+/*!
+ * @brief Sends outData and receives inData
+ *
+ * @param [IN] outData Byte to be sent
+ * @retval inData      Received byte.
+ */
+uint16_t HW_SPI_InOut( uint16_t outData );
+
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __STM32L0xx_IT_H__ */
+#endif  /* __HW_SPI_H__ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+
+
+
+
+
