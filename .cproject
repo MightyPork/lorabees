@@ -44,6 +44,8 @@
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Phy"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Utilities"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Mac/region"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/sx1272"/>
+									<listOptionValue builtIn="false" value="../"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.248526217" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__weak=&quot;__attribute__((weak))&quot;"/>
@@ -80,65 +82,28 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1636346117.1680818898" name="/" resourcePath="Drivers/BSP/Components/sx1272">
-						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1085503164" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
-							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.791131379.1458908717" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix.791131379"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.2087208385.87840295" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu.2087208385"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.465889387.915431321" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board.465889387"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1756422888.2056861028" name="Instruction Set" superClass="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1756422888"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.429835822.751588825" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu.429835822"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.floatabi.1613299758.1358594047" name="Floating-point ABI" superClass="fr.ac6.managedbuild.option.gnu.cross.floatabi.1613299758"/>
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.682286040" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677">
-								<option id="gnu.c.compiler.option.include.paths.1407158377" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../Inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/STM32L0xx_HAL_Driver/Inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32L0xx/Include"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Core"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Crypto"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Mac"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Phy"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Utilities"/>
-									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Mac/region"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/sx1272"/>
-									<listOptionValue builtIn="false" value="../Drivers/BSP/sx1272mb2das/"/>
-								</option>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.1786322897" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.2069713447" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
+					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1636346117.2060898876" name="/" resourcePath="Drivers/BSP/Components">
+						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1642903596" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
+							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.791131379.1068660686" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix.791131379"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.2087208385.821420563" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu.2087208385"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.465889387.1259332501" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board.465889387"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1756422888.1747466074" name="Instruction Set" superClass="fr.ac6.managedbuild.option.gnu.cross.instructionSet.1756422888"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.429835822.1344283150" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu.429835822"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.floatabi.1613299758.850076902" name="Floating-point ABI" superClass="fr.ac6.managedbuild.option.gnu.cross.floatabi.1613299758"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1873724437" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677">
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.2091456505" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.2001757189" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.23580943" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.1942740107"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.1985391927" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.1585341127"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.753463299" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.996257263"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.1425870723" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver.883778798"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1532531737" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.471130259">
-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.789657598" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.1125779733" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.494295390" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.1942740107"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.838472547" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.1585341127"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.829963940" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.996257263"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.1565157009" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver.883778798"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1045789962" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.471130259">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.197345477" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.158606279" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1636346117.1230981831" name="sx1272mb2das.c" rcbsApplicability="disable" resourcePath="Drivers/BSP/sx1272mb2das/sx1272mb2das.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677.890206082">
-						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677.890206082" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677">
-							<option id="gnu.c.compiler.option.include.paths.1630368414" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-								<listOptionValue builtIn="false" value="../Inc"/>
-								<listOptionValue builtIn="false" value="../Drivers/STM32L0xx_HAL_Driver/Inc"/>
-								<listOptionValue builtIn="false" value="../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy"/>
-								<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32L0xx/Include"/>
-								<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Core"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Crypto"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Mac"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Phy"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Utilities"/>
-								<listOptionValue builtIn="false" value="../Middlewares/Third_Party/Lora/Mac/region"/>
-								<listOptionValue builtIn="false" value="../Drivers/BSP/Components/sx1272"/>
-								<listOptionValue builtIn="false" value="../Drivers/BSP/sx1272mb2das"/>
-							</option>
-							<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.1713066265" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
-							<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.1095488994" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
-						</tool>
-					</fileInfo>
 					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1636346117.891745609" name="low_power.c" rcbsApplicability="disable" resourcePath="Middlewares/Third_Party/Lora/Utilities/low_power.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677.463780228">
 						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677.463780228" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.377147677">
 							<option id="gnu.c.compiler.option.preprocessor.def.symbols.1938548990" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
@@ -150,20 +115,14 @@
 								<listOptionValue builtIn="false" value="REGION_EU868=1"/>
 								<listOptionValue builtIn="false" value="DEBUG=1"/>
 							</option>
+							<option id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.314482683" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" value="fr.ac6.managedbuild.gnu.c.optimization.level.none" valueType="enumerated"/>
+							<option id="gnu.c.compiler.option.debugging.level.301781393" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.default" valueType="enumerated"/>
 							<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.998724722" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
 							<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.1992215065" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Inc"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares/Third_Party/Lora/Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares/Third_Party/Lora/Crypto"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares/Third_Party/Lora/Mac"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares/Third_Party/Lora/Phy"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares/Third_Party/Lora/Utilities"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
+						<entry excluding="junk|cmake-build-debug" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

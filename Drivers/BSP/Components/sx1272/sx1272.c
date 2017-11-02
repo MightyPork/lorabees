@@ -48,9 +48,9 @@ Maintainer: Miguel Luis and Gregory Cristian
   ******************************************************************************
   */
   
+#include "sx1272.h"
 #include "hw.h"
 #include "radio.h"
-#include "sx1272.h"
 #include "timeServer.h"
 #include "delay.h"
 

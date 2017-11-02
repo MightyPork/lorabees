@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 add_definitions(-DSTM32L073xx)
 
 set(SOURCE_FILES
+        Src/system_stm32l0xx.c
         Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h
         Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h
         Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h

@@ -50,8 +50,8 @@ Maintainer: Miguel Luis and Gregory Cristian
   
 /* Includes ------------------------------------------------------------------*/
 #include "hw.h"
-#include "radio.h"
 #include "sx1272.h"
+#include "radio.h"
 #include "sx1272mb2das.h"
 
 
