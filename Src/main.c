@@ -88,7 +88,8 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
  */
-#define LORAWAN_APP_PORT                            2
+#define LORAWAN_APP_PORT                            42
+//2
 /*!
  * Number of trials for the join request.
  */
@@ -187,16 +188,15 @@ int main(void)
 
 static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 {
+	static uint8_t counter = 0;
 	/* USER CODE BEGIN 3 */
-	PRINTF("Lora TX");
+	PRINTF("Lora TX\r\n");
 
 	AppData->Port = LORAWAN_APP_PORT;
-
-	//TODO
-
 	*IsTxConfirmed = LORAWAN_CONFIRMED_MSG;
 
-	AppData->BuffSize = 0;
+	sprintf((char*)AppData->Buff, "HELLO-%02d", counter++);
+	AppData->BuffSize = 8;
 
 	/* USER CODE END 3 */
 }
@@ -204,7 +204,7 @@ static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 static void LoraRxData(lora_AppData_t *AppData)
 {
 	/* USER CODE BEGIN 4 */
-	PRINTF("Lora RX");
+	PRINTF("Lora RX\r\n");
 
 	switch (AppData->Port) {
 		case LORAWAN_APP_PORT:
