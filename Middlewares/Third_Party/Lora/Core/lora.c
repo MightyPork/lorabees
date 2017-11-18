@@ -179,7 +179,7 @@ struct ComplianceTest_s
 /*!
  * \brief   Prepares the payload of the frame
  */
-static void PrepareTxFrame( )
+static void PrepareTxFrame( void)
 {
     if( ComplianceTest.Running == true )
     {
@@ -260,15 +260,15 @@ static bool SendFrame( void )
 
 void OnSendEvent( void )
 {
-    MibRequestConfirm_t mibReq;
+    MibRequestConfirm_t _mibReq;
     LoRaMacStatus_t status;
 
-    mibReq.Type = MIB_NETWORK_JOINED;
-    status = LoRaMacMibGetRequestConfirm( &mibReq );
+    _mibReq.Type = MIB_NETWORK_JOINED;
+    status = LoRaMacMibGetRequestConfirm( &_mibReq );
 
     if( status == LORAMAC_STATUS_OK )
     {
-        if( mibReq.Param.IsNetworkJoined == true )
+        if( _mibReq.Param.IsNetworkJoined == true )
         {
             DeviceState = DEVICE_STATE_SEND;
             NextTx = true;
@@ -399,10 +399,10 @@ static void McpsIndication( McpsIndication_t *mcpsIndication )
                     ComplianceTest.Running = true;
                     ComplianceTest.State = 1;
                     
-                    MibRequestConfirm_t mibReq;
-                    mibReq.Type = MIB_ADR;
-                    mibReq.Param.AdrEnable = true;
-                    LoRaMacMibSetRequestConfirm( &mibReq );
+                    MibRequestConfirm_t _mibReq;
+                    _mibReq.Type = MIB_ADR;
+                    _mibReq.Param.AdrEnable = true;
+                    LoRaMacMibSetRequestConfirm( &_mibReq );
 
 #if defined( REGION_EU868 )
                     LoRaMacTestSetDutyCycleOn( false );
@@ -418,10 +418,10 @@ static void McpsIndication( McpsIndication_t *mcpsIndication )
                     ComplianceTest.DownLinkCounter = 0;
                     ComplianceTest.Running = false;
                     
-                    MibRequestConfirm_t mibReq;
-                    mibReq.Type = MIB_ADR;
-                    mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;
-                    LoRaMacMibSetRequestConfirm( &mibReq );
+                    MibRequestConfirm_t _mibReq;
+                    _mibReq.Type = MIB_ADR;
+                    _mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;
+                    LoRaMacMibSetRequestConfirm( &_mibReq );
 #if defined( REGION_EU868 )
                     LoRaMacTestSetDutyCycleOn( LORAWAN_DUTYCYCLE_ON );
 #endif

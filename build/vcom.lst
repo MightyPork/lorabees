@@ -1,0 +1,1441 @@
+ARM GAS  /tmp/ccoAAM0e.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"vcom.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.vcom_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	vcom_Init
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	vcom_Init:
+  24              	.LFB96:
+  25              		.file 1 "./Src/vcom.c"
+   1:./Src/vcom.c  ****  /******************************************************************************
+   2:./Src/vcom.c  ****   * @file    vcom.c
+   3:./Src/vcom.c  ****   * @author  MCD Application Team
+   4:./Src/vcom.c  ****   * @version V1.1.2
+   5:./Src/vcom.c  ****   * @date    08-September-2017
+   6:./Src/vcom.c  ****   * @brief   manages virtual com port
+   7:./Src/vcom.c  ****   ******************************************************************************
+   8:./Src/vcom.c  ****   * @attention
+   9:./Src/vcom.c  ****   *
+  10:./Src/vcom.c  ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  11:./Src/vcom.c  ****   * All rights reserved.</center></h2>
+  12:./Src/vcom.c  ****   *
+  13:./Src/vcom.c  ****   * Redistribution and use in source and binary forms, with or without 
+  14:./Src/vcom.c  ****   * modification, are permitted, provided that the following conditions are met:
+  15:./Src/vcom.c  ****   *
+  16:./Src/vcom.c  ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  17:./Src/vcom.c  ****   *    this list of conditions and the following disclaimer.
+  18:./Src/vcom.c  ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  19:./Src/vcom.c  ****   *    this list of conditions and the following disclaimer in the documentation
+  20:./Src/vcom.c  ****   *    and/or other materials provided with the distribution.
+  21:./Src/vcom.c  ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  22:./Src/vcom.c  ****   *    contributors to this software may be used to endorse or promote products 
+  23:./Src/vcom.c  ****   *    derived from this software without specific written permission.
+  24:./Src/vcom.c  ****   * 4. This software, including modifications and/or derivative works of this 
+  25:./Src/vcom.c  ****   *    software, must execute solely and exclusively on microcontroller or
+  26:./Src/vcom.c  ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  27:./Src/vcom.c  ****   * 5. Redistribution and use of this software other than as permitted under 
+  28:./Src/vcom.c  ****   *    this license is void and will automatically terminate your rights under 
+  29:./Src/vcom.c  ****   *    this license. 
+  30:./Src/vcom.c  ****   *
+  31:./Src/vcom.c  ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  32:./Src/vcom.c  ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  33:./Src/vcom.c  ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+ARM GAS  /tmp/ccoAAM0e.s 			page 2
+
+
+  34:./Src/vcom.c  ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  35:./Src/vcom.c  ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  36:./Src/vcom.c  ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  37:./Src/vcom.c  ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  38:./Src/vcom.c  ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  39:./Src/vcom.c  ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  40:./Src/vcom.c  ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  41:./Src/vcom.c  ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  42:./Src/vcom.c  ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  43:./Src/vcom.c  ****   *
+  44:./Src/vcom.c  ****   ******************************************************************************
+  45:./Src/vcom.c  ****   */
+  46:./Src/vcom.c  ****   
+  47:./Src/vcom.c  **** #include "hw.h"
+  48:./Src/vcom.c  **** #include "vcom.h"
+  49:./Src/vcom.c  **** #include <stdarg.h>
+  50:./Src/vcom.c  **** 
+  51:./Src/vcom.c  **** 
+  52:./Src/vcom.c  **** /* Private typedef -----------------------------------------------------------*/
+  53:./Src/vcom.c  **** /* Private define ------------------------------------------------------------*/
+  54:./Src/vcom.c  **** #define BUFSIZE 256
+  55:./Src/vcom.c  **** #define USARTX_IRQn USART2_IRQn
+  56:./Src/vcom.c  **** /* Private macro -------------------------------------------------------------*/
+  57:./Src/vcom.c  **** /* Private variables ---------------------------------------------------------*/
+  58:./Src/vcom.c  **** 
+  59:./Src/vcom.c  **** /* buffer */
+  60:./Src/vcom.c  **** static char buff[BUFSIZE];
+  61:./Src/vcom.c  **** /* buffer write index*/
+  62:./Src/vcom.c  **** __IO uint16_t iw=0;
+  63:./Src/vcom.c  **** /* buffer read index*/
+  64:./Src/vcom.c  **** static uint16_t ir=0;
+  65:./Src/vcom.c  **** /* Uart Handle */
+  66:./Src/vcom.c  **** static UART_HandleTypeDef UartHandle;
+  67:./Src/vcom.c  **** 
+  68:./Src/vcom.c  **** /* Private function prototypes -----------------------------------------------*/
+  69:./Src/vcom.c  **** /* Functions Definition ------------------------------------------------------*/
+  70:./Src/vcom.c  **** 
+  71:./Src/vcom.c  **** void vcom_Init(void)
+  72:./Src/vcom.c  **** {
+  26              		.loc 1 72 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 10B5     		push	{r4, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+  73:./Src/vcom.c  ****   /*## Configure the UART peripheral ######################################*/
+  74:./Src/vcom.c  ****   /* Put the USART peripheral in the Asynchronous mode (UART Mode) */
+  75:./Src/vcom.c  ****   /* UART1 configured as follow:
+  76:./Src/vcom.c  ****       - Word Length = 8 Bits
+  77:./Src/vcom.c  ****       - Stop Bit = One Stop bit
+  78:./Src/vcom.c  ****       - Parity = ODD parity
+  79:./Src/vcom.c  ****       - BaudRate = 921600 baud
+  80:./Src/vcom.c  ****       - Hardware flow control disabled (RTS and CTS signals) */
+  81:./Src/vcom.c  ****   UartHandle.Instance        = USARTX;
+ARM GAS  /tmp/ccoAAM0e.s 			page 3
+
+
+  35              		.loc 1 81 0
+  36 0002 0F48     		ldr	r0, .L4
+  37 0004 0F4B     		ldr	r3, .L4+4
+  38 0006 0360     		str	r3, [r0]
+  82:./Src/vcom.c  ****   
+  83:./Src/vcom.c  ****   UartHandle.Init.BaudRate   = 115200;
+  39              		.loc 1 83 0
+  40 0008 E123     		movs	r3, #225
+  41 000a 5B02     		lsls	r3, r3, #9
+  42 000c 4360     		str	r3, [r0, #4]
+  84:./Src/vcom.c  ****   UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+  43              		.loc 1 84 0
+  44 000e 0023     		movs	r3, #0
+  45 0010 8360     		str	r3, [r0, #8]
+  85:./Src/vcom.c  ****   UartHandle.Init.StopBits   = UART_STOPBITS_1;
+  46              		.loc 1 85 0
+  47 0012 C360     		str	r3, [r0, #12]
+  86:./Src/vcom.c  ****   UartHandle.Init.Parity     = UART_PARITY_NONE;
+  48              		.loc 1 86 0
+  49 0014 0361     		str	r3, [r0, #16]
+  87:./Src/vcom.c  ****   UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+  50              		.loc 1 87 0
+  51 0016 8361     		str	r3, [r0, #24]
+  88:./Src/vcom.c  ****   UartHandle.Init.Mode       = UART_MODE_TX_RX;
+  52              		.loc 1 88 0
+  53 0018 0C33     		adds	r3, r3, #12
+  54 001a 4361     		str	r3, [r0, #20]
+  89:./Src/vcom.c  ****   
+  90:./Src/vcom.c  ****   if(HAL_UART_Init(&UartHandle) != HAL_OK)
+  55              		.loc 1 90 0
+  56 001c FFF7FEFF 		bl	HAL_UART_Init
+  57              	.LVL0:
+  58 0020 0028     		cmp	r0, #0
+  59 0022 08D1     		bne	.L3
+  60              	.L2:
+  91:./Src/vcom.c  ****   {
+  92:./Src/vcom.c  ****     /* Initialization Error */
+  93:./Src/vcom.c  ****     Error_Handler(); 
+  94:./Src/vcom.c  ****   }
+  95:./Src/vcom.c  ****   
+  96:./Src/vcom.c  ****   HAL_NVIC_SetPriority(USARTX_IRQn, 0x1, 0);
+  61              		.loc 1 96 0
+  62 0024 0022     		movs	r2, #0
+  63 0026 0121     		movs	r1, #1
+  64 0028 1C20     		movs	r0, #28
+  65 002a FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  66              	.LVL1:
+  97:./Src/vcom.c  ****   HAL_NVIC_EnableIRQ(USARTX_IRQn);
+  67              		.loc 1 97 0
+  68 002e 1C20     		movs	r0, #28
+  69 0030 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  70              	.LVL2:
+  98:./Src/vcom.c  **** }
+  71              		.loc 1 98 0
+  72              		@ sp needed
+  73 0034 10BD     		pop	{r4, pc}
+  74              	.L3:
+ARM GAS  /tmp/ccoAAM0e.s 			page 4
+
+
+  93:./Src/vcom.c  ****   }
+  75              		.loc 1 93 0
+  76 0036 5D21     		movs	r1, #93
+  77 0038 0348     		ldr	r0, .L4+8
+  78 003a FFF7FEFF 		bl	_Error_Handler
+  79              	.LVL3:
+  80 003e F1E7     		b	.L2
+  81              	.L5:
+  82              		.align	2
+  83              	.L4:
+  84 0040 00000000 		.word	.LANCHOR0
+  85 0044 00440040 		.word	1073759232
+  86 0048 00000000 		.word	.LC1
+  87              		.cfi_endproc
+  88              	.LFE96:
+  90              		.section	.text.vcom_DeInit,"ax",%progbits
+  91              		.align	1
+  92              		.global	vcom_DeInit
+  93              		.syntax unified
+  94              		.code	16
+  95              		.thumb_func
+  96              		.fpu softvfp
+  98              	vcom_DeInit:
+  99              	.LFB97:
+  99:./Src/vcom.c  **** 
+ 100:./Src/vcom.c  **** 
+ 101:./Src/vcom.c  **** void vcom_DeInit(void)
+ 102:./Src/vcom.c  **** {
+ 100              		.loc 1 102 0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104 0000 10B5     		push	{r4, lr}
+ 105              	.LCFI1:
+ 106              		.cfi_def_cfa_offset 8
+ 107              		.cfi_offset 4, -8
+ 108              		.cfi_offset 14, -4
+ 103:./Src/vcom.c  **** #if 1
+ 104:./Src/vcom.c  ****   HAL_UART_DeInit(&UartHandle);
+ 109              		.loc 1 104 0
+ 110 0002 0248     		ldr	r0, .L7
+ 111 0004 FFF7FEFF 		bl	HAL_UART_DeInit
+ 112              	.LVL4:
+ 105:./Src/vcom.c  **** #endif
+ 106:./Src/vcom.c  **** }
+ 113              		.loc 1 106 0
+ 114              		@ sp needed
+ 115 0008 10BD     		pop	{r4, pc}
+ 116              	.L8:
+ 117 000a C046     		.align	2
+ 118              	.L7:
+ 119 000c 00000000 		.word	.LANCHOR0
+ 120              		.cfi_endproc
+ 121              	.LFE97:
+ 123              		.section	.text.vcom_Send,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	vcom_Send
+ARM GAS  /tmp/ccoAAM0e.s 			page 5
+
+
+ 126              		.syntax unified
+ 127              		.code	16
+ 128              		.thumb_func
+ 129              		.fpu softvfp
+ 131              	vcom_Send:
+ 132              	.LFB98:
+ 107:./Src/vcom.c  **** 
+ 108:./Src/vcom.c  **** void vcom_Send( char *format, ... )
+ 109:./Src/vcom.c  **** {
+ 133              		.loc 1 109 0
+ 134              		.cfi_startproc
+ 135              		@ args = 4, pretend = 16, frame = 136
+ 136              		@ frame_needed = 0, uses_anonymous_args = 1
+ 137              	.LVL5:
+ 138 0000 0FB4     		push	{r0, r1, r2, r3}
+ 139              	.LCFI2:
+ 140              		.cfi_def_cfa_offset 16
+ 141 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+ 142              	.LCFI3:
+ 143              		.cfi_def_cfa_offset 36
+ 144              		.cfi_offset 4, -36
+ 145              		.cfi_offset 5, -32
+ 146              		.cfi_offset 6, -28
+ 147              		.cfi_offset 7, -24
+ 148              		.cfi_offset 14, -20
+ 149 0004 CE46     		mov	lr, r9
+ 150 0006 4746     		mov	r7, r8
+ 151 0008 80B5     		push	{r7, lr}
+ 152              	.LCFI4:
+ 153              		.cfi_def_cfa_offset 44
+ 154              		.cfi_offset 8, -44
+ 155              		.cfi_offset 9, -40
+ 156 000a A3B0     		sub	sp, sp, #140
+ 157              	.LCFI5:
+ 158              		.cfi_def_cfa_offset 184
+ 159 000c 2AAB     		add	r3, sp, #168
+ 160 000e 02CB     		ldmia	r3!, {r1}
+ 110:./Src/vcom.c  ****   va_list args;
+ 111:./Src/vcom.c  ****   va_start(args, format);
+ 161              		.loc 1 111 0
+ 162 0010 2193     		str	r3, [sp, #132]
+ 163              	.LBB21:
+ 164              	.LBB22:
+ 165              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+ARM GAS  /tmp/ccoAAM0e.s 			page 6
+
+
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /tmp/ccoAAM0e.s 			page 7
+
+
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccoAAM0e.s 			page 8
+
+
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ARM GAS  /tmp/ccoAAM0e.s 			page 9
+
+
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 166              		.loc 2 203 0
+ 167              		.syntax divided
+ 168              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 169 0012 EFF31085 		MRS r5, primask
+ 170              	@ 0 "" 2
+ 171              		.thumb
+ 172              		.syntax unified
+ 173              	.LBE22:
+ 174              	.LBE21:
+ 175              	.LBB23:
+ 176              	.LBB24:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 177              		.loc 2 71 0
+ 178              		.syntax divided
+ 179              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 180 0016 72B6     		cpsid i
+ 181              	@ 0 "" 2
+ 182              		.thumb
+ 183              		.syntax unified
+ 184              	.LBE24:
+ 185              	.LBE23:
+ 112:./Src/vcom.c  ****   uint8_t len;
+ 113:./Src/vcom.c  ****   uint8_t lenTop;
+ 114:./Src/vcom.c  ****   char tempBuff[128];
+ 115:./Src/vcom.c  ****   
+ 116:./Src/vcom.c  ****   BACKUP_PRIMASK();
+ 117:./Src/vcom.c  ****   DISABLE_IRQ();
+ 118:./Src/vcom.c  ****   
+ 119:./Src/vcom.c  ****   /*convert into string at buff[0] of length iw*/
+ 120:./Src/vcom.c  ****   len = vsprintf(&tempBuff[0], format, args);
+ 186              		.loc 1 120 0
+ 187 0018 219A     		ldr	r2, [sp, #132]
+ 188 001a 01A8     		add	r0, sp, #4
+ 189 001c FFF7FEFF 		bl	vsprintf
+ 190              	.LVL6:
+ 191 0020 C6B2     		uxtb	r6, r0
+ 192              	.LVL7:
+ 121:./Src/vcom.c  ****   
+ARM GAS  /tmp/ccoAAM0e.s 			page 10
+
+
+ 122:./Src/vcom.c  ****   if (iw+len<BUFSIZE)
+ 193              		.loc 1 122 0
+ 194 0022 1C4B     		ldr	r3, .L13
+ 195 0024 1B88     		ldrh	r3, [r3]
+ 196 0026 FF22     		movs	r2, #255
+ 197 0028 0240     		ands	r2, r0
+ 198 002a 9B18     		adds	r3, r3, r2
+ 199 002c FF2B     		cmp	r3, #255
+ 200 002e 24DD     		ble	.L12
+ 123:./Src/vcom.c  ****   {
+ 124:./Src/vcom.c  ****     memcpy( &buff[iw], &tempBuff[0], len);
+ 125:./Src/vcom.c  ****     iw+=len;
+ 126:./Src/vcom.c  ****   }
+ 127:./Src/vcom.c  ****   else
+ 128:./Src/vcom.c  ****   {
+ 129:./Src/vcom.c  ****     lenTop=BUFSIZE-iw;
+ 201              		.loc 1 129 0
+ 202 0030 184F     		ldr	r7, .L13
+ 203 0032 3C88     		ldrh	r4, [r7]
+ 204 0034 E4B2     		uxtb	r4, r4
+ 205 0036 6142     		rsbs	r1, r4, #0
+ 206 0038 CBB2     		uxtb	r3, r1
+ 207 003a 9946     		mov	r9, r3
+ 208              	.LVL8:
+ 130:./Src/vcom.c  ****     memcpy( &buff[iw], &tempBuff[0], lenTop);
+ 209              		.loc 1 130 0
+ 210 003c 3888     		ldrh	r0, [r7]
+ 211 003e 164B     		ldr	r3, .L13+4
+ 212 0040 9846     		mov	r8, r3
+ 213 0042 4044     		add	r0, r0, r8
+ 214 0044 4A46     		mov	r2, r9
+ 215 0046 01A9     		add	r1, sp, #4
+ 216 0048 FFF7FEFF 		bl	memcpy
+ 217              	.LVL9:
+ 131:./Src/vcom.c  ****     len-=lenTop;
+ 218              		.loc 1 131 0
+ 219 004c A419     		adds	r4, r4, r6
+ 220 004e E4B2     		uxtb	r4, r4
+ 221              	.LVL10:
+ 132:./Src/vcom.c  ****     memcpy( &buff[0], &tempBuff[lenTop], len);
+ 222              		.loc 1 132 0
+ 223 0050 01A9     		add	r1, sp, #4
+ 224 0052 4944     		add	r1, r1, r9
+ 225 0054 2200     		movs	r2, r4
+ 226 0056 4046     		mov	r0, r8
+ 227 0058 FFF7FEFF 		bl	memcpy
+ 228              	.LVL11:
+ 133:./Src/vcom.c  ****     iw = len;
+ 229              		.loc 1 133 0
+ 230 005c A4B2     		uxth	r4, r4
+ 231              	.LVL12:
+ 232 005e 3C80     		strh	r4, [r7]
+ 233              	.LVL13:
+ 234              	.L11:
+ 235              	.LBB25:
+ 236              	.LBB26:
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ARM GAS  /tmp/ccoAAM0e.s 			page 11
+
+
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 237              		.loc 2 215 0
+ 238              		.syntax divided
+ 239              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 240 0060 85F31088 		MSR primask, r5
+ 241              	@ 0 "" 2
+ 242              	.LVL14:
+ 243              		.thumb
+ 244              		.syntax unified
+ 245              	.LBE26:
+ 246              	.LBE25:
+ 134:./Src/vcom.c  ****   }
+ 135:./Src/vcom.c  ****   RESTORE_PRIMASK();
+ 136:./Src/vcom.c  ****   
+ 137:./Src/vcom.c  ****   HAL_NVIC_SetPendingIRQ(USARTX_IRQn);
+ 247              		.loc 1 137 0
+ 248 0064 1C20     		movs	r0, #28
+ 249 0066 FFF7FEFF 		bl	HAL_NVIC_SetPendingIRQ
+ 250              	.LVL15:
+ 138:./Src/vcom.c  ****     
+ 139:./Src/vcom.c  ****   va_end(args);
+ 140:./Src/vcom.c  **** }
+ 251              		.loc 1 140 0
+ 252 006a 23B0     		add	sp, sp, #140
+ 253              		@ sp needed
+ 254 006c 0CBC     		pop	{r2, r3}
+ 255 006e 9046     		mov	r8, r2
+ 256 0070 9946     		mov	r9, r3
+ 257 0072 F0BC     		pop	{r4, r5, r6, r7}
+ 258 0074 08BC     		pop	{r3}
+ 259 0076 04B0     		add	sp, sp, #16
+ 260 0078 1847     		bx	r3
+ 261              	.LVL16:
+ 262              	.L12:
+ 124:./Src/vcom.c  ****     iw+=len;
+ 263              		.loc 1 124 0
+ 264 007a 064F     		ldr	r7, .L13
+ 265 007c 3B88     		ldrh	r3, [r7]
+ 266 007e 0648     		ldr	r0, .L13+4
+ 267 0080 C018     		adds	r0, r0, r3
+ 268 0082 01A9     		add	r1, sp, #4
+ 269 0084 FFF7FEFF 		bl	memcpy
+ 270              	.LVL17:
+ 125:./Src/vcom.c  ****   }
+ 271              		.loc 1 125 0
+ 272 0088 3C88     		ldrh	r4, [r7]
+ 273 008a A419     		adds	r4, r4, r6
+ARM GAS  /tmp/ccoAAM0e.s 			page 12
+
+
+ 274 008c A4B2     		uxth	r4, r4
+ 275 008e 3C80     		strh	r4, [r7]
+ 276 0090 E6E7     		b	.L11
+ 277              	.L14:
+ 278 0092 C046     		.align	2
+ 279              	.L13:
+ 280 0094 00000000 		.word	.LANCHOR1
+ 281 0098 00000000 		.word	buff
+ 282              		.cfi_endproc
+ 283              	.LFE98:
+ 285              		.section	.text.vcom_Print,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	vcom_Print
+ 288              		.syntax unified
+ 289              		.code	16
+ 290              		.thumb_func
+ 291              		.fpu softvfp
+ 293              	vcom_Print:
+ 294              	.LFB99:
+ 141:./Src/vcom.c  **** 
+ 142:./Src/vcom.c  **** /* modifes only ir*/
+ 143:./Src/vcom.c  **** void vcom_Print( void)
+ 144:./Src/vcom.c  **** {
+ 295              		.loc 1 144 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299 0000 10B5     		push	{r4, lr}
+ 300              	.LCFI6:
+ 301              		.cfi_def_cfa_offset 8
+ 302              		.cfi_offset 4, -8
+ 303              		.cfi_offset 14, -4
+ 145:./Src/vcom.c  ****   char* CurChar;
+ 146:./Src/vcom.c  ****   while( ( (iw+BUFSIZE-ir)%BUFSIZE) >0 )
+ 304              		.loc 1 146 0
+ 305 0002 12E0     		b	.L16
+ 306              	.L17:
+ 307              	.LBB27:
+ 308              	.LBB28:
+ 309              	.LBB29:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 310              		.loc 2 203 0
+ 311              		.syntax divided
+ 312              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 313 0004 EFF31082 		MRS r2, primask
+ 314              	@ 0 "" 2
+ 315              		.thumb
+ 316              		.syntax unified
+ 317              	.LBE29:
+ 318              	.LBE28:
+ 319              	.LBB30:
+ 320              	.LBB31:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 321              		.loc 2 71 0
+ 322              		.syntax divided
+ 323              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 324 0008 72B6     		cpsid i
+ARM GAS  /tmp/ccoAAM0e.s 			page 13
+
+
+ 325              	@ 0 "" 2
+ 326              		.thumb
+ 327              		.syntax unified
+ 328              	.LBE31:
+ 329              	.LBE30:
+ 147:./Src/vcom.c  ****   {
+ 148:./Src/vcom.c  ****     BACKUP_PRIMASK();
+ 149:./Src/vcom.c  ****     DISABLE_IRQ();
+ 150:./Src/vcom.c  ****     
+ 151:./Src/vcom.c  ****     CurChar = &buff[ir];
+ 330              		.loc 1 151 0
+ 331 000a 114C     		ldr	r4, .L18
+ 332 000c 2388     		ldrh	r3, [r4]
+ 333 000e 1149     		ldr	r1, .L18+4
+ 334 0010 5918     		adds	r1, r3, r1
+ 335              	.LVL18:
+ 152:./Src/vcom.c  ****     ir= (ir+1) %BUFSIZE;
+ 336              		.loc 1 152 0
+ 337 0012 0133     		adds	r3, r3, #1
+ 338 0014 FF20     		movs	r0, #255
+ 339 0016 0340     		ands	r3, r0
+ 340 0018 2380     		strh	r3, [r4]
+ 341              	.LBB32:
+ 342              	.LBB33:
+ 343              		.loc 2 215 0
+ 344              		.syntax divided
+ 345              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 346 001a 82F31088 		MSR primask, r2
+ 347              	@ 0 "" 2
+ 348              		.thumb
+ 349              		.syntax unified
+ 350              	.LBE33:
+ 351              	.LBE32:
+ 153:./Src/vcom.c  ****     
+ 154:./Src/vcom.c  ****     RESTORE_PRIMASK();
+ 155:./Src/vcom.c  ****     
+ 156:./Src/vcom.c  ****     HAL_UART_Transmit(&UartHandle,(uint8_t *) CurChar, 1, 300);    
+ 352              		.loc 1 156 0
+ 353 001e 9623     		movs	r3, #150
+ 354 0020 5B00     		lsls	r3, r3, #1
+ 355 0022 0122     		movs	r2, #1
+ 356 0024 0C48     		ldr	r0, .L18+8
+ 357 0026 FFF7FEFF 		bl	HAL_UART_Transmit
+ 358              	.LVL19:
+ 359              	.L16:
+ 360              	.LBE27:
+ 146:./Src/vcom.c  ****   {
+ 361              		.loc 1 146 0
+ 362 002a 0C4B     		ldr	r3, .L18+12
+ 363 002c 1B88     		ldrh	r3, [r3]
+ 364 002e 0133     		adds	r3, r3, #1
+ 365 0030 FF33     		adds	r3, r3, #255
+ 366 0032 074A     		ldr	r2, .L18
+ 367 0034 1288     		ldrh	r2, [r2]
+ 368 0036 9B1A     		subs	r3, r3, r2
+ 369 0038 D917     		asrs	r1, r3, #31
+ 370 003a 090E     		lsrs	r1, r1, #24
+ARM GAS  /tmp/ccoAAM0e.s 			page 14
+
+
+ 371 003c 5B18     		adds	r3, r3, r1
+ 372 003e FF22     		movs	r2, #255
+ 373 0040 1340     		ands	r3, r2
+ 374 0042 5B1A     		subs	r3, r3, r1
+ 375 0044 002B     		cmp	r3, #0
+ 376 0046 DDDC     		bgt	.L17
+ 157:./Src/vcom.c  ****   }
+ 158:./Src/vcom.c  ****   HAL_NVIC_ClearPendingIRQ(USARTX_IRQn);
+ 377              		.loc 1 158 0
+ 378 0048 1C20     		movs	r0, #28
+ 379 004a FFF7FEFF 		bl	HAL_NVIC_ClearPendingIRQ
+ 380              	.LVL20:
+ 159:./Src/vcom.c  **** }
+ 381              		.loc 1 159 0
+ 382              		@ sp needed
+ 383 004e 10BD     		pop	{r4, pc}
+ 384              	.L19:
+ 385              		.align	2
+ 386              	.L18:
+ 387 0050 00000000 		.word	.LANCHOR2
+ 388 0054 00000000 		.word	buff
+ 389 0058 00000000 		.word	.LANCHOR0
+ 390 005c 00000000 		.word	.LANCHOR1
+ 391              		.cfi_endproc
+ 392              	.LFE99:
+ 394              		.section	.text.vcom_Send_Lp,"ax",%progbits
+ 395              		.align	1
+ 396              		.global	vcom_Send_Lp
+ 397              		.syntax unified
+ 398              		.code	16
+ 399              		.thumb_func
+ 400              		.fpu softvfp
+ 402              	vcom_Send_Lp:
+ 403              	.LFB100:
+ 160:./Src/vcom.c  **** 
+ 161:./Src/vcom.c  **** void vcom_Send_Lp( char *format, ... )
+ 162:./Src/vcom.c  **** {
+ 404              		.loc 1 162 0
+ 405              		.cfi_startproc
+ 406              		@ args = 4, pretend = 16, frame = 136
+ 407              		@ frame_needed = 0, uses_anonymous_args = 1
+ 408              	.LVL21:
+ 409 0000 0FB4     		push	{r0, r1, r2, r3}
+ 410              	.LCFI7:
+ 411              		.cfi_def_cfa_offset 16
+ 412 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+ 413              	.LCFI8:
+ 414              		.cfi_def_cfa_offset 36
+ 415              		.cfi_offset 4, -36
+ 416              		.cfi_offset 5, -32
+ 417              		.cfi_offset 6, -28
+ 418              		.cfi_offset 7, -24
+ 419              		.cfi_offset 14, -20
+ 420 0004 CE46     		mov	lr, r9
+ 421 0006 4746     		mov	r7, r8
+ 422 0008 80B5     		push	{r7, lr}
+ 423              	.LCFI9:
+ARM GAS  /tmp/ccoAAM0e.s 			page 15
+
+
+ 424              		.cfi_def_cfa_offset 44
+ 425              		.cfi_offset 8, -44
+ 426              		.cfi_offset 9, -40
+ 427 000a A3B0     		sub	sp, sp, #140
+ 428              	.LCFI10:
+ 429              		.cfi_def_cfa_offset 184
+ 430 000c 2AAB     		add	r3, sp, #168
+ 431 000e 02CB     		ldmia	r3!, {r1}
+ 163:./Src/vcom.c  ****   va_list args;
+ 164:./Src/vcom.c  ****   va_start(args, format);
+ 432              		.loc 1 164 0
+ 433 0010 2193     		str	r3, [sp, #132]
+ 434              	.LBB34:
+ 435              	.LBB35:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 436              		.loc 2 203 0
+ 437              		.syntax divided
+ 438              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 439 0012 EFF31085 		MRS r5, primask
+ 440              	@ 0 "" 2
+ 441              		.thumb
+ 442              		.syntax unified
+ 443              	.LBE35:
+ 444              	.LBE34:
+ 445              	.LBB36:
+ 446              	.LBB37:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 447              		.loc 2 71 0
+ 448              		.syntax divided
+ 449              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 450 0016 72B6     		cpsid i
+ 451              	@ 0 "" 2
+ 452              		.thumb
+ 453              		.syntax unified
+ 454              	.LBE37:
+ 455              	.LBE36:
+ 165:./Src/vcom.c  ****   uint8_t len;
+ 166:./Src/vcom.c  ****   uint8_t lenTop;
+ 167:./Src/vcom.c  ****   char tempBuff[128];
+ 168:./Src/vcom.c  ****   
+ 169:./Src/vcom.c  ****   BACKUP_PRIMASK();
+ 170:./Src/vcom.c  ****   DISABLE_IRQ();
+ 171:./Src/vcom.c  ****   
+ 172:./Src/vcom.c  ****   /*convert into string at buff[0] of length iw*/
+ 173:./Src/vcom.c  ****   len = vsprintf(&tempBuff[0], format, args);
+ 456              		.loc 1 173 0
+ 457 0018 219A     		ldr	r2, [sp, #132]
+ 458 001a 01A8     		add	r0, sp, #4
+ 459 001c FFF7FEFF 		bl	vsprintf
+ 460              	.LVL22:
+ 461 0020 C6B2     		uxtb	r6, r0
+ 462              	.LVL23:
+ 174:./Src/vcom.c  ****   
+ 175:./Src/vcom.c  ****   if (iw+len<BUFSIZE)
+ 463              		.loc 1 175 0
+ 464 0022 1A4B     		ldr	r3, .L24
+ 465 0024 1B88     		ldrh	r3, [r3]
+ARM GAS  /tmp/ccoAAM0e.s 			page 16
+
+
+ 466 0026 FF22     		movs	r2, #255
+ 467 0028 0240     		ands	r2, r0
+ 468 002a 9B18     		adds	r3, r3, r2
+ 469 002c FF2B     		cmp	r3, #255
+ 470 002e 21DD     		ble	.L23
+ 176:./Src/vcom.c  ****   {
+ 177:./Src/vcom.c  ****     memcpy( &buff[iw], &tempBuff[0], len);
+ 178:./Src/vcom.c  ****     iw+=len;
+ 179:./Src/vcom.c  ****   }
+ 180:./Src/vcom.c  ****   else
+ 181:./Src/vcom.c  ****   {
+ 182:./Src/vcom.c  ****     lenTop=BUFSIZE-iw;
+ 471              		.loc 1 182 0
+ 472 0030 164F     		ldr	r7, .L24
+ 473 0032 3C88     		ldrh	r4, [r7]
+ 474 0034 E4B2     		uxtb	r4, r4
+ 475 0036 6142     		rsbs	r1, r4, #0
+ 476 0038 CBB2     		uxtb	r3, r1
+ 477 003a 9946     		mov	r9, r3
+ 478              	.LVL24:
+ 183:./Src/vcom.c  ****     memcpy( &buff[iw], &tempBuff[0], lenTop);
+ 479              		.loc 1 183 0
+ 480 003c 3888     		ldrh	r0, [r7]
+ 481 003e 144B     		ldr	r3, .L24+4
+ 482 0040 9846     		mov	r8, r3
+ 483 0042 4044     		add	r0, r0, r8
+ 484 0044 4A46     		mov	r2, r9
+ 485 0046 01A9     		add	r1, sp, #4
+ 486 0048 FFF7FEFF 		bl	memcpy
+ 487              	.LVL25:
+ 184:./Src/vcom.c  ****     len-=lenTop;
+ 488              		.loc 1 184 0
+ 489 004c A419     		adds	r4, r4, r6
+ 490 004e E4B2     		uxtb	r4, r4
+ 491              	.LVL26:
+ 185:./Src/vcom.c  ****     memcpy( &buff[0], &tempBuff[lenTop], len);
+ 492              		.loc 1 185 0
+ 493 0050 01A9     		add	r1, sp, #4
+ 494 0052 4944     		add	r1, r1, r9
+ 495 0054 2200     		movs	r2, r4
+ 496 0056 4046     		mov	r0, r8
+ 497 0058 FFF7FEFF 		bl	memcpy
+ 498              	.LVL27:
+ 186:./Src/vcom.c  ****     iw = len;
+ 499              		.loc 1 186 0
+ 500 005c A4B2     		uxth	r4, r4
+ 501              	.LVL28:
+ 502 005e 3C80     		strh	r4, [r7]
+ 503              	.LVL29:
+ 504              	.L22:
+ 505              	.LBB38:
+ 506              	.LBB39:
+ 507              		.loc 2 215 0
+ 508              		.syntax divided
+ 509              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 510 0060 85F31088 		MSR primask, r5
+ 511              	@ 0 "" 2
+ARM GAS  /tmp/ccoAAM0e.s 			page 17
+
+
+ 512              	.LVL30:
+ 513              		.thumb
+ 514              		.syntax unified
+ 515              	.LBE39:
+ 516              	.LBE38:
+ 187:./Src/vcom.c  ****   }
+ 188:./Src/vcom.c  ****   RESTORE_PRIMASK();  
+ 189:./Src/vcom.c  ****   
+ 190:./Src/vcom.c  ****   va_end(args);
+ 191:./Src/vcom.c  **** }
+ 517              		.loc 1 191 0
+ 518 0064 23B0     		add	sp, sp, #140
+ 519              		@ sp needed
+ 520 0066 0CBC     		pop	{r2, r3}
+ 521 0068 9046     		mov	r8, r2
+ 522 006a 9946     		mov	r9, r3
+ 523 006c F0BC     		pop	{r4, r5, r6, r7}
+ 524 006e 08BC     		pop	{r3}
+ 525 0070 04B0     		add	sp, sp, #16
+ 526 0072 1847     		bx	r3
+ 527              	.LVL31:
+ 528              	.L23:
+ 177:./Src/vcom.c  ****     iw+=len;
+ 529              		.loc 1 177 0
+ 530 0074 054F     		ldr	r7, .L24
+ 531 0076 3B88     		ldrh	r3, [r7]
+ 532 0078 0548     		ldr	r0, .L24+4
+ 533 007a C018     		adds	r0, r0, r3
+ 534 007c 01A9     		add	r1, sp, #4
+ 535 007e FFF7FEFF 		bl	memcpy
+ 536              	.LVL32:
+ 178:./Src/vcom.c  ****   }
+ 537              		.loc 1 178 0
+ 538 0082 3C88     		ldrh	r4, [r7]
+ 539 0084 A419     		adds	r4, r4, r6
+ 540 0086 A4B2     		uxth	r4, r4
+ 541 0088 3C80     		strh	r4, [r7]
+ 542 008a E9E7     		b	.L22
+ 543              	.L25:
+ 544              		.align	2
+ 545              	.L24:
+ 546 008c 00000000 		.word	.LANCHOR1
+ 547 0090 00000000 		.word	buff
+ 548              		.cfi_endproc
+ 549              	.LFE100:
+ 551              		.section	.text.vcom_IoInit,"ax",%progbits
+ 552              		.align	1
+ 553              		.global	vcom_IoInit
+ 554              		.syntax unified
+ 555              		.code	16
+ 556              		.thumb_func
+ 557              		.fpu softvfp
+ 559              	vcom_IoInit:
+ 560              	.LFB102:
+ 192:./Src/vcom.c  **** /**
+ 193:./Src/vcom.c  ****   * @brief UART MSP Initialization 
+ 194:./Src/vcom.c  ****   *        This function configures the hardware resources used in this example: 
+ARM GAS  /tmp/ccoAAM0e.s 			page 18
+
+
+ 195:./Src/vcom.c  ****   *           - Peripheral's clock enable
+ 196:./Src/vcom.c  ****   *           - Peripheral's GPIO Configuration  
+ 197:./Src/vcom.c  ****   *           - NVIC configuration for UART interrupt request enable
+ 198:./Src/vcom.c  ****   * @param huart: UART handle pointer
+ 199:./Src/vcom.c  ****   * @retval None
+ 200:./Src/vcom.c  ****   */
+ 201:./Src/vcom.c  **** void HAL_UART_MspInit(UART_HandleTypeDef *huart)
+ 202:./Src/vcom.c  **** {
+ 203:./Src/vcom.c  ****   
+ 204:./Src/vcom.c  ****   /*##-1- Enable peripherals and GPIO Clocks #################################*/
+ 205:./Src/vcom.c  **** 
+ 206:./Src/vcom.c  ****   /* Enable USART1 clock */
+ 207:./Src/vcom.c  ****   USARTX_CLK_ENABLE(); 
+ 208:./Src/vcom.c  ****   
+ 209:./Src/vcom.c  ****   /*##-2- Configure peripheral GPIO ##########################################*/  
+ 210:./Src/vcom.c  ****   vcom_IoInit( );
+ 211:./Src/vcom.c  **** }
+ 212:./Src/vcom.c  **** 
+ 213:./Src/vcom.c  **** void vcom_IoInit(void)
+ 214:./Src/vcom.c  **** {
+ 561              		.loc 1 214 0
+ 562              		.cfi_startproc
+ 563              		@ args = 0, pretend = 0, frame = 32
+ 564              		@ frame_needed = 0, uses_anonymous_args = 0
+ 565 0000 30B5     		push	{r4, r5, lr}
+ 566              	.LCFI11:
+ 567              		.cfi_def_cfa_offset 12
+ 568              		.cfi_offset 4, -12
+ 569              		.cfi_offset 5, -8
+ 570              		.cfi_offset 14, -4
+ 571 0002 89B0     		sub	sp, sp, #36
+ 572              	.LCFI12:
+ 573              		.cfi_def_cfa_offset 48
+ 574              	.LBB40:
+ 215:./Src/vcom.c  ****   GPIO_InitTypeDef  GPIO_InitStruct={0};
+ 216:./Src/vcom.c  ****     /* Enable GPIO TX/RX clock */
+ 217:./Src/vcom.c  ****   USARTX_TX_GPIO_CLK_ENABLE();
+ 575              		.loc 1 217 0
+ 576 0004 134B     		ldr	r3, .L27
+ 577 0006 D96A     		ldr	r1, [r3, #44]
+ 578 0008 0122     		movs	r2, #1
+ 579 000a 1143     		orrs	r1, r2
+ 580 000c D962     		str	r1, [r3, #44]
+ 581 000e D96A     		ldr	r1, [r3, #44]
+ 582 0010 1140     		ands	r1, r2
+ 583 0012 0191     		str	r1, [sp, #4]
+ 584 0014 0199     		ldr	r1, [sp, #4]
+ 585              	.LBE40:
+ 586              	.LBB41:
+ 218:./Src/vcom.c  ****   USARTX_RX_GPIO_CLK_ENABLE();
+ 587              		.loc 1 218 0
+ 588 0016 D96A     		ldr	r1, [r3, #44]
+ 589 0018 1143     		orrs	r1, r2
+ 590 001a D962     		str	r1, [r3, #44]
+ 591 001c DB6A     		ldr	r3, [r3, #44]
+ 592 001e 1340     		ands	r3, r2
+ 593 0020 0293     		str	r3, [sp, #8]
+ARM GAS  /tmp/ccoAAM0e.s 			page 19
+
+
+ 594 0022 029B     		ldr	r3, [sp, #8]
+ 595              	.LBE41:
+ 219:./Src/vcom.c  ****     /* UART TX GPIO pin configuration  */
+ 220:./Src/vcom.c  ****   GPIO_InitStruct.Pin       = USARTX_TX_PIN;
+ 596              		.loc 1 220 0
+ 597 0024 0424     		movs	r4, #4
+ 598 0026 0394     		str	r4, [sp, #12]
+ 221:./Src/vcom.c  ****   GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+ 599              		.loc 1 221 0
+ 600 0028 0223     		movs	r3, #2
+ 601 002a 0493     		str	r3, [sp, #16]
+ 222:./Src/vcom.c  ****   GPIO_InitStruct.Pull      = GPIO_PULLUP;
+ 602              		.loc 1 222 0
+ 603 002c 0592     		str	r2, [sp, #20]
+ 223:./Src/vcom.c  ****   GPIO_InitStruct.Speed     = GPIO_SPEED_HIGH;
+ 604              		.loc 1 223 0
+ 605 002e 0133     		adds	r3, r3, #1
+ 606 0030 0693     		str	r3, [sp, #24]
+ 224:./Src/vcom.c  ****   GPIO_InitStruct.Alternate = USARTX_TX_AF;
+ 607              		.loc 1 224 0
+ 608 0032 0794     		str	r4, [sp, #28]
+ 225:./Src/vcom.c  **** 
+ 226:./Src/vcom.c  ****   HAL_GPIO_Init(USARTX_TX_GPIO_PORT, &GPIO_InitStruct);
+ 609              		.loc 1 226 0
+ 610 0034 A025     		movs	r5, #160
+ 611 0036 ED05     		lsls	r5, r5, #23
+ 612 0038 03A9     		add	r1, sp, #12
+ 613 003a 2800     		movs	r0, r5
+ 614 003c FFF7FEFF 		bl	HAL_GPIO_Init
+ 615              	.LVL33:
+ 227:./Src/vcom.c  **** 
+ 228:./Src/vcom.c  ****   /* UART RX GPIO pin configuration  */
+ 229:./Src/vcom.c  ****   GPIO_InitStruct.Pin = USARTX_RX_PIN;
+ 616              		.loc 1 229 0
+ 617 0040 0823     		movs	r3, #8
+ 618 0042 0393     		str	r3, [sp, #12]
+ 230:./Src/vcom.c  ****   GPIO_InitStruct.Alternate = USARTX_RX_AF;
+ 619              		.loc 1 230 0
+ 620 0044 0794     		str	r4, [sp, #28]
+ 231:./Src/vcom.c  **** 
+ 232:./Src/vcom.c  ****   HAL_GPIO_Init(USARTX_RX_GPIO_PORT, &GPIO_InitStruct);
+ 621              		.loc 1 232 0
+ 622 0046 03A9     		add	r1, sp, #12
+ 623 0048 2800     		movs	r0, r5
+ 624 004a FFF7FEFF 		bl	HAL_GPIO_Init
+ 625              	.LVL34:
+ 233:./Src/vcom.c  **** }
+ 626              		.loc 1 233 0
+ 627 004e 09B0     		add	sp, sp, #36
+ 628              		@ sp needed
+ 629 0050 30BD     		pop	{r4, r5, pc}
+ 630              	.L28:
+ 631 0052 C046     		.align	2
+ 632              	.L27:
+ 633 0054 00100240 		.word	1073876992
+ 634              		.cfi_endproc
+ 635              	.LFE102:
+ARM GAS  /tmp/ccoAAM0e.s 			page 20
+
+
+ 637              		.section	.text.HAL_UART_MspInit,"ax",%progbits
+ 638              		.align	1
+ 639              		.global	HAL_UART_MspInit
+ 640              		.syntax unified
+ 641              		.code	16
+ 642              		.thumb_func
+ 643              		.fpu softvfp
+ 645              	HAL_UART_MspInit:
+ 646              	.LFB101:
+ 202:./Src/vcom.c  ****   
+ 647              		.loc 1 202 0
+ 648              		.cfi_startproc
+ 649              		@ args = 0, pretend = 0, frame = 0
+ 650              		@ frame_needed = 0, uses_anonymous_args = 0
+ 651              	.LVL35:
+ 652 0000 10B5     		push	{r4, lr}
+ 653              	.LCFI13:
+ 654              		.cfi_def_cfa_offset 8
+ 655              		.cfi_offset 4, -8
+ 656              		.cfi_offset 14, -4
+ 207:./Src/vcom.c  ****   
+ 657              		.loc 1 207 0
+ 658 0002 044A     		ldr	r2, .L30
+ 659 0004 916B     		ldr	r1, [r2, #56]
+ 660 0006 8023     		movs	r3, #128
+ 661 0008 9B02     		lsls	r3, r3, #10
+ 662 000a 0B43     		orrs	r3, r1
+ 663 000c 9363     		str	r3, [r2, #56]
+ 210:./Src/vcom.c  **** }
+ 664              		.loc 1 210 0
+ 665 000e FFF7FEFF 		bl	vcom_IoInit
+ 666              	.LVL36:
+ 211:./Src/vcom.c  **** 
+ 667              		.loc 1 211 0
+ 668              		@ sp needed
+ 669 0012 10BD     		pop	{r4, pc}
+ 670              	.L31:
+ 671              		.align	2
+ 672              	.L30:
+ 673 0014 00100240 		.word	1073876992
+ 674              		.cfi_endproc
+ 675              	.LFE101:
+ 677              		.section	.text.vcom_IoDeInit,"ax",%progbits
+ 678              		.align	1
+ 679              		.global	vcom_IoDeInit
+ 680              		.syntax unified
+ 681              		.code	16
+ 682              		.thumb_func
+ 683              		.fpu softvfp
+ 685              	vcom_IoDeInit:
+ 686              	.LFB103:
+ 234:./Src/vcom.c  **** 
+ 235:./Src/vcom.c  **** void vcom_IoDeInit(void)
+ 236:./Src/vcom.c  **** {
+ 687              		.loc 1 236 0
+ 688              		.cfi_startproc
+ 689              		@ args = 0, pretend = 0, frame = 32
+ARM GAS  /tmp/ccoAAM0e.s 			page 21
+
+
+ 690              		@ frame_needed = 0, uses_anonymous_args = 0
+ 691 0000 10B5     		push	{r4, lr}
+ 692              	.LCFI14:
+ 693              		.cfi_def_cfa_offset 8
+ 694              		.cfi_offset 4, -8
+ 695              		.cfi_offset 14, -4
+ 696 0002 88B0     		sub	sp, sp, #32
+ 697              	.LCFI15:
+ 698              		.cfi_def_cfa_offset 40
+ 237:./Src/vcom.c  ****   GPIO_InitTypeDef GPIO_InitStructure={0};
+ 699              		.loc 1 237 0
+ 700 0004 0C22     		movs	r2, #12
+ 701 0006 0021     		movs	r1, #0
+ 702 0008 05A8     		add	r0, sp, #20
+ 703 000a FFF7FEFF 		bl	memset
+ 704              	.LVL37:
+ 705              	.LBB42:
+ 238:./Src/vcom.c  ****   
+ 239:./Src/vcom.c  ****   USARTX_TX_GPIO_CLK_ENABLE();
+ 706              		.loc 1 239 0
+ 707 000e 114A     		ldr	r2, .L33
+ 708 0010 D16A     		ldr	r1, [r2, #44]
+ 709 0012 0123     		movs	r3, #1
+ 710 0014 1943     		orrs	r1, r3
+ 711 0016 D162     		str	r1, [r2, #44]
+ 712 0018 D16A     		ldr	r1, [r2, #44]
+ 713 001a 1940     		ands	r1, r3
+ 714 001c 0191     		str	r1, [sp, #4]
+ 715 001e 0199     		ldr	r1, [sp, #4]
+ 716              	.LBE42:
+ 717              	.LBB43:
+ 240:./Src/vcom.c  ****   USARTX_RX_GPIO_CLK_ENABLE();
+ 718              		.loc 1 240 0
+ 719 0020 D16A     		ldr	r1, [r2, #44]
+ 720 0022 1943     		orrs	r1, r3
+ 721 0024 D162     		str	r1, [r2, #44]
+ 722 0026 D26A     		ldr	r2, [r2, #44]
+ 723 0028 1340     		ands	r3, r2
+ 724 002a 0293     		str	r3, [sp, #8]
+ 725 002c 029B     		ldr	r3, [sp, #8]
+ 726              	.LBE43:
+ 241:./Src/vcom.c  **** 
+ 242:./Src/vcom.c  ****   GPIO_InitStructure.Mode = GPIO_MODE_ANALOG;
+ 727              		.loc 1 242 0
+ 728 002e 0323     		movs	r3, #3
+ 729 0030 0493     		str	r3, [sp, #16]
+ 243:./Src/vcom.c  ****   GPIO_InitStructure.Pull = GPIO_NOPULL;
+ 244:./Src/vcom.c  ****   
+ 245:./Src/vcom.c  ****   GPIO_InitStructure.Pin =  USARTX_TX_PIN ;
+ 730              		.loc 1 245 0
+ 731 0032 0133     		adds	r3, r3, #1
+ 732 0034 0393     		str	r3, [sp, #12]
+ 246:./Src/vcom.c  ****   HAL_GPIO_Init(  USARTX_TX_GPIO_PORT, &GPIO_InitStructure );
+ 733              		.loc 1 246 0
+ 734 0036 A024     		movs	r4, #160
+ 735 0038 E405     		lsls	r4, r4, #23
+ 736 003a 03A9     		add	r1, sp, #12
+ARM GAS  /tmp/ccoAAM0e.s 			page 22
+
+
+ 737 003c 2000     		movs	r0, r4
+ 738 003e FFF7FEFF 		bl	HAL_GPIO_Init
+ 739              	.LVL38:
+ 247:./Src/vcom.c  ****   
+ 248:./Src/vcom.c  ****   GPIO_InitStructure.Pin =  USARTX_RX_PIN ;
+ 740              		.loc 1 248 0
+ 741 0042 0823     		movs	r3, #8
+ 742 0044 0393     		str	r3, [sp, #12]
+ 249:./Src/vcom.c  ****   HAL_GPIO_Init(  USARTX_RX_GPIO_PORT, &GPIO_InitStructure ); 
+ 743              		.loc 1 249 0
+ 744 0046 03A9     		add	r1, sp, #12
+ 745 0048 2000     		movs	r0, r4
+ 746 004a FFF7FEFF 		bl	HAL_GPIO_Init
+ 747              	.LVL39:
+ 250:./Src/vcom.c  **** }
+ 748              		.loc 1 250 0
+ 749 004e 08B0     		add	sp, sp, #32
+ 750              		@ sp needed
+ 751 0050 10BD     		pop	{r4, pc}
+ 752              	.L34:
+ 753 0052 C046     		.align	2
+ 754              	.L33:
+ 755 0054 00100240 		.word	1073876992
+ 756              		.cfi_endproc
+ 757              	.LFE103:
+ 759              		.section	.text.HAL_UART_MspDeInit,"ax",%progbits
+ 760              		.align	1
+ 761              		.global	HAL_UART_MspDeInit
+ 762              		.syntax unified
+ 763              		.code	16
+ 764              		.thumb_func
+ 765              		.fpu softvfp
+ 767              	HAL_UART_MspDeInit:
+ 768              	.LFB104:
+ 251:./Src/vcom.c  **** 
+ 252:./Src/vcom.c  **** /**
+ 253:./Src/vcom.c  ****   * @brief UART MSP DeInit
+ 254:./Src/vcom.c  ****   * @param huart: uart handle
+ 255:./Src/vcom.c  ****   * @retval None
+ 256:./Src/vcom.c  ****   */
+ 257:./Src/vcom.c  **** void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
+ 258:./Src/vcom.c  **** {
+ 769              		.loc 1 258 0
+ 770              		.cfi_startproc
+ 771              		@ args = 0, pretend = 0, frame = 0
+ 772              		@ frame_needed = 0, uses_anonymous_args = 0
+ 773              	.LVL40:
+ 774 0000 10B5     		push	{r4, lr}
+ 775              	.LCFI16:
+ 776              		.cfi_def_cfa_offset 8
+ 777              		.cfi_offset 4, -8
+ 778              		.cfi_offset 14, -4
+ 259:./Src/vcom.c  ****   vcom_IoDeInit( );
+ 779              		.loc 1 259 0
+ 780 0002 FFF7FEFF 		bl	vcom_IoDeInit
+ 781              	.LVL41:
+ 260:./Src/vcom.c  **** }
+ARM GAS  /tmp/ccoAAM0e.s 			page 23
+
+
+ 782              		.loc 1 260 0
+ 783              		@ sp needed
+ 784 0006 10BD     		pop	{r4, pc}
+ 785              		.cfi_endproc
+ 786              	.LFE104:
+ 788              		.global	iw
+ 789              		.section	.bss.UartHandle,"aw",%nobits
+ 790              		.align	2
+ 791              		.set	.LANCHOR0,. + 0
+ 794              	UartHandle:
+ 795 0000 00000000 		.space	112
+ 795      00000000 
+ 795      00000000 
+ 795      00000000 
+ 795      00000000 
+ 796              		.section	.bss.buff,"aw",%nobits
+ 797              		.align	2
+ 800              	buff:
+ 801 0000 00000000 		.space	256
+ 801      00000000 
+ 801      00000000 
+ 801      00000000 
+ 801      00000000 
+ 802              		.section	.bss.ir,"aw",%nobits
+ 803              		.align	1
+ 804              		.set	.LANCHOR2,. + 0
+ 807              	ir:
+ 808 0000 0000     		.space	2
+ 809              		.section	.bss.iw,"aw",%nobits
+ 810              		.align	1
+ 811              		.set	.LANCHOR1,. + 0
+ 814              	iw:
+ 815 0000 0000     		.space	2
+ 816              		.section	.rodata.vcom_Init.str1.4,"aMS",%progbits,1
+ 817              		.align	2
+ 818              	.LC1:
+ 819 0000 2E2F5372 		.ascii	"./Src/vcom.c\000"
+ 819      632F7663 
+ 819      6F6D2E63 
+ 819      00
+ 820              		.text
+ 821              	.Letext0:
+ 822              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 823              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 824              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 825              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 826              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
+ 827              		.file 8 "/usr/arm-none-eabi/include/math.h"
+ 828              		.file 9 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 829              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 830              		.file 11 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h"
+ 831              		.file 12 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stdarg.h"
+ 832              		.file 13 "<built-in>"
+ 833              		.file 14 "/usr/arm-none-eabi/include/stdio.h"
+ 834              		.file 15 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ 835              		.file 16 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h"
+ 836              		.file 17 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dma.h"
+ARM GAS  /tmp/ccoAAM0e.s 			page 24
+
+
+ 837              		.file 18 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart.h"
+ 838              		.file 19 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cortex.h"
+ 839              		.file 20 "Inc/debug.h"
+ARM GAS  /tmp/ccoAAM0e.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 vcom.c
+     /tmp/ccoAAM0e.s:16     .text.vcom_Init:0000000000000000 $t
+     /tmp/ccoAAM0e.s:23     .text.vcom_Init:0000000000000000 vcom_Init
+     /tmp/ccoAAM0e.s:84     .text.vcom_Init:0000000000000040 $d
+     /tmp/ccoAAM0e.s:91     .text.vcom_DeInit:0000000000000000 $t
+     /tmp/ccoAAM0e.s:98     .text.vcom_DeInit:0000000000000000 vcom_DeInit
+     /tmp/ccoAAM0e.s:119    .text.vcom_DeInit:000000000000000c $d
+     /tmp/ccoAAM0e.s:124    .text.vcom_Send:0000000000000000 $t
+     /tmp/ccoAAM0e.s:131    .text.vcom_Send:0000000000000000 vcom_Send
+     /tmp/ccoAAM0e.s:280    .text.vcom_Send:0000000000000094 $d
+     /tmp/ccoAAM0e.s:800    .bss.buff:0000000000000000 buff
+     /tmp/ccoAAM0e.s:286    .text.vcom_Print:0000000000000000 $t
+     /tmp/ccoAAM0e.s:293    .text.vcom_Print:0000000000000000 vcom_Print
+     /tmp/ccoAAM0e.s:387    .text.vcom_Print:0000000000000050 $d
+     /tmp/ccoAAM0e.s:395    .text.vcom_Send_Lp:0000000000000000 $t
+     /tmp/ccoAAM0e.s:402    .text.vcom_Send_Lp:0000000000000000 vcom_Send_Lp
+     /tmp/ccoAAM0e.s:546    .text.vcom_Send_Lp:000000000000008c $d
+     /tmp/ccoAAM0e.s:552    .text.vcom_IoInit:0000000000000000 $t
+     /tmp/ccoAAM0e.s:559    .text.vcom_IoInit:0000000000000000 vcom_IoInit
+     /tmp/ccoAAM0e.s:633    .text.vcom_IoInit:0000000000000054 $d
+     /tmp/ccoAAM0e.s:638    .text.HAL_UART_MspInit:0000000000000000 $t
+     /tmp/ccoAAM0e.s:645    .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
+     /tmp/ccoAAM0e.s:673    .text.HAL_UART_MspInit:0000000000000014 $d
+     /tmp/ccoAAM0e.s:678    .text.vcom_IoDeInit:0000000000000000 $t
+     /tmp/ccoAAM0e.s:685    .text.vcom_IoDeInit:0000000000000000 vcom_IoDeInit
+     /tmp/ccoAAM0e.s:755    .text.vcom_IoDeInit:0000000000000054 $d
+     /tmp/ccoAAM0e.s:760    .text.HAL_UART_MspDeInit:0000000000000000 $t
+     /tmp/ccoAAM0e.s:767    .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
+     /tmp/ccoAAM0e.s:814    .bss.iw:0000000000000000 iw
+     /tmp/ccoAAM0e.s:790    .bss.UartHandle:0000000000000000 $d
+     /tmp/ccoAAM0e.s:794    .bss.UartHandle:0000000000000000 UartHandle
+     /tmp/ccoAAM0e.s:797    .bss.buff:0000000000000000 $d
+     /tmp/ccoAAM0e.s:803    .bss.ir:0000000000000000 $d
+     /tmp/ccoAAM0e.s:807    .bss.ir:0000000000000000 ir
+     /tmp/ccoAAM0e.s:810    .bss.iw:0000000000000000 $d
+     /tmp/ccoAAM0e.s:817    .rodata.vcom_Init.str1.4:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Init
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+_Error_Handler
+HAL_UART_DeInit
+vsprintf
+memcpy
+HAL_NVIC_SetPendingIRQ
+HAL_UART_Transmit
+HAL_NVIC_ClearPendingIRQ
+HAL_GPIO_Init
+memset

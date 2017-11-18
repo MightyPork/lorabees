@@ -103,6 +103,7 @@ void DBG_Init( void )
 #endif
 }
 
+#if 0
 /**
   * @brief Error_Handler
   * @param None
@@ -113,6 +114,15 @@ void Error_Handler(void)
   DBG_PRINTF("Error_Handler\n\r");
   while(1);
 }
+#endif
+
+void _Error_Handler(char * file, int line)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  PRINTF("INIT ERROR, %s:%d", file, (uint16_t) line);
+  /* USER CODE END Error_Handler_Debug */
+}
+
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

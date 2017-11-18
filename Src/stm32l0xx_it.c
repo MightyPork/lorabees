@@ -102,6 +102,7 @@ void NMI_Handler(void)
 
 void HardFault_Handler(void)
 {
+  PRINTF("\r\nHARDFAULT!\r\n");
   while(1)
   {
     __NOP();

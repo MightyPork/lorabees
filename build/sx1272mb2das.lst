@@ -1,0 +1,925 @@
+ARM GAS  /tmp/ccy8fBTW.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"sx1272mb2das.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SX1272GetWakeTime,"ax",%progbits
+  16              		.align	1
+  17              		.global	SX1272GetWakeTime
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	SX1272GetWakeTime:
+  24              	.LFB96:
+  25              		.file 1 "./Drivers/BSP/sx1272mb2das/sx1272mb2das.c"
+   1:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** /*
+   2:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  / _____)             _              | |
+   3:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     (C)2013 Semtech
+   8:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+   9:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** Description: SX1272 driver specific target board functions implementation
+  10:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  11:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  13:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** Maintainer: Miguel Luis and Gregory Cristian
+  14:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** */
+  15:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  /*******************************************************************************
+  16:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @file    sx1272mb2das.c
+  17:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @author  MCD Application Team
+  18:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @version V1.0.4
+  19:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @date    08-September-2017
+  20:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @brief   driver sx1272mb2das board 
+  21:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   ******************************************************************************
+  22:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * @attention
+  23:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *
+  24:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+  25:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *
+  26:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * Redistribution and use in source and binary forms, with or without modification,
+  27:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * are permitted provided that the following conditions are met:
+  28:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *   1. Redistributions of source code must retain the above copyright notice,
+  29:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *      this list of conditions and the following disclaimer.
+  30:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  31:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *      this list of conditions and the following disclaimer in the documentation
+  32:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *      and/or other materials provided with the distribution.
+  33:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+ARM GAS  /tmp/ccy8fBTW.s 			page 2
+
+
+  34:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *      may be used to endorse or promote products derived from this software
+  35:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *      without specific prior written permission.
+  36:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *
+  37:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  38:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  39:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  40:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  41:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  42:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  43:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  44:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  45:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  46:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  47:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   *
+  48:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   ******************************************************************************
+  49:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   */
+  50:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+  51:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** /* Includes ------------------------------------------------------------------*/
+  52:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** #include "hw.h"
+  53:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** #include "sx1272.h"
+  54:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** #include "radio.h"
+  55:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** #include "sx1272mb2das.h"
+  56:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  57:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  58:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** #define IRQ_HIGH_PRIORITY  0
+  59:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  60:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** /*!
+  61:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  * Flag used to set the RF switch control pins in low power mode when the radio is not active.
+  62:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  */
+  63:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  64:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  65:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetXO( uint8_t state );
+  66:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  67:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** uint32_t SX1272GetWakeTime( void );
+  68:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  69:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272IoIrqInit( DioIrqHandler **irqHandlers );
+  70:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  71:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** uint8_t SX1272GetPaSelect( uint32_t channel );
+  72:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  73:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetAntSwLowPower( bool status );
+  74:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  75:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetRfTxPower( int8_t power );
+  76:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  77:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetAntSw( uint8_t opMode );
+  78:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** /*!
+  79:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  * \brief Controls the antena switch if necessary.
+  80:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  *
+  81:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  * \remark see errata note
+  82:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  *
+  83:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  * \param [IN] opMode Current radio operating mode
+  84:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  */
+  85:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** static LoRaBoardCallback_t BoardCallbacks = { SX1272SetXO,
+  86:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                                               SX1272GetWakeTime,
+  87:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                                               SX1272IoIrqInit,
+  88:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                                               SX1272SetRfTxPower,
+  89:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                                               SX1272SetAntSwLowPower,
+  90:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                                               SX1272SetAntSw};
+ARM GAS  /tmp/ccy8fBTW.s 			page 3
+
+
+  91:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+  92:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** /*!
+  93:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  * Radio driver structure initialization
+  94:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****  */
+  95:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** const struct Radio_s Radio =
+  96:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+  97:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272IoInit,
+  98:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272IoDeInit,
+  99:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Init,
+ 100:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272GetStatus,
+ 101:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetModem,
+ 102:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetChannel,
+ 103:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272IsChannelFree,
+ 104:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Random,
+ 105:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetRxConfig,
+ 106:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetTxConfig,
+ 107:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272CheckRfFrequency,
+ 108:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272GetTimeOnAir,
+ 109:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Send,
+ 110:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetSleep,
+ 111:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetStby,
+ 112:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetRx,
+ 113:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272StartCad,
+ 114:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetTxContinuousWave,
+ 115:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272ReadRssi,
+ 116:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Write,
+ 117:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Read,
+ 118:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272WriteBuffer,
+ 119:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272ReadBuffer,
+ 120:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetMaxPayloadLength,
+ 121:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272SetPublicNetwork,
+ 122:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272GetRadioWakeUpTime
+ 123:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** };
+ 124:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 125:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** uint32_t SX1272GetWakeTime( void )
+ 126:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+  26              		.loc 1 126 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+ 127:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   return  BOARD_WAKEUP_TIME;
+ 128:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+  31              		.loc 1 128 0
+  32 0000 0020     		movs	r0, #0
+  33              		@ sp needed
+  34 0002 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE96:
+  38              		.section	.text.SX1272SetXO,"ax",%progbits
+  39              		.align	1
+  40              		.global	SX1272SetXO
+  41              		.syntax unified
+  42              		.code	16
+  43              		.thumb_func
+  44              		.fpu softvfp
+  46              	SX1272SetXO:
+ARM GAS  /tmp/ccy8fBTW.s 			page 4
+
+
+  47              	.LFB97:
+ 129:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 130:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetXO( uint8_t state )
+ 131:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+  48              		.loc 1 131 0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53              	.LVL0:
+ 132:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+  54              		.loc 1 132 0
+  55              		@ sp needed
+  56 0000 7047     		bx	lr
+  57              		.cfi_endproc
+  58              	.LFE97:
+  60              		.section	.text.SX1272SetAntSwLowPower,"ax",%progbits
+  61              		.align	1
+  62              		.global	SX1272SetAntSwLowPower
+  63              		.syntax unified
+  64              		.code	16
+  65              		.thumb_func
+  66              		.fpu softvfp
+  68              	SX1272SetAntSwLowPower:
+  69              	.LFB103:
+ 133:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272IoInit( void )
+ 134:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 135:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   GPIO_InitTypeDef initStruct={0};
+ 136:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 137:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   SX1272BoardInit( &BoardCallbacks );
+ 138:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 139:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Mode = GPIO_MODE_IT_RISING;
+ 140:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Pull = GPIO_PULLDOWN;
+ 141:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Speed = GPIO_SPEED_HIGH;
+ 142:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 143:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_0_PORT, RADIO_DIO_0_PIN, &initStruct );
+ 144:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, &initStruct );
+ 145:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, &initStruct );
+ 146:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, &initStruct );
+ 147:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 148:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 149:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272IoIrqInit( DioIrqHandler **irqHandlers )
+ 150:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 151:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_0_PORT, RADIO_DIO_0_PIN, IRQ_HIGH_PRIORITY, irqHandlers[0] );
+ 152:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, IRQ_HIGH_PRIORITY, irqHandlers[1] );
+ 153:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, IRQ_HIGH_PRIORITY, irqHandlers[2] );
+ 154:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, IRQ_HIGH_PRIORITY, irqHandlers[3] );
+ 155:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 156:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 157:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272IoDeInit( void )
+ 158:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 159:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   GPIO_InitTypeDef initStruct={0};
+ 160:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 161:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Mode = GPIO_MODE_IT_RISING ;//GPIO_MODE_ANALOG;
+ 162:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Pull = GPIO_PULLDOWN;
+ 163:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 164:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_0_PORT, RADIO_DIO_0_PIN, &initStruct );
+ARM GAS  /tmp/ccy8fBTW.s 			page 5
+
+
+ 165:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, &initStruct );
+ 166:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, &initStruct );
+ 167:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, &initStruct );
+ 168:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 169:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 170:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetRfTxPower( int8_t power )
+ 171:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 172:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     uint8_t paConfig = 0;
+ 173:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     uint8_t paDac = 0;
+ 174:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 175:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     paConfig = SX1272Read( REG_PACONFIG );
+ 176:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     paDac = SX1272Read( REG_PADAC );
+ 177:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 178:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     paConfig = ( paConfig & RF_PACONFIG_PASELECT_MASK ) | SX1272GetPaSelect( SX1272.Settings.Channe
+ 179:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 180:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     if( ( paConfig & RF_PACONFIG_PASELECT_PABOOST ) == RF_PACONFIG_PASELECT_PABOOST )
+ 181:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     {
+ 182:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         if( power > 17 )
+ 183:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 184:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             paDac = ( paDac & RF_PADAC_20DBM_MASK ) | RF_PADAC_20DBM_ON;
+ 185:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 186:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         else
+ 187:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 188:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             paDac = ( paDac & RF_PADAC_20DBM_MASK ) | RF_PADAC_20DBM_OFF;
+ 189:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 190:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         if( ( paDac & RF_PADAC_20DBM_ON ) == RF_PADAC_20DBM_ON )
+ 191:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 192:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             if( power < 5 )
+ 193:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             {
+ 194:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                 power = 5;
+ 195:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             }
+ 196:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             if( power > 20 )
+ 197:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             {
+ 198:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                 power = 20;
+ 199:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             }
+ 200:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             paConfig = ( paConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( p
+ 201:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 202:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         else
+ 203:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 204:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             if( power < 2 )
+ 205:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             {
+ 206:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                 power = 2;
+ 207:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             }
+ 208:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             if( power > 17 )
+ 209:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             {
+ 210:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****                 power = 17;
+ 211:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             }
+ 212:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             paConfig = ( paConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( p
+ 213:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 214:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     }
+ 215:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     else
+ 216:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     {
+ 217:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         if( power < -1 )
+ 218:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 219:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             power = -1;
+ 220:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 221:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         if( power > 14 )
+ARM GAS  /tmp/ccy8fBTW.s 			page 6
+
+
+ 222:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 223:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****             power = 14;
+ 224:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 225:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         paConfig = ( paConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power
+ 226:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     }
+ 227:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Write( REG_PACONFIG, paConfig );
+ 228:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Write( REG_PADAC, paDac );
+ 229:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 230:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 231:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** uint8_t SX1272GetPaSelect( uint32_t channel )
+ 232:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 233:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     return RF_PACONFIG_PASELECT_RFO;
+ 234:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 235:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 236:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetAntSwLowPower( bool status )
+ 237:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+  70              		.loc 1 237 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  75              	.LVL1:
+ 238:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   //Ant Switch Controlled by SX1272 IC
+ 239:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+  76              		.loc 1 239 0
+  77              		@ sp needed
+  78 0000 7047     		bx	lr
+  79              		.cfi_endproc
+  80              	.LFE103:
+  82              		.section	.text.SX1272SetAntSw,"ax",%progbits
+  83              		.align	1
+  84              		.global	SX1272SetAntSw
+  85              		.syntax unified
+  86              		.code	16
+  87              		.thumb_func
+  88              		.fpu softvfp
+  90              	SX1272SetAntSw:
+  91              	.LFB104:
+ 240:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 241:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** void SX1272SetAntSw( uint8_t opMode )
+ 242:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+  92              		.loc 1 242 0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  97              	.LVL2:
+ 243:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     switch( opMode )
+  98              		.loc 1 243 0
+  99 0000 0328     		cmp	r0, #3
+ 100 0002 03D0     		beq	.L9
+ 244:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     {
+ 245:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     case RFLR_OPMODE_TRANSMITTER:
+ 246:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         SX1272.RxTx = 1;
+ 247:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         break;
+ 248:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     case RFLR_OPMODE_RECEIVER:
+ 249:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     case RFLR_OPMODE_RECEIVER_SINGLE:
+ARM GAS  /tmp/ccy8fBTW.s 			page 7
+
+
+ 250:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     case RFLR_OPMODE_CAD:
+ 251:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     default:
+ 252:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         SX1272.RxTx = 0;
+ 101              		.loc 1 252 0
+ 102 0004 034B     		ldr	r3, .L10
+ 103 0006 0022     		movs	r2, #0
+ 104 0008 1A70     		strb	r2, [r3]
+ 105              	.L4:
+ 253:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         break;
+ 254:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     }
+ 255:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 106              		.loc 1 255 0
+ 107              		@ sp needed
+ 108 000a 7047     		bx	lr
+ 109              	.L9:
+ 246:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         break;
+ 110              		.loc 1 246 0
+ 111 000c 014B     		ldr	r3, .L10
+ 112 000e 0122     		movs	r2, #1
+ 113 0010 1A70     		strb	r2, [r3]
+ 247:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     case RFLR_OPMODE_RECEIVER:
+ 114              		.loc 1 247 0
+ 115 0012 FAE7     		b	.L4
+ 116              	.L11:
+ 117              		.align	2
+ 118              	.L10:
+ 119 0014 00000000 		.word	SX1272
+ 120              		.cfi_endproc
+ 121              	.LFE104:
+ 123              		.section	.text.SX1272CheckRfFrequency,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	SX1272CheckRfFrequency
+ 126              		.syntax unified
+ 127              		.code	16
+ 128              		.thumb_func
+ 129              		.fpu softvfp
+ 131              	SX1272CheckRfFrequency:
+ 132              	.LFB105:
+ 256:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 257:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** bool SX1272CheckRfFrequency( uint32_t frequency )
+ 258:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** {
+ 133              		.loc 1 258 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138              	.LVL3:
+ 259:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     // Implement check. Currently all frequencies are supported
+ 260:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     return true;
+ 261:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 139              		.loc 1 261 0
+ 140 0000 0120     		movs	r0, #1
+ 141              	.LVL4:
+ 142              		@ sp needed
+ 143 0002 7047     		bx	lr
+ 144              		.cfi_endproc
+ 145              	.LFE105:
+ARM GAS  /tmp/ccy8fBTW.s 			page 8
+
+
+ 147              		.section	.text.SX1272SetRfTxPower,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	SX1272SetRfTxPower
+ 150              		.syntax unified
+ 151              		.code	16
+ 152              		.thumb_func
+ 153              		.fpu softvfp
+ 155              	SX1272SetRfTxPower:
+ 156              	.LFB101:
+ 171:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     uint8_t paConfig = 0;
+ 157              		.loc 1 171 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              	.LVL5:
+ 162 0000 70B5     		push	{r4, r5, r6, lr}
+ 163              	.LCFI0:
+ 164              		.cfi_def_cfa_offset 16
+ 165              		.cfi_offset 4, -16
+ 166              		.cfi_offset 5, -12
+ 167              		.cfi_offset 6, -8
+ 168              		.cfi_offset 14, -4
+ 169 0002 0400     		movs	r4, r0
+ 170              	.LVL6:
+ 175:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     paDac = SX1272Read( REG_PADAC );
+ 171              		.loc 1 175 0
+ 172 0004 0920     		movs	r0, #9
+ 173              	.LVL7:
+ 174 0006 FFF7FEFF 		bl	SX1272Read
+ 175              	.LVL8:
+ 176 000a 0600     		movs	r6, r0
+ 177              	.LVL9:
+ 176:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 178              		.loc 1 176 0
+ 179 000c 5A20     		movs	r0, #90
+ 180 000e FFF7FEFF 		bl	SX1272Read
+ 181              	.LVL10:
+ 182 0012 0500     		movs	r5, r0
+ 183              	.LVL11:
+ 178:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 184              		.loc 1 178 0
+ 185 0014 76B2     		sxtb	r6, r6
+ 186              	.LVL12:
+ 217:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 187              		.loc 1 217 0
+ 188 0016 631C     		adds	r3, r4, #1
+ 189 0018 11DB     		blt	.L15
+ 190              	.LVL13:
+ 221:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         {
+ 191              		.loc 1 221 0
+ 192 001a 0E2C     		cmp	r4, #14
+ 193 001c 00DD     		ble	.L14
+ 223:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 194              		.loc 1 223 0
+ 195 001e 0E24     		movs	r4, #14
+ 196              	.LVL14:
+ 197              	.L14:
+ARM GAS  /tmp/ccy8fBTW.s 			page 9
+
+
+ 225:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     }
+ 198              		.loc 1 225 0
+ 199 0020 7021     		movs	r1, #112
+ 200 0022 3140     		ands	r1, r6
+ 201 0024 0134     		adds	r4, r4, #1
+ 202              	.LVL15:
+ 203 0026 64B2     		sxtb	r4, r4
+ 204 0028 0F23     		movs	r3, #15
+ 205 002a 1C40     		ands	r4, r3
+ 206 002c 2143     		orrs	r1, r4
+ 207              	.LVL16:
+ 227:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     SX1272Write( REG_PADAC, paDac );
+ 208              		.loc 1 227 0
+ 209 002e 0920     		movs	r0, #9
+ 210 0030 FFF7FEFF 		bl	SX1272Write
+ 211              	.LVL17:
+ 228:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 212              		.loc 1 228 0
+ 213 0034 2900     		movs	r1, r5
+ 214 0036 5A20     		movs	r0, #90
+ 215 0038 FFF7FEFF 		bl	SX1272Write
+ 216              	.LVL18:
+ 229:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 217              		.loc 1 229 0
+ 218              		@ sp needed
+ 219              	.LVL19:
+ 220              	.LVL20:
+ 221 003c 70BD     		pop	{r4, r5, r6, pc}
+ 222              	.LVL21:
+ 223              	.L15:
+ 219:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****         }
+ 224              		.loc 1 219 0
+ 225 003e 0124     		movs	r4, #1
+ 226 0040 6442     		rsbs	r4, r4, #0
+ 227 0042 EDE7     		b	.L14
+ 228              		.cfi_endproc
+ 229              	.LFE101:
+ 231              		.section	.text.SX1272IoInit,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	SX1272IoInit
+ 234              		.syntax unified
+ 235              		.code	16
+ 236              		.thumb_func
+ 237              		.fpu softvfp
+ 239              	SX1272IoInit:
+ 240              	.LFB98:
+ 134:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   GPIO_InitTypeDef initStruct={0};
+ 241              		.loc 1 134 0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 24
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245 0000 10B5     		push	{r4, lr}
+ 246              	.LCFI1:
+ 247              		.cfi_def_cfa_offset 8
+ 248              		.cfi_offset 4, -8
+ 249              		.cfi_offset 14, -4
+ 250 0002 86B0     		sub	sp, sp, #24
+ARM GAS  /tmp/ccy8fBTW.s 			page 10
+
+
+ 251              	.LCFI2:
+ 252              		.cfi_def_cfa_offset 32
+ 135:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 253              		.loc 1 135 0
+ 254 0004 1422     		movs	r2, #20
+ 255 0006 0021     		movs	r1, #0
+ 256 0008 01A8     		add	r0, sp, #4
+ 257 000a FFF7FEFF 		bl	memset
+ 258              	.LVL22:
+ 137:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 259              		.loc 1 137 0
+ 260 000e 1148     		ldr	r0, .L18
+ 261 0010 FFF7FEFF 		bl	SX1272BoardInit
+ 262              	.LVL23:
+ 139:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Pull = GPIO_PULLDOWN;
+ 263              		.loc 1 139 0
+ 264 0014 104B     		ldr	r3, .L18+4
+ 265 0016 0293     		str	r3, [sp, #8]
+ 140:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Speed = GPIO_SPEED_HIGH;
+ 266              		.loc 1 140 0
+ 267 0018 0223     		movs	r3, #2
+ 268 001a 0393     		str	r3, [sp, #12]
+ 141:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 269              		.loc 1 141 0
+ 270 001c 0133     		adds	r3, r3, #1
+ 271 001e 0493     		str	r3, [sp, #16]
+ 143:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, &initStruct );
+ 272              		.loc 1 143 0
+ 273 0020 8021     		movs	r1, #128
+ 274 0022 A020     		movs	r0, #160
+ 275 0024 01AA     		add	r2, sp, #4
+ 276 0026 C900     		lsls	r1, r1, #3
+ 277 0028 C005     		lsls	r0, r0, #23
+ 278 002a FFF7FEFF 		bl	HW_GPIO_Init
+ 279              	.LVL24:
+ 144:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, &initStruct );
+ 280              		.loc 1 144 0
+ 281 002e 0B4C     		ldr	r4, .L18+8
+ 282 0030 01AA     		add	r2, sp, #4
+ 283 0032 0821     		movs	r1, #8
+ 284 0034 2000     		movs	r0, r4
+ 285 0036 FFF7FEFF 		bl	HW_GPIO_Init
+ 286              	.LVL25:
+ 145:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, &initStruct );
+ 287              		.loc 1 145 0
+ 288 003a 01AA     		add	r2, sp, #4
+ 289 003c 2021     		movs	r1, #32
+ 290 003e 2000     		movs	r0, r4
+ 291 0040 FFF7FEFF 		bl	HW_GPIO_Init
+ 292              	.LVL26:
+ 146:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 293              		.loc 1 146 0
+ 294 0044 01AA     		add	r2, sp, #4
+ 295 0046 1021     		movs	r1, #16
+ 296 0048 2000     		movs	r0, r4
+ 297 004a FFF7FEFF 		bl	HW_GPIO_Init
+ 298              	.LVL27:
+ARM GAS  /tmp/ccy8fBTW.s 			page 11
+
+
+ 147:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 299              		.loc 1 147 0
+ 300 004e 06B0     		add	sp, sp, #24
+ 301              		@ sp needed
+ 302 0050 10BD     		pop	{r4, pc}
+ 303              	.L19:
+ 304 0052 C046     		.align	2
+ 305              	.L18:
+ 306 0054 00000000 		.word	.LANCHOR0
+ 307 0058 00001110 		.word	269549568
+ 308 005c 00040050 		.word	1342178304
+ 309              		.cfi_endproc
+ 310              	.LFE98:
+ 312              		.section	.text.SX1272IoDeInit,"ax",%progbits
+ 313              		.align	1
+ 314              		.global	SX1272IoDeInit
+ 315              		.syntax unified
+ 316              		.code	16
+ 317              		.thumb_func
+ 318              		.fpu softvfp
+ 320              	SX1272IoDeInit:
+ 321              	.LFB100:
+ 158:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   GPIO_InitTypeDef initStruct={0};
+ 322              		.loc 1 158 0
+ 323              		.cfi_startproc
+ 324              		@ args = 0, pretend = 0, frame = 24
+ 325              		@ frame_needed = 0, uses_anonymous_args = 0
+ 326 0000 10B5     		push	{r4, lr}
+ 327              	.LCFI3:
+ 328              		.cfi_def_cfa_offset 8
+ 329              		.cfi_offset 4, -8
+ 330              		.cfi_offset 14, -4
+ 331 0002 86B0     		sub	sp, sp, #24
+ 332              	.LCFI4:
+ 333              		.cfi_def_cfa_offset 32
+ 159:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 334              		.loc 1 159 0
+ 335 0004 1422     		movs	r2, #20
+ 336 0006 0021     		movs	r1, #0
+ 337 0008 01A8     		add	r0, sp, #4
+ 338 000a FFF7FEFF 		bl	memset
+ 339              	.LVL28:
+ 161:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   initStruct.Pull = GPIO_PULLDOWN;
+ 340              		.loc 1 161 0
+ 341 000e 0E4B     		ldr	r3, .L21
+ 342 0010 0293     		str	r3, [sp, #8]
+ 162:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   
+ 343              		.loc 1 162 0
+ 344 0012 0223     		movs	r3, #2
+ 345 0014 0393     		str	r3, [sp, #12]
+ 164:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, &initStruct );
+ 346              		.loc 1 164 0
+ 347 0016 8021     		movs	r1, #128
+ 348 0018 A020     		movs	r0, #160
+ 349 001a 01AA     		add	r2, sp, #4
+ 350 001c C900     		lsls	r1, r1, #3
+ 351 001e C005     		lsls	r0, r0, #23
+ARM GAS  /tmp/ccy8fBTW.s 			page 12
+
+
+ 352 0020 FFF7FEFF 		bl	HW_GPIO_Init
+ 353              	.LVL29:
+ 165:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, &initStruct );
+ 354              		.loc 1 165 0
+ 355 0024 094C     		ldr	r4, .L21+4
+ 356 0026 01AA     		add	r2, sp, #4
+ 357 0028 0821     		movs	r1, #8
+ 358 002a 2000     		movs	r0, r4
+ 359 002c FFF7FEFF 		bl	HW_GPIO_Init
+ 360              	.LVL30:
+ 166:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_Init( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, &initStruct );
+ 361              		.loc 1 166 0
+ 362 0030 01AA     		add	r2, sp, #4
+ 363 0032 2021     		movs	r1, #32
+ 364 0034 2000     		movs	r0, r4
+ 365 0036 FFF7FEFF 		bl	HW_GPIO_Init
+ 366              	.LVL31:
+ 167:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 367              		.loc 1 167 0
+ 368 003a 01AA     		add	r2, sp, #4
+ 369 003c 1021     		movs	r1, #16
+ 370 003e 2000     		movs	r0, r4
+ 371 0040 FFF7FEFF 		bl	HW_GPIO_Init
+ 372              	.LVL32:
+ 168:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 373              		.loc 1 168 0
+ 374 0044 06B0     		add	sp, sp, #24
+ 375              		@ sp needed
+ 376 0046 10BD     		pop	{r4, pc}
+ 377              	.L22:
+ 378              		.align	2
+ 379              	.L21:
+ 380 0048 00001110 		.word	269549568
+ 381 004c 00040050 		.word	1342178304
+ 382              		.cfi_endproc
+ 383              	.LFE100:
+ 385              		.section	.text.SX1272IoIrqInit,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	SX1272IoIrqInit
+ 388              		.syntax unified
+ 389              		.code	16
+ 390              		.thumb_func
+ 391              		.fpu softvfp
+ 393              	SX1272IoIrqInit:
+ 394              	.LFB99:
+ 150:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_0_PORT, RADIO_DIO_0_PIN, IRQ_HIGH_PRIORITY, irqHandlers[0] );
+ 395              		.loc 1 150 0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399              	.LVL33:
+ 400 0000 70B5     		push	{r4, r5, r6, lr}
+ 401              	.LCFI5:
+ 402              		.cfi_def_cfa_offset 16
+ 403              		.cfi_offset 4, -16
+ 404              		.cfi_offset 5, -12
+ 405              		.cfi_offset 6, -8
+ARM GAS  /tmp/ccy8fBTW.s 			page 13
+
+
+ 406              		.cfi_offset 14, -4
+ 407 0002 0400     		movs	r4, r0
+ 151:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_1_PORT, RADIO_DIO_1_PIN, IRQ_HIGH_PRIORITY, irqHandlers[1] );
+ 408              		.loc 1 151 0
+ 409 0004 8021     		movs	r1, #128
+ 410 0006 A020     		movs	r0, #160
+ 411              	.LVL34:
+ 412 0008 2368     		ldr	r3, [r4]
+ 413 000a 0022     		movs	r2, #0
+ 414 000c C900     		lsls	r1, r1, #3
+ 415 000e C005     		lsls	r0, r0, #23
+ 416 0010 FFF7FEFF 		bl	HW_GPIO_SetIrq
+ 417              	.LVL35:
+ 152:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_2_PORT, RADIO_DIO_2_PIN, IRQ_HIGH_PRIORITY, irqHandlers[2] );
+ 418              		.loc 1 152 0
+ 419 0014 094D     		ldr	r5, .L24
+ 420 0016 6368     		ldr	r3, [r4, #4]
+ 421 0018 0022     		movs	r2, #0
+ 422 001a 0821     		movs	r1, #8
+ 423 001c 2800     		movs	r0, r5
+ 424 001e FFF7FEFF 		bl	HW_GPIO_SetIrq
+ 425              	.LVL36:
+ 153:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****   HW_GPIO_SetIrq( RADIO_DIO_3_PORT, RADIO_DIO_3_PIN, IRQ_HIGH_PRIORITY, irqHandlers[3] );
+ 426              		.loc 1 153 0
+ 427 0022 A368     		ldr	r3, [r4, #8]
+ 428 0024 0022     		movs	r2, #0
+ 429 0026 2021     		movs	r1, #32
+ 430 0028 2800     		movs	r0, r5
+ 431 002a FFF7FEFF 		bl	HW_GPIO_SetIrq
+ 432              	.LVL37:
+ 154:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** }
+ 433              		.loc 1 154 0
+ 434 002e E368     		ldr	r3, [r4, #12]
+ 435 0030 0022     		movs	r2, #0
+ 436 0032 1021     		movs	r1, #16
+ 437 0034 2800     		movs	r0, r5
+ 438 0036 FFF7FEFF 		bl	HW_GPIO_SetIrq
+ 439              	.LVL38:
+ 155:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 440              		.loc 1 155 0
+ 441              		@ sp needed
+ 442              	.LVL39:
+ 443 003a 70BD     		pop	{r4, r5, r6, pc}
+ 444              	.L25:
+ 445              		.align	2
+ 446              	.L24:
+ 447 003c 00040050 		.word	1342178304
+ 448              		.cfi_endproc
+ 449              	.LFE99:
+ 451              		.section	.text.SX1272GetPaSelect,"ax",%progbits
+ 452              		.align	1
+ 453              		.global	SX1272GetPaSelect
+ 454              		.syntax unified
+ 455              		.code	16
+ 456              		.thumb_func
+ 457              		.fpu softvfp
+ 459              	SX1272GetPaSelect:
+ARM GAS  /tmp/ccy8fBTW.s 			page 14
+
+
+ 460              	.LFB102:
+ 232:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c ****     return RF_PACONFIG_PASELECT_RFO;
+ 461              		.loc 1 232 0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 0
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 465              		@ link register save eliminated.
+ 466              	.LVL40:
+ 234:./Drivers/BSP/sx1272mb2das/sx1272mb2das.c **** 
+ 467              		.loc 1 234 0
+ 468 0000 0020     		movs	r0, #0
+ 469              	.LVL41:
+ 470              		@ sp needed
+ 471 0002 7047     		bx	lr
+ 472              		.cfi_endproc
+ 473              	.LFE102:
+ 475              		.global	Radio
+ 476              		.section	.data.BoardCallbacks,"aw",%progbits
+ 477              		.align	2
+ 478              		.set	.LANCHOR0,. + 0
+ 481              	BoardCallbacks:
+ 482 0000 00000000 		.word	SX1272SetXO
+ 483 0004 00000000 		.word	SX1272GetWakeTime
+ 484 0008 00000000 		.word	SX1272IoIrqInit
+ 485 000c 00000000 		.word	SX1272SetRfTxPower
+ 486 0010 00000000 		.word	SX1272SetAntSwLowPower
+ 487 0014 00000000 		.word	SX1272SetAntSw
+ 488              		.section	.rodata.Radio,"a",%progbits
+ 489              		.align	2
+ 492              	Radio:
+ 493 0000 00000000 		.word	SX1272IoInit
+ 494 0004 00000000 		.word	SX1272IoDeInit
+ 495 0008 00000000 		.word	SX1272Init
+ 496 000c 00000000 		.word	SX1272GetStatus
+ 497 0010 00000000 		.word	SX1272SetModem
+ 498 0014 00000000 		.word	SX1272SetChannel
+ 499 0018 00000000 		.word	SX1272IsChannelFree
+ 500 001c 00000000 		.word	SX1272Random
+ 501 0020 00000000 		.word	SX1272SetRxConfig
+ 502 0024 00000000 		.word	SX1272SetTxConfig
+ 503 0028 00000000 		.word	SX1272CheckRfFrequency
+ 504 002c 00000000 		.word	SX1272GetTimeOnAir
+ 505 0030 00000000 		.word	SX1272Send
+ 506 0034 00000000 		.word	SX1272SetSleep
+ 507 0038 00000000 		.word	SX1272SetStby
+ 508 003c 00000000 		.word	SX1272SetRx
+ 509 0040 00000000 		.word	SX1272StartCad
+ 510 0044 00000000 		.word	SX1272SetTxContinuousWave
+ 511 0048 00000000 		.word	SX1272ReadRssi
+ 512 004c 00000000 		.word	SX1272Write
+ 513 0050 00000000 		.word	SX1272Read
+ 514 0054 00000000 		.word	SX1272WriteBuffer
+ 515 0058 00000000 		.word	SX1272ReadBuffer
+ 516 005c 00000000 		.word	SX1272SetMaxPayloadLength
+ 517 0060 00000000 		.word	SX1272SetPublicNetwork
+ 518 0064 00000000 		.word	SX1272GetRadioWakeUpTime
+ 519              		.text
+ARM GAS  /tmp/ccy8fBTW.s 			page 15
+
+
+ 520              	.Letext0:
+ 521              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 522              		.file 3 "/usr/arm-none-eabi/include/sys/lock.h"
+ 523              		.file 4 "/usr/arm-none-eabi/include/sys/_types.h"
+ 524              		.file 5 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 525              		.file 6 "/usr/arm-none-eabi/include/sys/reent.h"
+ 526              		.file 7 "/usr/arm-none-eabi/include/math.h"
+ 527              		.file 8 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 528              		.file 9 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 529              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h"
+ 530              		.file 11 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h"
+ 531              		.file 12 "Middlewares/Third_Party/Lora/Phy/radio.h"
+ 532              		.file 13 "Drivers/BSP/Components/sx1272/sx1272.h"
+ 533              		.file 14 "Inc/hw_gpio.h"
+ 534              		.file 15 "<built-in>"
+ARM GAS  /tmp/ccy8fBTW.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sx1272mb2das.c
+     /tmp/ccy8fBTW.s:16     .text.SX1272GetWakeTime:0000000000000000 $t
+     /tmp/ccy8fBTW.s:23     .text.SX1272GetWakeTime:0000000000000000 SX1272GetWakeTime
+     /tmp/ccy8fBTW.s:39     .text.SX1272SetXO:0000000000000000 $t
+     /tmp/ccy8fBTW.s:46     .text.SX1272SetXO:0000000000000000 SX1272SetXO
+     /tmp/ccy8fBTW.s:61     .text.SX1272SetAntSwLowPower:0000000000000000 $t
+     /tmp/ccy8fBTW.s:68     .text.SX1272SetAntSwLowPower:0000000000000000 SX1272SetAntSwLowPower
+     /tmp/ccy8fBTW.s:83     .text.SX1272SetAntSw:0000000000000000 $t
+     /tmp/ccy8fBTW.s:90     .text.SX1272SetAntSw:0000000000000000 SX1272SetAntSw
+     /tmp/ccy8fBTW.s:119    .text.SX1272SetAntSw:0000000000000014 $d
+     /tmp/ccy8fBTW.s:124    .text.SX1272CheckRfFrequency:0000000000000000 $t
+     /tmp/ccy8fBTW.s:131    .text.SX1272CheckRfFrequency:0000000000000000 SX1272CheckRfFrequency
+     /tmp/ccy8fBTW.s:148    .text.SX1272SetRfTxPower:0000000000000000 $t
+     /tmp/ccy8fBTW.s:155    .text.SX1272SetRfTxPower:0000000000000000 SX1272SetRfTxPower
+     /tmp/ccy8fBTW.s:232    .text.SX1272IoInit:0000000000000000 $t
+     /tmp/ccy8fBTW.s:239    .text.SX1272IoInit:0000000000000000 SX1272IoInit
+     /tmp/ccy8fBTW.s:306    .text.SX1272IoInit:0000000000000054 $d
+     /tmp/ccy8fBTW.s:313    .text.SX1272IoDeInit:0000000000000000 $t
+     /tmp/ccy8fBTW.s:320    .text.SX1272IoDeInit:0000000000000000 SX1272IoDeInit
+     /tmp/ccy8fBTW.s:380    .text.SX1272IoDeInit:0000000000000048 $d
+     /tmp/ccy8fBTW.s:386    .text.SX1272IoIrqInit:0000000000000000 $t
+     /tmp/ccy8fBTW.s:393    .text.SX1272IoIrqInit:0000000000000000 SX1272IoIrqInit
+     /tmp/ccy8fBTW.s:447    .text.SX1272IoIrqInit:000000000000003c $d
+     /tmp/ccy8fBTW.s:452    .text.SX1272GetPaSelect:0000000000000000 $t
+     /tmp/ccy8fBTW.s:459    .text.SX1272GetPaSelect:0000000000000000 SX1272GetPaSelect
+     /tmp/ccy8fBTW.s:492    .rodata.Radio:0000000000000000 Radio
+     /tmp/ccy8fBTW.s:477    .data.BoardCallbacks:0000000000000000 $d
+     /tmp/ccy8fBTW.s:481    .data.BoardCallbacks:0000000000000000 BoardCallbacks
+     /tmp/ccy8fBTW.s:489    .rodata.Radio:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+SX1272
+SX1272Read
+SX1272Write
+memset
+SX1272BoardInit
+HW_GPIO_Init
+HW_GPIO_SetIrq
+SX1272Init
+SX1272GetStatus
+SX1272SetModem
+SX1272SetChannel
+SX1272IsChannelFree
+SX1272Random
+SX1272SetRxConfig
+SX1272SetTxConfig
+SX1272GetTimeOnAir
+SX1272Send
+SX1272SetSleep
+SX1272SetStby
+SX1272SetRx
+SX1272StartCad
+SX1272SetTxContinuousWave
+SX1272ReadRssi
+SX1272WriteBuffer
+ARM GAS  /tmp/ccy8fBTW.s 			page 17
+
+
+SX1272ReadBuffer
+SX1272SetMaxPayloadLength
+SX1272SetPublicNetwork
+SX1272GetRadioWakeUpTime

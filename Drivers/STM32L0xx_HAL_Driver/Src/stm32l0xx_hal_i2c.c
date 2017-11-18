@@ -239,6 +239,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#include <vcom.h>
 #include "stm32l0xx_hal.h"
 
 /** @addtogroup STM32L0xx_HAL_Driver
@@ -1892,6 +1893,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
   {
     if ((pData == NULL) || (Size == 0U))
     {
+      PRINTF("Bad pData or Size=0\r\n");
       return  HAL_ERROR;
     }
 
@@ -1903,6 +1905,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
 
     if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_BUSY, SET, I2C_TIMEOUT_BUSY, tickstart) != HAL_OK)
     {
+      PRINTF("Timeout\r\n");
       return HAL_TIMEOUT;
     }
 
@@ -1918,6 +1921,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
     /* Send Slave Address and Memory Address */
     if (I2C_RequestMemoryRead(hi2c, DevAddress, MemAddress, MemAddSize, Timeout, tickstart) != HAL_OK)
     {
+      PRINTF("Error in memory read - %d\r\n", hi2c->ErrorCode);
       if (hi2c->ErrorCode == HAL_I2C_ERROR_AF)
       {
         /* Process Unlocked */
@@ -1950,6 +1954,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
       /* Wait until RXNE flag is set */
       if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_RXNE, RESET, Timeout, tickstart) != HAL_OK)
       {
+        PRINTF("waiting for flag timeout1\r\n");
         return HAL_TIMEOUT;
       }
 
@@ -1963,6 +1968,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
         /* Wait until TCR flag is set */
         if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_TCR, RESET, Timeout, tickstart) != HAL_OK)
         {
+          PRINTF("waiting for flag timeout2\r\n");
           return HAL_TIMEOUT;
         }
 
@@ -1986,6 +1992,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
     {
       if (hi2c->ErrorCode == HAL_I2C_ERROR_AF)
       {
+        PRINTF("waiting for stop error %d\r\n", hi2c->ErrorCode);
         return HAL_ERROR;
       }
       else
@@ -2010,6 +2017,7 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
   }
   else
   {
+    PRINTF("busy!!\r\n");
     return HAL_BUSY;
   }
 }
@@ -3713,6 +3721,7 @@ static HAL_StatusTypeDef I2C_RequestMemoryRead(I2C_HandleTypeDef *hi2c, uint16_t
   /* Wait until TXIS flag is set */
   if (I2C_WaitOnTXISFlagUntilTimeout(hi2c, Timeout, Tickstart) != HAL_OK)
   {
+    PRINTF("I2C_RequestMemoryRead error %d\r\n", hi2c->ErrorCode);
     if (hi2c->ErrorCode == HAL_I2C_ERROR_AF)
     {
       return HAL_ERROR;
@@ -3738,6 +3747,7 @@ static HAL_StatusTypeDef I2C_RequestMemoryRead(I2C_HandleTypeDef *hi2c, uint16_t
     /* Wait until TXIS flag is set */
     if (I2C_WaitOnTXISFlagUntilTimeout(hi2c, Timeout, Tickstart) != HAL_OK)
     {
+      PRINTF("I2C_RequestMemoryRead error2 %d\r\n", hi2c->ErrorCode);
       if (hi2c->ErrorCode == HAL_I2C_ERROR_AF)
       {
         return HAL_ERROR;
@@ -3755,6 +3765,7 @@ static HAL_StatusTypeDef I2C_RequestMemoryRead(I2C_HandleTypeDef *hi2c, uint16_t
   /* Wait until TC flag is set */
   if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_TC, RESET, Timeout, Tickstart) != HAL_OK)
   {
+    PRINTF("I2C_RequestMemoryRead TIMEOUT\r\n");
     return HAL_TIMEOUT;
   }
 
@@ -4507,6 +4518,7 @@ static HAL_StatusTypeDef I2C_WaitOnTXISFlagUntilTimeout(I2C_HandleTypeDef *hi2c,
     /* Check if a NACK is detected */
     if (I2C_IsAcknowledgeFailed(hi2c, Timeout, Tickstart) != HAL_OK)
     {
+      PRINTF("I2C_WaitOnTXISFlagUntilTimeout ->I2C_IsAcknowledgeFailed error\r\n");
       return HAL_ERROR;
     }
 
@@ -4522,6 +4534,7 @@ static HAL_StatusTypeDef I2C_WaitOnTXISFlagUntilTimeout(I2C_HandleTypeDef *hi2c,
         /* Process Unlocked */
         __HAL_UNLOCK(hi2c);
 
+        PRINTF("I2C_WaitOnTXISFlagUntilTimeout timeout\r\n");
         return HAL_TIMEOUT;
       }
     }

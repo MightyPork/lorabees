@@ -1,0 +1,1249 @@
+ARM GAS  /tmp/ccwmSZef.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stm32l0xx_ll_comp.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.LL_COMP_DeInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	LL_COMP_DeInit
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	LL_COMP_DeInit:
+  24              	.LFB58:
+  25              		.file 1 "./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c"
+   1:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /**
+   2:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   ******************************************************************************
+   3:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @file    stm32l0xx_ll_comp.c
+   4:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @author  MCD Application Team
+   5:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @brief   COMP LL module driver
+   6:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   ******************************************************************************
+   7:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @attention
+   8:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *
+   9:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  10:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *
+  11:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * Redistribution and use in source and binary forms, with or without modification,
+  12:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * are permitted provided that the following conditions are met:
+  13:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *   1. Redistributions of source code must retain the above copyright notice,
+  14:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *      this list of conditions and the following disclaimer.
+  15:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  16:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *      this list of conditions and the following disclaimer in the documentation
+  17:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *      and/or other materials provided with the distribution.
+  18:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  19:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *      may be used to endorse or promote products derived from this software
+  20:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *      without specific prior written permission.
+  21:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *
+  22:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  23:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  24:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  25:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  26:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  27:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  28:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  29:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  30:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  31:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  32:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *
+  33:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   ******************************************************************************
+ARM GAS  /tmp/ccwmSZef.s 			page 2
+
+
+  34:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+  35:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #if defined(USE_FULL_LL_DRIVER)
+  36:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  37:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Includes ------------------------------------------------------------------*/
+  38:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #include "stm32l0xx_ll_comp.h"
+  39:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  40:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #ifdef  USE_FULL_ASSERT
+  41:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   #include "stm32_assert.h"
+  42:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #else
+  43:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   #define assert_param(expr) ((void)0U)
+  44:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #endif
+  45:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  46:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /** @addtogroup STM32L0xx_LL_Driver
+  47:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @{
+  48:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+  49:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  50:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #if defined (COMP1) || defined (COMP2)
+  51:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  52:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /** @addtogroup COMP_LL COMP
+  53:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @{
+  54:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+  55:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  56:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Private types -------------------------------------------------------------*/
+  57:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Private variables ---------------------------------------------------------*/
+  58:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Private constants ---------------------------------------------------------*/
+  59:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Private macros ------------------------------------------------------------*/
+  60:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  61:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /** @addtogroup COMP_LL_Private_Macros
+  62:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @{
+  63:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+  64:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  65:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Check of parameters for configuration of COMP hierarchical scope:          */
+  66:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* COMP instance.                                                             */
+  67:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  68:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #define IS_LL_COMP_POWER_MODE(__POWER_MODE__)                                  \
+  69:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   (   ((__POWER_MODE__) == LL_COMP_POWERMODE_MEDIUMSPEED)                      \
+  70:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****    || ((__POWER_MODE__) == LL_COMP_POWERMODE_ULTRALOWPOWER)                    \
+  71:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   )
+  72:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+  73:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #if defined (STM32L011xx) || defined (STM32L021xx)
+  74:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #define IS_LL_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__)               \
+  75:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   (((__COMP_INSTANCE__) == COMP1)                                              \
+  76:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     ? (                                                                        \
+  77:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        (__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO1                              \
+  78:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+  79:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       :                                                                        \
+  80:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       (                                                                        \
+  81:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****           ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO1)                         \
+  82:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO2)                         \
+  83:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO3)                         \
+  84:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO4)                         \
+  85:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO5)                         \
+  86:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO6)                         \
+  87:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+  88:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   )
+  89:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #else
+  90:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #define IS_LL_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__)               \
+ARM GAS  /tmp/ccwmSZef.s 			page 3
+
+
+  91:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   (((__COMP_INSTANCE__) == COMP1)                                              \
+  92:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     ? (                                                                        \
+  93:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        (__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO1                              \
+  94:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+  95:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       :                                                                        \
+  96:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       (                                                                        \
+  97:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****           ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO1)                         \
+  98:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO2)                         \
+  99:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO3)                         \
+ 100:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO4)                         \
+ 101:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_PLUS__) == LL_COMP_INPUT_PLUS_IO5)                         \
+ 102:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+ 103:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   )
+ 104:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #endif
+ 105:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 106:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Note: On this STM32 serie, comparator input minus parameters are           */
+ 107:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /*       the different depending on COMP instances.                           */
+ 108:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #define IS_LL_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)             \
+ 109:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   (((__COMP_INSTANCE__) == COMP1)                                              \
+ 110:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     ? (                                                                        \
+ 111:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****           ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_VREFINT)                   \
+ 112:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_DAC1_CH1)                  \
+ 113:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_DAC1_CH2)                  \
+ 114:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_IO1)                       \
+ 115:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+ 116:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       :                                                                        \
+ 117:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       (                                                                        \
+ 118:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****           ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_1_4VREFINT)                \
+ 119:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_1_2VREFINT)                \
+ 120:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_3_4VREFINT)                \
+ 121:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_VREFINT)                   \
+ 122:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_DAC1_CH1)                  \
+ 123:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_DAC1_CH2)                  \
+ 124:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_IO1)                       \
+ 125:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****        || ((__INPUT_MINUS__) == LL_COMP_INPUT_MINUS_IO2)                       \
+ 126:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       )                                                                        \
+ 127:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   )
+ 128:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 129:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** #define IS_LL_COMP_OUTPUT_POLARITY(__POLARITY__)                               \
+ 130:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   (   ((__POLARITY__) == LL_COMP_OUTPUTPOL_NONINVERTED)                        \
+ 131:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****    || ((__POLARITY__) == LL_COMP_OUTPUTPOL_INVERTED)                           \
+ 132:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   )
+ 133:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 134:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /**
+ 135:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @}
+ 136:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 137:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 138:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 139:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Private function prototypes -----------------------------------------------*/
+ 140:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 141:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /* Exported functions --------------------------------------------------------*/
+ 142:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /** @addtogroup COMP_LL_Exported_Functions
+ 143:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @{
+ 144:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 145:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 146:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /** @addtogroup COMP_LL_EF_Init
+ 147:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @{
+ARM GAS  /tmp/ccwmSZef.s 			page 4
+
+
+ 148:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 149:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 150:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /**
+ 151:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @brief  De-initialize registers of the selected COMP instance
+ 152:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         to their default reset values.
+ 153:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @note   If comparator is locked, de-initialization by software is
+ 154:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         not possible.
+ 155:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         The only way to unlock the comparator is a device hardware reset.
+ 156:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @param  COMPx COMP instance
+ 157:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @retval An ErrorStatus enumeration value:
+ 158:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *          - SUCCESS: COMP registers are de-initialized
+ 159:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *          - ERROR: COMP registers are not de-initialized
+ 160:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 161:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** ErrorStatus LL_COMP_DeInit(COMP_TypeDef *COMPx)
+ 162:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** {
+  26              		.loc 1 162 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  32              	.LBB6:
+  33              	.LBB7:
+  34              		.file 2 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h"
+   1:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+   2:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   ******************************************************************************
+   3:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @file    stm32l0xx_ll_comp.h
+   4:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @author  MCD Application Team
+   5:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief   Header file of COMP LL module.
+   6:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   ******************************************************************************
+   7:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @attention
+   8:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+   9:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  10:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+  11:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * Redistribution and use in source and binary forms, with or without modification,
+  12:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * are permitted provided that the following conditions are met:
+  13:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *   1. Redistributions of source code must retain the above copyright notice,
+  14:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *      this list of conditions and the following disclaimer.
+  15:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  16:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *      this list of conditions and the following disclaimer in the documentation
+  17:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *      and/or other materials provided with the distribution.
+  18:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  19:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *      may be used to endorse or promote products derived from this software
+  20:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *      without specific prior written permission.
+  21:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+  22:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  23:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  24:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  25:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  26:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  27:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  28:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  29:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  30:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  31:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+  33:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   ******************************************************************************
+ARM GAS  /tmp/ccwmSZef.s 			page 5
+
+
+  34:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  35:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  36:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Define to prevent recursive inclusion -------------------------------------*/
+  37:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #ifndef __STM32L0xx_LL_COMP_H
+  38:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define __STM32L0xx_LL_COMP_H
+  39:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  40:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #ifdef __cplusplus
+  41:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** extern "C" {
+  42:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #endif
+  43:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  44:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Includes ------------------------------------------------------------------*/
+  45:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #include "stm32l0xx.h"
+  46:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  47:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @addtogroup STM32L0xx_LL_Driver
+  48:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+  49:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  50:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  51:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #if defined (COMP1) || defined (COMP2)
+  52:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  53:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL COMP
+  54:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+  55:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  56:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  57:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Private types -------------------------------------------------------------*/
+  58:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Private variables ---------------------------------------------------------*/
+  59:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Private constants ---------------------------------------------------------*/
+  60:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_Private_Constants COMP Private Constants
+  61:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+  62:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  63:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  64:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* COMP registers bits positions */
+  65:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS ((uint32_t)30U) /* Value equivalent to POSITION_VAL(COMP
+  66:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  67:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+  68:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+  69:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  70:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  71:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Private macros ------------------------------------------------------------*/
+  72:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Exported types ------------------------------------------------------------*/
+  73:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #if defined(USE_FULL_LL_DRIVER)
+  74:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_ES_INIT COMP Exported Init structure
+  75:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+  76:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  77:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  78:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+  79:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Structure definition of some features of COMP instance.
+  80:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+  81:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** typedef struct
+  82:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+  83:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   uint32_t PowerMode;                   /*!< Set comparator operating mode to adjust power and spee
+  84:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This parameter can be a value of @ref COMP_LL_EC_POWER
+  85:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              
+  86:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This feature can be modified afterwards using unitary 
+  87:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  88:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   uint32_t InputPlus;                   /*!< Set comparator input plus (non-inverting input).
+  89:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This parameter can be a value of @ref COMP_LL_EC_INPUT
+  90:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              
+ARM GAS  /tmp/ccwmSZef.s 			page 6
+
+
+  91:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This feature can be modified afterwards using unitary 
+  92:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  93:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   uint32_t InputMinus;                  /*!< Set comparator input minus (inverting input).
+  94:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This parameter can be a value of @ref COMP_LL_EC_INPUT
+  95:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              
+  96:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This feature can be modified afterwards using unitary 
+  97:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+  98:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   uint32_t OutputPolarity;              /*!< Set comparator output polarity.
+  99:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This parameter can be a value of @ref COMP_LL_EC_OUTPU
+ 100:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              
+ 101:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****                                              This feature can be modified afterwards using unitary 
+ 102:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 103:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** } LL_COMP_InitTypeDef;
+ 104:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 105:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 106:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 107:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 108:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #endif /* USE_FULL_LL_DRIVER */
+ 109:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 110:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Exported constants --------------------------------------------------------*/
+ 111:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_Exported_Constants COMP Exported Constants
+ 112:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 113:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 114:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 115:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_COMMON_WINDOWMODE Comparator common modes - Window mode
+ 116:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 117:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 118:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_WINDOWMODE_DISABLE                 ((uint32_t)0x00000000U) /*!< Window mode disable
+ 119:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON (COMP_CSR_COMP1WM)      /*!< Window mode enable:
+ 120:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 121:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 122:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 123:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 124:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_POWERMODE Comparator modes - Power mode
+ 125:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 126:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 127:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_POWERMODE_ULTRALOWPOWER   ((uint32_t)0x00000000U)     /*!< COMP power mode to low s
+ 128:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_POWERMODE_MEDIUMSPEED     (COMP_CSR_COMP2SPEED)       /*!< COMP power mode to fast 
+ 129:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 130:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 131:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 132:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 133:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_INPUT_PLUS Comparator inputs - Input plus (input non-inverting) selection
+ 134:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 135:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 136:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO1          ((uint32_t)0x00000000U)                            /*!< Com
+ 137:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO2          (COMP_CSR_COMP2INPSEL_0)                           /*!< Com
+ 138:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO3          (COMP_CSR_COMP2INPSEL_1)                           /*!< Com
+ 139:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO4          (COMP_CSR_COMP2INPSEL_0 | COMP_CSR_COMP2INPSEL_1)  /*!< Com
+ 140:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO5          (COMP_CSR_COMP2INPSEL_2)                           /*!< Com
+ 141:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #if defined (STM32L011xx) || defined (STM32L021xx)
+ 142:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_PLUS_IO6          (COMP_CSR_COMP2INPSEL_2 | COMP_CSR_COMP2INPSEL_0)  /*!< Com
+ 143:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #endif
+ 144:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 145:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 146:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 147:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ARM GAS  /tmp/ccwmSZef.s 			page 7
+
+
+ 148:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_INPUT_MINUS Comparator inputs - Input minus (input inverting) selection
+ 149:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 150:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 151:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_1_4VREFINT  (COMP_CSR_COMP2INNSEL_2                                    
+ 152:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_1_2VREFINT  (COMP_CSR_COMP2INNSEL_2 |                          COMP_CSR
+ 153:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_3_4VREFINT  (COMP_CSR_COMP2INNSEL_2 | COMP_CSR_COMP2INNSEL_1           
+ 154:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_VREFINT     ((uint32_t)0x00000000U)                                    
+ 155:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_DAC1_CH1    (                         COMP_CSR_COMP2INNSEL_1           
+ 156:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_DAC1_CH2    (                         COMP_CSR_COMP2INNSEL_1 | COMP_CSR
+ 157:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_IO1         (                                                  COMP_CSR
+ 158:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_INPUT_MINUS_IO2         (COMP_CSR_COMP2INNSEL_2 | COMP_CSR_COMP2INNSEL_1 | COMP_CSR
+ 159:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 160:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 161:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 162:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 163:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_OUTPUT_SELECTION_LPTIM Comparator output - Output selection specific to LP
+ 164:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 165:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 166:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LPTIM1_IN1_COMP1         (COMP_CSR_COMP1LPTIM1IN1)                          
+ 167:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LPTIM1_IN1_COMP2         (COMP_CSR_COMP2LPTIM1IN1)                          
+ 168:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LPTIM1_IN2_COMP2         (COMP_CSR_COMP2LPTIM1IN2)                          
+ 169:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 170:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 171:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 172:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 173:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_OUTPUT_POLARITY Comparator output - Output polarity
+ 174:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 175:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 176:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUTPOL_NONINVERTED   ((uint32_t)0x00000000U)  /*!< COMP output polarity is not i
+ 177:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUTPOL_INVERTED      (COMP_CSR_COMP1POLARITY) /*!< COMP output polarity is inver
+ 178:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 179:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 180:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 181:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 182:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 183:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_OUTPUT_LEVEL Comparator output - Output level
+ 184:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 185:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 186:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LEVEL_LOW        ((uint32_t)0x00000000U) /*!< Comparator output level low (i
+ 187:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_OUTPUT_LEVEL_HIGH       ((uint32_t)0x00000001U) /*!< Comparator output level high (
+ 188:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 189:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 190:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 191:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 192:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EC_HW_DELAYS  Definitions of COMP hardware constraints delays
+ 193:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   Only COMP IP HW delays are defined in COMP LL driver driver,
+ 194:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         not timeout values.
+ 195:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         For details on delays values, refer to descriptions in source code
+ 196:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         above each literal definition.
+ 197:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 198:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 199:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 200:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Delay for comparator startup time.                                         */
+ 201:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Note: Delay required to reach propagation delay specification.             */
+ 202:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Literal set to maximum value (refer to device datasheet,                   */
+ 203:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* parameter "tSTART").                                                       */
+ 204:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Unit: us                                                                   */
+ARM GAS  /tmp/ccwmSZef.s 			page 8
+
+
+ 205:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_DELAY_STARTUP_US          ((uint32_t) 25U)  /*!< Delay for COMP startup time */
+ 206:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 207:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Delay for comparator voltage scaler stabilization time                     */
+ 208:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* (voltage from VrefInt, delay based on VrefInt startup time).               */
+ 209:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Literal set to maximum value (refer to device datasheet,                   */
+ 210:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* parameter "TVREFINT").                                                     */
+ 211:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Unit: us                                                                   */
+ 212:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_DELAY_VOLTAGE_SCALER_STAB_US ((uint32_t)3000U)  /*!< Delay for COMP voltage scaler 
+ 213:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 214:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 215:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 216:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 217:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 218:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 219:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 220:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 221:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 222:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Exported macro ------------------------------------------------------------*/
+ 223:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_Exported_Macros COMP Exported Macros
+ 224:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 225:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 226:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EM_WRITE_READ Common write and read registers macro
+ 227:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 228:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 229:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 230:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 231:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Write a value in COMP register
+ 232:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __INSTANCE__ comparator instance
+ 233:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __REG__ Register to be written
+ 234:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __VALUE__ Value to be written in the register
+ 235:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 236:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 237:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(__INSTANCE__->__REG__, (__VALU
+ 238:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 239:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 240:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Read a value in COMP register
+ 241:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __INSTANCE__ comparator instance
+ 242:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __REG__ Register to be read
+ 243:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Register value
+ 244:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 245:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define LL_COMP_ReadReg(__INSTANCE__, __REG__) READ_REG(__INSTANCE__->__REG__)
+ 246:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 247:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 248:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 249:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 250:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EM_HELPER_MACRO COMP helper macro
+ 251:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 252:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 253:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 254:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 255:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Helper macro to select the COMP common instance
+ 256:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         to which is belonging the selected COMP instance.
+ 257:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   COMP common register instance can be used to
+ 258:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         set parameters common to several COMP instances.
+ 259:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Refer to functions having argument "COMPxy_COMMON" as parameter.
+ 260:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  __COMPx__ COMP instance
+ 261:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval COMP common instance or value "0" if there is no COMP common instance.
+ARM GAS  /tmp/ccwmSZef.s 			page 9
+
+
+ 262:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 263:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** #define __LL_COMP_COMMON_INSTANCE(__COMPx__)                                   \
+ 264:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   (COMP12_COMMON)
+ 265:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 266:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 267:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 268:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 269:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 270:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 271:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 272:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 273:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 274:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /* Exported functions --------------------------------------------------------*/
+ 275:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_Exported_Functions COMP Exported Functions
+ 276:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 277:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 278:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 279:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EF_Configuration_comparator_common Configuration of COMP hierarchical scope: 
+ 280:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 281:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 282:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 283:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 284:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set window mode of a pair of comparators instances
+ 285:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (2 consecutive COMP instances odd and even COMP<x> and COMP<x+1>).
+ 286:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1WM       LL_COMP_SetCommonWindowMode
+ 287:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPxy_COMMON Comparator common instance
+ 288:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (can be set directly from CMSIS definition or by using helper macro @ref __LL_COMP_COMM
+ 289:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  WindowMode This parameter can be one of the following values:
+ 290:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
+ 291:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
+ 292:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 293:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 294:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON, uint32_t Windo
+ 295:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 296:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPxy_COMMON->CSR, COMP_CSR_COMP1WM, WindowMode);
+ 297:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 298:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 299:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 300:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get window mode of a pair of comparators instances
+ 301:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (2 consecutive COMP instances odd and even COMP<x> and COMP<x+1>).
+ 302:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1WM       LL_COMP_GetCommonWindowMode
+ 303:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPxy_COMMON Comparator common instance
+ 304:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (can be set directly from CMSIS definition or by using helper macro @ref __LL_COMP_COMM
+ 305:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 306:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
+ 307:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
+ 308:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 309:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON)
+ 310:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 311:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPxy_COMMON->CSR, COMP_CSR_COMP1WM));
+ 312:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 313:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 314:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 315:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 316:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 317:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 318:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EF_Configuration_comparator_modes Configuration of comparator modes
+ARM GAS  /tmp/ccwmSZef.s 			page 10
+
+
+ 319:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 320:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 321:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 322:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 323:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator instance operating mode to adjust power and speed.
+ 324:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP2_CSR COMP2SPEED    LL_COMP_SetPowerMode
+ 325:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 326:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  PowerMode This parameter can be one of the following values:
+ 327:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED   (1)
+ 328:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER (1)
+ 329:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 330:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (1) Available only on COMP instance: COMP2.
+ 331:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 332:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 333:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx, uint32_t PowerMode)
+ 334:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 335:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR, COMP_CSR_COMP2SPEED, PowerMode);
+ 336:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 337:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 338:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 339:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator instance operating mode to adjust power and speed.
+ 340:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note  Available only on COMP instance: COMP2.
+ 341:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP2_CSR COMP2SPEED    LL_COMP_GetPowerMode\n
+ 342:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 343:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 344:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED   (1)
+ 345:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER (1)
+ 346:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 347:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (1) Available only on COMP instance: COMP2.
+ 348:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 349:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetPowerMode(COMP_TypeDef *COMPx)
+ 350:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 351:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_COMP2SPEED));
+ 352:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 353:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 354:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 355:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 356:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 357:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 358:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EF_Configuration_comparator_inputs Configuration of comparator inputs
+ 359:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 360:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 361:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 362:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 363:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator inputs minus (inverting) and plus (non-inverting).
+ 364:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   This function shall only be used for COMP2.
+ 365:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         For setting COMP1 input it is recommended to use LL_COMP_SetInputMinus()
+ 366:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Plus (non-inverting) input is not configurable on COMP1.
+ 367:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Using this function for COMP1 will corrupt COMP1WM register
+ 368:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   On this STM32 serie, specificity if using COMP instance COMP2
+ 369:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         with COMP input based on VrefInt (VrefInt or subdivision
+ 370:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         of VrefInt): scaler bridge is based on VrefInt and requires
+ 371:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         to enable path from VrefInt (refer to literal
+ 372:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         SYSCFG_CFGR3_ENBUFLP_VREFINT_COMP).
+ 373:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP2_CSR COMP2INNSEL   LL_COMP_ConfigInputs\n
+ 374:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2INPSEL   LL_COMP_ConfigInputs
+ 375:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ARM GAS  /tmp/ccwmSZef.s 			page 11
+
+
+ 376:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  InputMinus This parameter can be one of the following values:
+ 377:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ 378:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ 379:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ 380:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ 381:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
+ 382:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
+ 383:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
+ 384:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO2
+ 385:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  InputPlus This parameter can be one of the following values:
+ 386:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO1 (1)
+ 387:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO2 (1)
+ 388:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO3 (1)
+ 389:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO4 (1)
+ 390:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO5 (1)
+ 391:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO6 (1)(2)
+ 392:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+ 393:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (1) Available only on COMP instance: COMP2.
+ 394:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (2) Available only on devices STM32L0 category 1.
+ 395:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 396:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 397:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_ConfigInputs(COMP_TypeDef *COMPx, uint32_t InputMinus, uint32_t InputP
+ 398:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 399:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR,
+ 400:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****              COMP_CSR_COMP2INNSEL | COMP_CSR_COMP2INPSEL,
+ 401:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****              InputMinus | InputPlus);
+ 402:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 403:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 404:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 405:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator input plus (non-inverting).
+ 406:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   Only COMP2 allows to set the input plus (non-inverting).
+ 407:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         For COMP1 it is always PA1 IO, except when Windows Mode is selected.
+ 408:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP2_CSR COMP2INPSEL    LL_COMP_SetInputPlus
+ 409:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 410:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  InputPlus This parameter can be one of the following values:
+ 411:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO1 (1)
+ 412:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO2 (1)
+ 413:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO3 (1)
+ 414:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO4 (1)
+ 415:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO5 (1)
+ 416:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO6 (1)(2)
+ 417:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+ 418:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (1) Available only on COMP instance: COMP2.
+ 419:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (2) Available only on devices STM32L0 category 1.
+ 420:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 421:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 422:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx, uint32_t InputPlus)
+ 423:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 424:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR, COMP_CSR_COMP2INPSEL, InputPlus);
+ 425:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 426:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 427:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 428:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator input plus (non-inverting).
+ 429:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   Only COMP2 allows to set the input plus (non-inverting).
+ 430:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         For COMP1 it is always PA1 IO, except when Windows Mode is selected.
+ 431:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP2_CSR COMP2INPSEL    LL_COMP_GetInputPlus
+ 432:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ARM GAS  /tmp/ccwmSZef.s 			page 12
+
+
+ 433:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 434:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO1 (1)
+ 435:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO2 (1)
+ 436:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO3 (1)
+ 437:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO4 (1)
+ 438:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO5 (1)
+ 439:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_PLUS_IO6 (1)(2)
+ 440:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *
+ 441:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (1) Available only on COMP instance: COMP2.
+ 442:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (2) Available only on devices STM32L0 category 1.
+ 443:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 444:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetInputPlus(COMP_TypeDef *COMPx)
+ 445:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 446:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_COMP2INPSEL));
+ 447:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 448:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 449:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 450:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator input minus (inverting).
+ 451:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   In case of comparator input selected to be connected to IO:
+ 452:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         GPIO pins are specific to each comparator instance.
+ 453:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Refer to description of parameters or to reference manual.
+ 454:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   On this STM32 serie, specificity if using COMP instance COMP2
+ 455:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         with COMP input based on VrefInt (VrefInt or subdivision
+ 456:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         of VrefInt): scaler bridge is based on VrefInt and requires
+ 457:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         to enable path from VrefInt (refer to literal
+ 458:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         SYSCFG_CFGR3_ENBUFLP_VREFINT_COMP).
+ 459:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1INNSEL    LL_COMP_SetInputMinus\n
+ 460:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2INNSEL    LL_COMP_SetInputMinus
+ 461:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 462:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  InputMinus This parameter can be one of the following values:
+ 463:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ 464:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ 465:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ 466:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ 467:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT (*)
+ 468:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT (*)
+ 469:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT (*)
+ 470:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO2        (*)
+ 471:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 472:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (*) Available only on COMP instance: COMP2.
+ 473:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 474:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 475:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx, uint32_t InputMinus)
+ 476:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 477:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR, COMP_CSR_COMP2INNSEL, InputMinus);
+ 478:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 479:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 480:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 481:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator input minus (inverting).
+ 482:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   In case of comparator input selected to be connected to IO:
+ 483:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         GPIO pins are specific to each comparator instance.
+ 484:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Refer to description of parameters or to reference manual.
+ 485:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1INNSEL   LL_COMP_GetInputMinus\n
+ 486:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2INNSEL   LL_COMP_GetInputMinus
+ 487:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 488:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 489:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ARM GAS  /tmp/ccwmSZef.s 			page 13
+
+
+ 490:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ 491:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ 492:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ 493:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT (*)
+ 494:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT (*)
+ 495:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT (*)
+ 496:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_INPUT_MINUS_IO2        (*)
+ 497:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 498:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (*) Available only on COMP instance: COMP2.
+ 499:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 500:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetInputMinus(COMP_TypeDef *COMPx)
+ 501:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 502:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_COMP2INNSEL));
+ 503:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 504:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 505:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 506:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 507:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 508:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 509:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EF_Configuration_comparator_output Configuration of comparator output
+ 510:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 511:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 512:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 513:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 514:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator output LPTIM.
+ 515:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1LPTIMIN1 LL_COMP_SetOutputLPTIM\n
+ 516:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LPTIMIN1 LL_COMP_SetOutputLPTIM\n
+ 517:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LPTIMIN2 LL_COMP_SetOutputLPTIM
+ 518:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 519:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  OutputLptim This parameter can be one of the following values:
+ 520:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN1_COMP1 (*)
+ 521:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN1_COMP2 (**)
+ 522:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN2_COMP2 (**)
+ 523:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 524:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (*)  Available only on COMP instance: COMP1.\n
+ 525:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (**) Available only on COMP instance: COMP2.
+ 526:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 527:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 528:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetOutputLPTIM(COMP_TypeDef *COMPx, uint32_t OutputLptim)
+ 529:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 530:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR, (COMP_CSR_COMP1LPTIM1IN1 | COMP_CSR_COMP2LPTIM1IN1 | COMP_CSR_COMP2LPTIM1I
+ 531:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 532:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 533:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 534:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator output LPTIM.
+ 535:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1LPTIMIN1 LL_COMP_GetOutputLPTIM\n
+ 536:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LPTIMIN1 LL_COMP_GetOutputLPTIM\n
+ 537:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LPTIMIN2 LL_COMP_GetOutputLPTIM
+ 538:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 539:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 540:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN1_COMP1 (*)
+ 541:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN1_COMP2 (**)
+ 542:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUT_LPTIM1_IN2_COMP2 (**)
+ 543:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         
+ 544:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (*)  Available only on COMP instance: COMP1.\n
+ 545:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (**) Available only on COMP instance: COMP2.
+ 546:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ARM GAS  /tmp/ccwmSZef.s 			page 14
+
+
+ 547:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetOutputLPTIM(COMP_TypeDef *COMPx)
+ 548:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 549:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPx->CSR, (COMP_CSR_COMP1LPTIM1IN1 | COMP_CSR_COMP2LPTIM1IN1 | COMP_
+ 550:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 551:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 552:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 553:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Set comparator instance output polarity.
+ 554:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP     COMP1POLARITY  LL_COMP_SetOutputPolarity
+ 555:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 556:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  OutputPolarity This parameter can be one of the following values:
+ 557:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
+ 558:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
+ 559:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 560:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 561:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx, uint32_t OutputPolarity)
+ 562:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 563:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   MODIFY_REG(COMPx->CSR, COMP_CSR_COMPxPOLARITY, OutputPolarity);
+ 564:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 565:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 566:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 567:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator instance output polarity.
+ 568:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP     COMP1POLARITY  LL_COMP_GetOutputPolarity
+ 569:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 570:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval Returned value can be one of the following values:
+ 571:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
+ 572:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
+ 573:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 574:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(COMP_TypeDef *COMPx)
+ 575:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 576:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_COMPxPOLARITY));
+ 577:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 578:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 579:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 580:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @}
+ 581:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 582:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 583:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /** @defgroup COMP_LL_EF_Operation Operation on comparator instance
+ 584:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @{
+ 585:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 586:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 587:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 588:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Enable comparator instance.
+ 589:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   After enable from off state, comparator requires a delay
+ 590:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         to reach reach propagation delay specification.
+ 591:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         Refer to device datasheet, parameter "tSTART".
+ 592:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1EN       LL_COMP_Enable\n
+ 593:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2EN       LL_COMP_Enable
+ 594:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 595:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 596:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 597:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx)
+ 598:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 599:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   SET_BIT(COMPx->CSR, COMP_CSR_COMPxEN);
+ 600:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 601:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 602:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 603:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Disable comparator instance.
+ARM GAS  /tmp/ccwmSZef.s 			page 15
+
+
+ 604:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1EN       LL_COMP_Disable\n
+ 605:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2EN       LL_COMP_Disable
+ 606:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 607:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 608:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 609:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx)
+ 610:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 611:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   CLEAR_BIT(COMPx->CSR, COMP_CSR_COMPxEN);
+ 612:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 613:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 614:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 615:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator enable state
+ 616:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (0: COMP is disabled, 1: COMP is enabled)
+ 617:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1EN        LL_COMP_IsEnabled\n
+ 618:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2EN        LL_COMP_IsEnabled
+ 619:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 620:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval State of bit (1 or 0).
+ 621:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 622:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_IsEnabled(COMP_TypeDef *COMPx)
+ 623:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 624:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (READ_BIT(COMPx->CSR, COMP_CSR_COMPxEN) == (COMP_CSR_COMPxEN));
+ 625:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 626:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 627:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 628:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Lock comparator instance.
+ 629:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   Once locked, comparator configuration can be accessed in read-only.
+ 630:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   The only way to unlock the comparator is a device hardware reset.
+ 631:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1LOCK     LL_COMP_Lock\n
+ 632:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LOCK     LL_COMP_Lock
+ 633:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 634:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval None
+ 635:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 636:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx)
+ 637:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 638:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   SET_BIT(COMPx->CSR, COMP_CSR_COMPxLOCK);
+ 639:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** }
+ 640:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** 
+ 641:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** /**
+ 642:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @brief  Get comparator lock state
+ 643:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         (0: COMP is unlocked, 1: COMP is locked).
+ 644:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   Once locked, comparator configuration can be accessed in read-only.
+ 645:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @note   The only way to unlock the comparator is a device hardware reset.
+ 646:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @rmtoll COMP1_CSR COMP1LOCK     LL_COMP_IsLocked\n
+ 647:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   *         COMP2_CSR COMP2LOCK     LL_COMP_IsLocked
+ 648:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @param  COMPx Comparator instance
+ 649:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   * @retval State of bit (1 or 0).
+ 650:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   */
+ 651:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** __STATIC_INLINE uint32_t LL_COMP_IsLocked(COMP_TypeDef *COMPx)
+ 652:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h **** {
+ 653:Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h ****   return (READ_BIT(COMPx->CSR, COMP_CSR_COMPxLOCK) == (COMP_CSR_COMPxLOCK));
+  35              		.loc 2 653 0
+  36 0000 0368     		ldr	r3, [r0]
+  37              	.LVL1:
+  38              	.LBE7:
+  39              	.LBE6:
+ 163:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   ErrorStatus status = SUCCESS;
+ 164:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ARM GAS  /tmp/ccwmSZef.s 			page 16
+
+
+ 165:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /* Check the parameters */
+ 166:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   assert_param(IS_COMP_ALL_INSTANCE(COMPx));
+ 167:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 168:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /* Note: Hardware constraint (refer to description of this function):       */
+ 169:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /*       COMP instance must not be locked.                                  */
+ 170:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   if(LL_COMP_IsLocked(COMPx) == 0U)
+  40              		.loc 1 170 0
+  41 0002 002B     		cmp	r3, #0
+  42 0004 0EDB     		blt	.L4
+ 171:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   {
+ 172:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     if(COMPx == COMP1)
+  43              		.loc 1 172 0
+  44 0006 084B     		ldr	r3, .L6
+  45 0008 9842     		cmp	r0, r3
+  46 000a 05D0     		beq	.L5
+ 173:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     {
+ 174:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       CLEAR_BIT(COMPx->CSR,
+ 175:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 (  COMP_CSR_COMP1EN
+ 176:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP1INNSEL
+ 177:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP1WM
+ 178:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP1LPTIM1IN1
+ 179:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP1POLARITY
+ 180:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP1LOCK
+ 181:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 ) 
+ 182:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                );
+ 183:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     }
+ 184:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     else
+ 185:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     {
+ 186:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       CLEAR_BIT(COMPx->CSR,
+  47              		.loc 1 186 0
+  48 000c 0368     		ldr	r3, [r0]
+  49 000e 074A     		ldr	r2, .L6+4
+  50 0010 1340     		ands	r3, r2
+  51 0012 0360     		str	r3, [r0]
+ 163:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+  52              		.loc 1 163 0
+  53 0014 0120     		movs	r0, #1
+  54              	.LVL2:
+  55              	.L2:
+ 187:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 (  COMP_CSR_COMP2EN
+ 188:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2SPEED
+ 189:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2INNSEL
+ 190:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2INPSEL
+ 191:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2LPTIM1IN2
+ 192:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2LPTIM1IN1
+ 193:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2POLARITY
+ 194:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  | COMP_CSR_COMP2LOCK
+ 195:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 ) 
+ 196:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                );
+ 197:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     }
+ 198:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 199:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 200:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   else
+ 201:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   {
+ 202:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* Comparator instance is locked: de-initialization by software is         */
+ 203:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* not possible.                                                           */
+ 204:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* The only way to unlock the comparator is a device hardware reset.       */
+ARM GAS  /tmp/ccwmSZef.s 			page 17
+
+
+ 205:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     status = ERROR;
+ 206:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 207:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 208:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   return status;
+ 209:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** }
+  56              		.loc 1 209 0
+  57              		@ sp needed
+  58 0016 7047     		bx	lr
+  59              	.LVL3:
+  60              	.L5:
+ 174:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 (  COMP_CSR_COMP1EN
+  61              		.loc 1 174 0
+  62 0018 0368     		ldr	r3, [r0]
+  63 001a 054A     		ldr	r2, .L6+8
+  64 001c 1340     		ands	r3, r2
+  65 001e 0360     		str	r3, [r0]
+ 163:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+  66              		.loc 1 163 0
+  67 0020 0120     		movs	r0, #1
+  68              	.LVL4:
+  69 0022 F8E7     		b	.L2
+  70              	.LVL5:
+  71              	.L4:
+ 205:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+  72              		.loc 1 205 0
+  73 0024 0020     		movs	r0, #0
+  74              	.LVL6:
+  75 0026 F6E7     		b	.L2
+  76              	.L7:
+  77              		.align	2
+  78              	.L6:
+  79 0028 18000140 		.word	1073807384
+  80 002c 8648FF7F 		.word	2147436678
+  81 0030 CE6EFF7F 		.word	2147446478
+  82              		.cfi_endproc
+  83              	.LFE58:
+  85              		.section	.text.LL_COMP_Init,"ax",%progbits
+  86              		.align	1
+  87              		.global	LL_COMP_Init
+  88              		.syntax unified
+  89              		.code	16
+  90              		.thumb_func
+  91              		.fpu softvfp
+  93              	LL_COMP_Init:
+  94              	.LFB59:
+ 210:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 211:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /**
+ 212:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @brief  Initialize some features of COMP instance.
+ 213:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @note   This function configures features of the selected COMP instance.
+ 214:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         Some features are also available at scope COMP common instance
+ 215:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         (common to several COMP instances).
+ 216:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *         Refer to functions having argument "COMPxy_COMMON" as parameter.
+ 217:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @param  COMPx COMP instance
+ 218:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @param  COMP_InitStruct Pointer to a @ref LL_COMP_InitTypeDef structure
+ 219:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @retval An ErrorStatus enumeration value:
+ 220:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *          - SUCCESS: COMP registers are initialized
+ 221:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *          - ERROR: COMP registers are not initialized
+ARM GAS  /tmp/ccwmSZef.s 			page 18
+
+
+ 222:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 223:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, LL_COMP_InitTypeDef *COMP_InitStruct)
+ 224:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** {
+  95              		.loc 1 224 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              	.LVL7:
+ 100 0000 10B5     		push	{r4, lr}
+ 101              	.LCFI0:
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 4, -8
+ 104              		.cfi_offset 14, -4
+ 105              	.LVL8:
+ 106              	.LBB8:
+ 107              	.LBB9:
+ 108              		.loc 2 653 0
+ 109 0002 0368     		ldr	r3, [r0]
+ 110              	.LVL9:
+ 111              	.LBE9:
+ 112              	.LBE8:
+ 225:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   ErrorStatus status = SUCCESS;
+ 226:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 227:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /* Check the parameters */
+ 228:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   assert_param(IS_COMP_ALL_INSTANCE(COMPx));
+ 229:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   if(COMPx == COMP2)
+ 230:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   {
+ 231:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     assert_param(IS_LL_COMP_POWER_MODE(COMP_InitStruct->PowerMode));
+ 232:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     assert_param(IS_LL_COMP_INPUT_PLUS(COMPx, COMP_InitStruct->InputPlus));
+ 233:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 234:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   assert_param(IS_LL_COMP_INPUT_MINUS(COMPx, COMP_InitStruct->InputMinus));
+ 235:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   assert_param(IS_LL_COMP_OUTPUT_POLARITY(COMP_InitStruct->OutputPolarity));
+ 236:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 237:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /* Note: Hardware constraint (refer to description of this function)        */
+ 238:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /*       COMP instance must not be locked.                                  */
+ 239:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   if(LL_COMP_IsLocked(COMPx) == 0U)
+ 113              		.loc 1 239 0
+ 114 0004 002B     		cmp	r3, #0
+ 115 0006 1ADB     		blt	.L11
+ 240:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   {
+ 241:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* Configuration of comparator instance :                                 */
+ 242:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*  - PowerMode                                                           */
+ 243:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*  - InputPlus                                                           */
+ 244:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*  - InputMinus                                                          */
+ 245:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*  - OutputPolarity                                                      */
+ 246:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* Note: Connection switch is applicable only to COMP instance COMP1,     */
+ 247:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*       therefore is COMP2 is selected the equivalent bit is             */
+ 248:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /*       kept unmodified.                                                 */
+ 249:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     if(COMPx == COMP1)
+ 116              		.loc 1 249 0
+ 117 0008 0E4B     		ldr	r3, .L13
+ 118 000a 9842     		cmp	r0, r3
+ 119 000c 0DD0     		beq	.L12
+ 250:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     {
+ 251:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       MODIFY_REG(COMPx->CSR,
+ 252:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ( COMP_CSR_COMP1INNSEL
+ 253:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_CSR_COMP1POLARITY
+ARM GAS  /tmp/ccwmSZef.s 			page 19
+
+
+ 254:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ) 
+ 255:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 ,
+ 256:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  (  COMP_InitStruct->InputMinus
+ 257:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_InitStruct->OutputPolarity
+ 258:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ) 
+ 259:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 );
+ 260:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     }
+ 261:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     else
+ 262:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     {
+ 263:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****       MODIFY_REG(COMPx->CSR,
+ 120              		.loc 1 263 0
+ 121 000e 0368     		ldr	r3, [r0]
+ 122 0010 0D4A     		ldr	r2, .L13+4
+ 123 0012 1A40     		ands	r2, r3
+ 124 0014 0B68     		ldr	r3, [r1]
+ 125 0016 4C68     		ldr	r4, [r1, #4]
+ 126 0018 2343     		orrs	r3, r4
+ 127 001a 8C68     		ldr	r4, [r1, #8]
+ 128 001c 2343     		orrs	r3, r4
+ 129 001e C968     		ldr	r1, [r1, #12]
+ 130              	.LVL10:
+ 131 0020 0B43     		orrs	r3, r1
+ 132 0022 1343     		orrs	r3, r2
+ 133 0024 0360     		str	r3, [r0]
+ 225:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 134              		.loc 1 225 0
+ 135 0026 0120     		movs	r0, #1
+ 136              	.LVL11:
+ 137              	.L9:
+ 264:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  (  COMP_CSR_COMP2SPEED       
+ 265:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_CSR_COMP2INPSEL      
+ 266:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_CSR_COMP2INNSEL      
+ 267:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_CSR_COMP2POLARITY
+ 268:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ) 
+ 269:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 ,
+ 270:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  (  COMP_InitStruct->PowerMode
+ 271:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_InitStruct->InputPlus
+ 272:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_InitStruct->InputMinus
+ 273:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                   | COMP_InitStruct->OutputPolarity
+ 274:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ) 
+ 275:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                 );
+ 276:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     }
+ 277:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 278:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 279:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   else
+ 280:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   {
+ 281:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     /* Initialization error: COMP instance is locked.                         */
+ 282:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****     status = ERROR;
+ 283:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 284:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 285:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   return status;
+ 286:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** }
+ 138              		.loc 1 286 0
+ 139              		@ sp needed
+ 140 0028 10BD     		pop	{r4, pc}
+ 141              	.LVL12:
+ 142              	.L12:
+ARM GAS  /tmp/ccwmSZef.s 			page 20
+
+
+ 251:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****                  ( COMP_CSR_COMP1INNSEL
+ 143              		.loc 1 251 0
+ 144 002a 0368     		ldr	r3, [r0]
+ 145 002c 074A     		ldr	r2, .L13+8
+ 146 002e 1340     		ands	r3, r2
+ 147 0030 8A68     		ldr	r2, [r1, #8]
+ 148 0032 C968     		ldr	r1, [r1, #12]
+ 149              	.LVL13:
+ 150 0034 0A43     		orrs	r2, r1
+ 151 0036 1343     		orrs	r3, r2
+ 152 0038 0360     		str	r3, [r0]
+ 225:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   
+ 153              		.loc 1 225 0
+ 154 003a 0120     		movs	r0, #1
+ 155              	.LVL14:
+ 156 003c F4E7     		b	.L9
+ 157              	.LVL15:
+ 158              	.L11:
+ 282:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   }
+ 159              		.loc 1 282 0
+ 160 003e 0020     		movs	r0, #0
+ 161              	.LVL16:
+ 162 0040 F2E7     		b	.L9
+ 163              	.L14:
+ 164 0042 C046     		.align	2
+ 165              	.L13:
+ 166 0044 18000140 		.word	1073807384
+ 167 0048 8778FFFF 		.word	-34681
+ 168 004c CF7FFFFF 		.word	-32817
+ 169              		.cfi_endproc
+ 170              	.LFE59:
+ 172              		.section	.text.LL_COMP_StructInit,"ax",%progbits
+ 173              		.align	1
+ 174              		.global	LL_COMP_StructInit
+ 175              		.syntax unified
+ 176              		.code	16
+ 177              		.thumb_func
+ 178              		.fpu softvfp
+ 180              	LL_COMP_StructInit:
+ 181              	.LFB60:
+ 287:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** 
+ 288:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** /**
+ 289:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @brief Set each @ref LL_COMP_InitTypeDef field to default value.
+ 290:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @param COMP_InitStruct: pointer to a @ref LL_COMP_InitTypeDef structure
+ 291:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   *                         whose fields will be set to default values.
+ 292:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   * @retval None
+ 293:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   */
+ 294:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** void LL_COMP_StructInit(LL_COMP_InitTypeDef *COMP_InitStruct)
+ 295:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** {
+ 182              		.loc 1 295 0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186              		@ link register save eliminated.
+ 187              	.LVL17:
+ 296:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   /* Set COMP_InitStruct fields to default values */
+ 297:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   COMP_InitStruct->PowerMode            = LL_COMP_POWERMODE_MEDIUMSPEED;
+ARM GAS  /tmp/ccwmSZef.s 			page 21
+
+
+ 188              		.loc 1 297 0
+ 189 0000 0823     		movs	r3, #8
+ 190 0002 0360     		str	r3, [r0]
+ 298:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   COMP_InitStruct->InputPlus            = LL_COMP_INPUT_PLUS_IO1;
+ 191              		.loc 1 298 0
+ 192 0004 0023     		movs	r3, #0
+ 193 0006 4360     		str	r3, [r0, #4]
+ 299:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   COMP_InitStruct->InputMinus           = LL_COMP_INPUT_MINUS_VREFINT;
+ 194              		.loc 1 299 0
+ 195 0008 8360     		str	r3, [r0, #8]
+ 300:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c ****   COMP_InitStruct->OutputPolarity       = LL_COMP_OUTPUTPOL_NONINVERTED;
+ 196              		.loc 1 300 0
+ 197 000a C360     		str	r3, [r0, #12]
+ 301:./Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c **** }
+ 198              		.loc 1 301 0
+ 199              		@ sp needed
+ 200 000c 7047     		bx	lr
+ 201              		.cfi_endproc
+ 202              	.LFE60:
+ 204              		.text
+ 205              	.Letext0:
+ 206              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 207              		.file 4 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 208              		.file 5 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 209              		.file 6 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h"
+ 210              		.file 7 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h"
+ 211              		.file 8 "/usr/arm-none-eabi/include/sys/lock.h"
+ 212              		.file 9 "/usr/arm-none-eabi/include/sys/_types.h"
+ 213              		.file 10 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 214              		.file 11 "/usr/arm-none-eabi/include/sys/reent.h"
+ARM GAS  /tmp/ccwmSZef.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l0xx_ll_comp.c
+     /tmp/ccwmSZef.s:16     .text.LL_COMP_DeInit:0000000000000000 $t
+     /tmp/ccwmSZef.s:23     .text.LL_COMP_DeInit:0000000000000000 LL_COMP_DeInit
+     /tmp/ccwmSZef.s:79     .text.LL_COMP_DeInit:0000000000000028 $d
+     /tmp/ccwmSZef.s:86     .text.LL_COMP_Init:0000000000000000 $t
+     /tmp/ccwmSZef.s:93     .text.LL_COMP_Init:0000000000000000 LL_COMP_Init
+     /tmp/ccwmSZef.s:166    .text.LL_COMP_Init:0000000000000044 $d
+     /tmp/ccwmSZef.s:173    .text.LL_COMP_StructInit:0000000000000000 $t
+     /tmp/ccwmSZef.s:180    .text.LL_COMP_StructInit:0000000000000000 LL_COMP_StructInit
+                     .debug_frame:0000000000000010 $d
+
+NO UNDEFINED SYMBOLS

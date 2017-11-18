@@ -3,7 +3,7 @@ project(proj)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_definitions(-DSTM32L073xx)
+add_definitions(-DSTM32L073xx -DUSE_FULL_LL_DRIVER)
 
 set(SOURCE_FILES
         Src/system_stm32l0xx.c
@@ -79,6 +79,7 @@ set(SOURCE_FILES
         Inc/hw_gpio.h
         Inc/hw_msp.h
         Inc/hw_rtc.h
+        Inc/hw_i2c.h
         Inc/hw_spi.h
         Inc/stm32l0xx_hw_conf.h
         Inc/vcom.h
@@ -87,6 +88,7 @@ set(SOURCE_FILES
         Src/hw_gpio.c
         Src/hw_rtc.c
         Src/hw_spi.c
+        Src/hw_i2c.c
         Src/stm32l0xx_hw.c
         Src/vcom.c
         Src/stm32l0xx_hal_msp.c
@@ -143,13 +145,233 @@ set(SOURCE_FILES
         Middlewares/Third_Party/Lora/Utilities/timeServer.h
         Middlewares/Third_Party/Lora/Utilities/low_power.c
         Middlewares/Third_Party/Lora/Utilities/delay.c
-        )
+        ./Drivers/CMSIS/Include/cmsis_gcc.h
+        ./Drivers/CMSIS/Include/core_sc000.h
+        ./Drivers/CMSIS/Include/core_cm7.h
+        ./Drivers/CMSIS/Include/core_cm0.h
+        ./Drivers/CMSIS/Include/cmsis_armcc_V6.h
+        ./Drivers/CMSIS/Include/arm_math.h
+        ./Drivers/CMSIS/Include/core_sc300.h
+        ./Drivers/CMSIS/Include/core_cmInstr.h
+        ./Drivers/CMSIS/Include/cmsis_armcc.h
+        ./Drivers/CMSIS/Include/core_cmSimd.h
+        ./Drivers/CMSIS/Include/core_cm0plus.h
+        ./Drivers/CMSIS/Include/core_cm4.h
+        ./Drivers/CMSIS/Include/arm_common_tables.h
+        ./Drivers/CMSIS/Include/core_cm3.h
+        ./Drivers/CMSIS/Include/core_cmFunc.h
+        ./Drivers/CMSIS/Include/arm_const_structs.h
+        ./Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h
+        ./Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h
+        ./Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dma.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dac_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_dma.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crs.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_wwdg.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_tim_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_lpuart.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_pwr.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_irda_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_conf_template.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_i2c.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cryp.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rng.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_usart.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_crc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_wwdg.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cryp_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_gpio.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_smbus.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_system.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_flash_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_tim.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_usart.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_i2c_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_dac.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_utils.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_comp.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_firewall.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_comp_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_crc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_iwdg.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_lptim.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_cortex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pcd.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_rcc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rtc_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_dac.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_spi.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_adc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_spi.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_iwdg.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_flash_ramfunc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_smartcard.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pcd_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_lcd.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_smartcard_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_usart_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_irda.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_lptim_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_tim.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_exti.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_crc_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_comp.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_flash.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_rng.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rtc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_rtc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_lptim.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_tsc.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_bus.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_cortex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_i2s.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_adc_ex.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_ll_i2c.h
+        ./Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_adc.h
+        ./Drivers/BSP/sx1272mb2das/sx1272mb2das.h
+        ./Drivers/BSP/Components/sx1272/sx1272Regs-LoRa.h
+        ./Drivers/BSP/Components/sx1272/sx1272Regs-Fsk.h
+        ./Drivers/BSP/Components/sx1272/sx1272.h
+        ./junk/stm32l0xx_hal_conf.h
+        ./junk/usart.h
+        ./junk/rtc.h
+        ./junk/stm32l0xx_it.h
+        ./junk/i2c.h
+        ./junk/spi.h
+        ./junk/gpio.h
+        ./Inc/hw_gpio.h
+        ./Inc/stm32l0xx_hal_conf.h
+        ./Inc/Commissioning.h
+        ./Inc/hw.h
+        ./Inc/stm32l0xx_hw_conf.h
+        ./Inc/stm32l0xx_it.h
+        ./Inc/hw_spi.h
+        ./Inc/debug.h
+        ./Inc/hw_conf.h
+        ./Inc/vcom.h
+        ./Inc/main.h
+        ./Inc/hw_rtc.h
+        ./Inc/hw_i2c.h
+        ./Inc/hw_msp.h
+        ./Middlewares/Third_Party/Lora/Core/lora_mac_version.h
+        ./Middlewares/Third_Party/Lora/Core/lora.h
+        ./Middlewares/Third_Party/Lora/Crypto/cmac.h
+        ./Middlewares/Third_Party/Lora/Crypto/aes.h
+        ./Middlewares/Third_Party/Lora/Phy/radio.h
+        ./Middlewares/Third_Party/Lora/Conf/Commissioning_template.h
+        ./Middlewares/Third_Party/Lora/Conf/Inc/hw_gpio_template.h
+        ./Middlewares/Third_Party/Lora/Conf/Inc/hw_template.h
+        ./Middlewares/Third_Party/Lora/Conf/Inc/hw_rtc_template.h
+        ./Middlewares/Third_Party/Lora/Conf/Inc/hw_spi_template.h
+        ./Middlewares/Third_Party/Lora/Mac/LoRaMacCrypto.h
+        ./Middlewares/Third_Party/Lora/Mac/timer.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionUS915-Hybrid.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionUS915.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionCN470.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionKR920.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionAU915.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionCN779.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionIN865.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionAS923.h
+        ./Middlewares/Third_Party/Lora/Mac/region/Region.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionEU433.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionCommon.h
+        ./Middlewares/Third_Party/Lora/Mac/region/RegionEU868.h
+        ./Middlewares/Third_Party/Lora/Mac/LoRaMac.h
+        ./Middlewares/Third_Party/Lora/Mac/LoRaMacTest.h
+        ./Middlewares/Third_Party/Lora/Utilities/utilities.h
+        ./Middlewares/Third_Party/Lora/Utilities/delay.h
+        ./Middlewares/Third_Party/Lora/Utilities/timeServer.h
+        ./Middlewares/Third_Party/Lora/Utilities/low_power.h
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_comp.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_comp_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cryp.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cryp_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dac.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dac_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_firewall.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2s.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_irda.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_iwdg.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_lcd.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_lptim.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template-c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pcd.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pcd_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rng.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_smartcard.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_smartcard_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_smbus.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tsc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_usart.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_wwdg.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_adc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_comp.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_crc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_crs.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_dac.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_dma.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_exti.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_gpio.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_i2c.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_lptim.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_lpuart.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_pwr.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_rcc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_rng.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_rtc.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_spi.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_tim.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_usart.c
+        Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_utils.c
+        Drivers/BME680/bme680.c
+        Drivers/BME680/bme680.h
+        Drivers/BME680/bme680_defs.h
+        Src/voc_sensor.c
+        Src/voc_sensor.h)
 
 include_directories(Drivers/CMSIS/Device/ST/STM32L0xx/Include)
 include_directories(Drivers/CMSIS/Include)
 include_directories(Drivers/STM32L0xx_HAL_Driver/Inc)
 include_directories(Drivers/STM32L0xx_HAL_Driver/Inc/Legacy)
-include_directories(Inc
+include_directories(
+        Inc
         Middlewares/Third_Party/Lora/Core
         Middlewares/Third_Party/Lora/Crypto
         Middlewares/Third_Party/Lora/Mac

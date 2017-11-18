@@ -1,0 +1,479 @@
+ARM GAS  /tmp/cco3Pbva.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"utilities.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.global	__aeabi_uidivmod
+  16              		.section	.text.rand1,"ax",%progbits
+  17              		.align	1
+  18              		.global	rand1
+  19              		.syntax unified
+  20              		.code	16
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	rand1:
+  25              	.LFB85:
+  26              		.file 1 "./Middlewares/Third_Party/Lora/Utilities/utilities.c"
+   1:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** /*
+   2:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  / _____)             _              | |
+   3:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     (C)2013 Semtech
+   8:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+   9:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** Description: Helper functions implementation
+  10:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  11:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  13:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** Maintainer: Miguel Luis and Gregory Cristian
+  14:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** */
+  15:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** #include <stdlib.h>
+  16:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** #include <stdio.h>
+  17:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** #include <stdint.h>
+  18:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** #include "utilities.h"
+  19:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  20:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** /*!
+  21:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  * Redefinition of rand() and srand() standard C functions.
+  22:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  * These functions are redefined in order to get the same behavior across
+  23:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  * different compiler toolchains implementations.
+  24:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****  */
+  25:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** // Standard random functions redefinition start
+  26:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** #define RAND_LOCAL_MAX 2147483647L
+  27:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  28:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** static uint32_t next = 1;
+  29:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  30:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** int32_t rand1( void )
+  31:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+  27              		.loc 1 31 0
+ARM GAS  /tmp/cco3Pbva.s 			page 2
+
+
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  32:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     return ( ( next = next * 1103515245L + 12345L ) % RAND_LOCAL_MAX );
+  36              		.loc 1 32 0
+  37 0002 064B     		ldr	r3, .L2
+  38 0004 0648     		ldr	r0, .L2+4
+  39 0006 1A68     		ldr	r2, [r3]
+  40 0008 5043     		muls	r0, r2
+  41 000a 064A     		ldr	r2, .L2+8
+  42 000c 9446     		mov	ip, r2
+  43 000e 6044     		add	r0, r0, ip
+  44 0010 1860     		str	r0, [r3]
+  45 0012 0549     		ldr	r1, .L2+12
+  46 0014 FFF7FEFF 		bl	__aeabi_uidivmod
+  47              	.LVL0:
+  33:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+  48              		.loc 1 33 0
+  49 0018 0800     		movs	r0, r1
+  50              		@ sp needed
+  51 001a 10BD     		pop	{r4, pc}
+  52              	.L3:
+  53              		.align	2
+  54              	.L2:
+  55 001c 00000000 		.word	.LANCHOR0
+  56 0020 6D4EC641 		.word	1103515245
+  57 0024 39300000 		.word	12345
+  58 0028 FFFFFF7F 		.word	2147483647
+  59              		.cfi_endproc
+  60              	.LFE85:
+  62              		.section	.text.srand1,"ax",%progbits
+  63              		.align	1
+  64              		.global	srand1
+  65              		.syntax unified
+  66              		.code	16
+  67              		.thumb_func
+  68              		.fpu softvfp
+  70              	srand1:
+  71              	.LFB86:
+  34:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  35:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** void srand1( uint32_t seed )
+  36:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+  72              		.loc 1 36 0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              		@ link register save eliminated.
+  77              	.LVL1:
+  37:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     next = seed;
+  78              		.loc 1 37 0
+  79 0000 014B     		ldr	r3, .L5
+  80 0002 1860     		str	r0, [r3]
+ARM GAS  /tmp/cco3Pbva.s 			page 3
+
+
+  38:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+  81              		.loc 1 38 0
+  82              		@ sp needed
+  83 0004 7047     		bx	lr
+  84              	.L6:
+  85 0006 C046     		.align	2
+  86              	.L5:
+  87 0008 00000000 		.word	.LANCHOR0
+  88              		.cfi_endproc
+  89              	.LFE86:
+  91              		.global	__aeabi_idivmod
+  92              		.section	.text.randr,"ax",%progbits
+  93              		.align	1
+  94              		.global	randr
+  95              		.syntax unified
+  96              		.code	16
+  97              		.thumb_func
+  98              		.fpu softvfp
+ 100              	randr:
+ 101              	.LFB87:
+  39:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** // Standard random functions redefinition end
+  40:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  41:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** int32_t randr( int32_t min, int32_t max )
+  42:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+ 102              		.loc 1 42 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              	.LVL2:
+ 107 0000 70B5     		push	{r4, r5, r6, lr}
+ 108              	.LCFI1:
+ 109              		.cfi_def_cfa_offset 16
+ 110              		.cfi_offset 4, -16
+ 111              		.cfi_offset 5, -12
+ 112              		.cfi_offset 6, -8
+ 113              		.cfi_offset 14, -4
+ 114 0002 0500     		movs	r5, r0
+ 115 0004 0C00     		movs	r4, r1
+ 116              	.LBB4:
+ 117              	.LBB5:
+  32:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ 118              		.loc 1 32 0
+ 119 0006 094B     		ldr	r3, .L8
+ 120 0008 0948     		ldr	r0, .L8+4
+ 121              	.LVL3:
+ 122 000a 1A68     		ldr	r2, [r3]
+ 123 000c 5043     		muls	r0, r2
+ 124 000e 094A     		ldr	r2, .L8+8
+ 125 0010 9446     		mov	ip, r2
+ 126 0012 6044     		add	r0, r0, ip
+ 127 0014 1860     		str	r0, [r3]
+ 128 0016 0849     		ldr	r1, .L8+12
+ 129              	.LVL4:
+ 130 0018 FFF7FEFF 		bl	__aeabi_uidivmod
+ 131              	.LVL5:
+ 132 001c 0800     		movs	r0, r1
+ 133              	.LBE5:
+ARM GAS  /tmp/cco3Pbva.s 			page 4
+
+
+ 134              	.LBE4:
+  43:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     return ( int32_t )rand1( ) % ( max - min + 1 ) + min;
+ 135              		.loc 1 43 0
+ 136 001e 611B     		subs	r1, r4, r5
+ 137 0020 0131     		adds	r1, r1, #1
+ 138 0022 FFF7FEFF 		bl	__aeabi_idivmod
+ 139              	.LVL6:
+ 140 0026 4819     		adds	r0, r1, r5
+  44:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ 141              		.loc 1 44 0
+ 142              		@ sp needed
+ 143              	.LVL7:
+ 144              	.LVL8:
+ 145 0028 70BD     		pop	{r4, r5, r6, pc}
+ 146              	.L9:
+ 147 002a C046     		.align	2
+ 148              	.L8:
+ 149 002c 00000000 		.word	.LANCHOR0
+ 150 0030 6D4EC641 		.word	1103515245
+ 151 0034 39300000 		.word	12345
+ 152 0038 FFFFFF7F 		.word	2147483647
+ 153              		.cfi_endproc
+ 154              	.LFE87:
+ 156              		.section	.text.memcpy1,"ax",%progbits
+ 157              		.align	1
+ 158              		.global	memcpy1
+ 159              		.syntax unified
+ 160              		.code	16
+ 161              		.thumb_func
+ 162              		.fpu softvfp
+ 164              	memcpy1:
+ 165              	.LFB88:
+  45:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  46:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** void memcpy1( uint8_t *dst, const uint8_t *src, uint16_t size )
+  47:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+ 166              		.loc 1 47 0
+ 167              		.cfi_startproc
+ 168              		@ args = 0, pretend = 0, frame = 0
+ 169              		@ frame_needed = 0, uses_anonymous_args = 0
+ 170              		@ link register save eliminated.
+ 171              	.LVL9:
+  48:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 172              		.loc 1 48 0
+ 173 0000 04E0     		b	.L11
+ 174              	.LVL10:
+ 175              	.L12:
+  49:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  50:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         *dst++ = *src++;
+ 176              		.loc 1 50 0
+ 177 0002 0A78     		ldrb	r2, [r1]
+ 178 0004 0270     		strb	r2, [r0]
+  48:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 179              		.loc 1 48 0
+ 180 0006 1A00     		movs	r2, r3
+ 181              		.loc 1 50 0
+ 182 0008 0131     		adds	r1, r1, #1
+ 183              	.LVL11:
+ARM GAS  /tmp/cco3Pbva.s 			page 5
+
+
+ 184 000a 0130     		adds	r0, r0, #1
+ 185              	.LVL12:
+ 186              	.L11:
+  48:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 187              		.loc 1 48 0
+ 188 000c 531E     		subs	r3, r2, #1
+ 189 000e 9BB2     		uxth	r3, r3
+ 190              	.LVL13:
+ 191 0010 002A     		cmp	r2, #0
+ 192 0012 F6D1     		bne	.L12
+  51:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  52:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ 193              		.loc 1 52 0
+ 194              		@ sp needed
+ 195 0014 7047     		bx	lr
+ 196              		.cfi_endproc
+ 197              	.LFE88:
+ 199              		.section	.text.memcpyr,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	memcpyr
+ 202              		.syntax unified
+ 203              		.code	16
+ 204              		.thumb_func
+ 205              		.fpu softvfp
+ 207              	memcpyr:
+ 208              	.LFB89:
+  53:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  54:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** void memcpyr( uint8_t *dst, const uint8_t *src, uint16_t size )
+  55:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+ 209              		.loc 1 55 0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 214              	.LVL14:
+  56:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     dst = dst + ( size - 1 );
+ 215              		.loc 1 56 0
+ 216 0000 531E     		subs	r3, r2, #1
+ 217 0002 C018     		adds	r0, r0, r3
+ 218              	.LVL15:
+  57:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 219              		.loc 1 57 0
+ 220 0004 04E0     		b	.L14
+ 221              	.LVL16:
+ 222              	.L15:
+  58:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  59:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         *dst-- = *src++;
+ 223              		.loc 1 59 0
+ 224 0006 0A78     		ldrb	r2, [r1]
+ 225 0008 0270     		strb	r2, [r0]
+  57:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 226              		.loc 1 57 0
+ 227 000a 1A00     		movs	r2, r3
+ 228              		.loc 1 59 0
+ 229 000c 0131     		adds	r1, r1, #1
+ 230              	.LVL17:
+ 231 000e 0138     		subs	r0, r0, #1
+ARM GAS  /tmp/cco3Pbva.s 			page 6
+
+
+ 232              	.LVL18:
+ 233              	.L14:
+  57:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 234              		.loc 1 57 0
+ 235 0010 531E     		subs	r3, r2, #1
+ 236 0012 9BB2     		uxth	r3, r3
+ 237              	.LVL19:
+ 238 0014 002A     		cmp	r2, #0
+ 239 0016 F6D1     		bne	.L15
+  60:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  61:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ 240              		.loc 1 61 0
+ 241              		@ sp needed
+ 242 0018 7047     		bx	lr
+ 243              		.cfi_endproc
+ 244              	.LFE89:
+ 246              		.section	.text.memset1,"ax",%progbits
+ 247              		.align	1
+ 248              		.global	memset1
+ 249              		.syntax unified
+ 250              		.code	16
+ 251              		.thumb_func
+ 252              		.fpu softvfp
+ 254              	memset1:
+ 255              	.LFB90:
+  62:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  63:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** void memset1( uint8_t *dst, uint8_t value, uint16_t size )
+  64:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+ 256              		.loc 1 64 0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		@ link register save eliminated.
+ 261              	.LVL20:
+  65:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 262              		.loc 1 65 0
+ 263 0000 02E0     		b	.L17
+ 264              	.LVL21:
+ 265              	.L18:
+  66:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  67:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         *dst++ = value;
+ 266              		.loc 1 67 0
+ 267 0002 0170     		strb	r1, [r0]
+  65:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 268              		.loc 1 65 0
+ 269 0004 1A00     		movs	r2, r3
+ 270              		.loc 1 67 0
+ 271 0006 0130     		adds	r0, r0, #1
+ 272              	.LVL22:
+ 273              	.L17:
+  65:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     while( size-- )
+ 274              		.loc 1 65 0
+ 275 0008 531E     		subs	r3, r2, #1
+ 276 000a 9BB2     		uxth	r3, r3
+ 277              	.LVL23:
+ 278 000c 002A     		cmp	r2, #0
+ 279 000e F8D1     		bne	.L18
+ARM GAS  /tmp/cco3Pbva.s 			page 7
+
+
+  68:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  69:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ 280              		.loc 1 69 0
+ 281              		@ sp needed
+ 282 0010 7047     		bx	lr
+ 283              		.cfi_endproc
+ 284              	.LFE90:
+ 286              		.section	.text.Nibble2HexChar,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	Nibble2HexChar
+ 289              		.syntax unified
+ 290              		.code	16
+ 291              		.thumb_func
+ 292              		.fpu softvfp
+ 294              	Nibble2HexChar:
+ 295              	.LFB91:
+  70:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** 
+  71:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** int8_t Nibble2HexChar( uint8_t a )
+  72:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** {
+ 296              		.loc 1 72 0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300              		@ link register save eliminated.
+ 301              	.LVL24:
+  73:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     if( a < 10 )
+ 302              		.loc 1 73 0
+ 303 0000 0928     		cmp	r0, #9
+ 304 0002 04D9     		bls	.L23
+  74:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  75:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         return '0' + a;
+  76:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  77:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     else if( a < 16 )
+ 305              		.loc 1 77 0
+ 306 0004 0F28     		cmp	r0, #15
+ 307 0006 05D8     		bhi	.L22
+  78:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  79:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         return 'A' + ( a - 10 );
+ 308              		.loc 1 79 0
+ 309 0008 3730     		adds	r0, r0, #55
+ 310              	.LVL25:
+ 311 000a 40B2     		sxtb	r0, r0
+ 312 000c 01E0     		b	.L21
+ 313              	.LVL26:
+ 314              	.L23:
+  75:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+ 315              		.loc 1 75 0
+ 316 000e 3030     		adds	r0, r0, #48
+ 317              	.LVL27:
+ 318 0010 40B2     		sxtb	r0, r0
+ 319              	.L21:
+  80:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  81:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     else
+  82:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     {
+  83:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****         return '?';
+  84:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+  85:./Middlewares/Third_Party/Lora/Utilities/utilities.c **** }
+ARM GAS  /tmp/cco3Pbva.s 			page 8
+
+
+ 320              		.loc 1 85 0
+ 321              		@ sp needed
+ 322 0012 7047     		bx	lr
+ 323              	.LVL28:
+ 324              	.L22:
+  83:./Middlewares/Third_Party/Lora/Utilities/utilities.c ****     }
+ 325              		.loc 1 83 0
+ 326 0014 3F20     		movs	r0, #63
+ 327              	.LVL29:
+ 328 0016 FCE7     		b	.L21
+ 329              		.cfi_endproc
+ 330              	.LFE91:
+ 332              		.section	.data.next,"aw",%progbits
+ 333              		.align	2
+ 334              		.set	.LANCHOR0,. + 0
+ 337              	next:
+ 338 0000 01000000 		.word	1
+ 339              		.text
+ 340              	.Letext0:
+ 341              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 342              		.file 3 "/usr/arm-none-eabi/include/sys/lock.h"
+ 343              		.file 4 "/usr/arm-none-eabi/include/sys/_types.h"
+ 344              		.file 5 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 345              		.file 6 "/usr/arm-none-eabi/include/sys/reent.h"
+ 346              		.file 7 "/usr/arm-none-eabi/include/stdlib.h"
+ 347              		.file 8 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 348              		.file 9 "/usr/arm-none-eabi/include/math.h"
+ARM GAS  /tmp/cco3Pbva.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 utilities.c
+     /tmp/cco3Pbva.s:17     .text.rand1:0000000000000000 $t
+     /tmp/cco3Pbva.s:24     .text.rand1:0000000000000000 rand1
+     /tmp/cco3Pbva.s:55     .text.rand1:000000000000001c $d
+     /tmp/cco3Pbva.s:63     .text.srand1:0000000000000000 $t
+     /tmp/cco3Pbva.s:70     .text.srand1:0000000000000000 srand1
+     /tmp/cco3Pbva.s:87     .text.srand1:0000000000000008 $d
+     /tmp/cco3Pbva.s:93     .text.randr:0000000000000000 $t
+     /tmp/cco3Pbva.s:100    .text.randr:0000000000000000 randr
+     /tmp/cco3Pbva.s:149    .text.randr:000000000000002c $d
+     /tmp/cco3Pbva.s:157    .text.memcpy1:0000000000000000 $t
+     /tmp/cco3Pbva.s:164    .text.memcpy1:0000000000000000 memcpy1
+     /tmp/cco3Pbva.s:200    .text.memcpyr:0000000000000000 $t
+     /tmp/cco3Pbva.s:207    .text.memcpyr:0000000000000000 memcpyr
+     /tmp/cco3Pbva.s:247    .text.memset1:0000000000000000 $t
+     /tmp/cco3Pbva.s:254    .text.memset1:0000000000000000 memset1
+     /tmp/cco3Pbva.s:287    .text.Nibble2HexChar:0000000000000000 $t
+     /tmp/cco3Pbva.s:294    .text.Nibble2HexChar:0000000000000000 Nibble2HexChar
+     /tmp/cco3Pbva.s:333    .data.next:0000000000000000 $d
+     /tmp/cco3Pbva.s:337    .data.next:0000000000000000 next
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+__aeabi_uidivmod
+__aeabi_idivmod

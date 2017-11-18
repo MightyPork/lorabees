@@ -1,0 +1,844 @@
+ARM GAS  /tmp/ccUuuSOT.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"cmac.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.AES_CMAC_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	AES_CMAC_Init
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	AES_CMAC_Init:
+  24              	.LFB82:
+  25              		.file 1 "./Middlewares/Third_Party/Lora/Crypto/cmac.c"
+   1:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** /**************************************************************************
+   2:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** Copyright (C) 2009 Lander Casado, Philippas Tsigas
+   3:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+   4:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** All rights reserved.
+   5:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+   6:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** Permission is hereby granted, free of charge, to any person obtaining
+   7:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** a copy of this software and associated documentation files 
+   8:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** (the "Software"), to deal with the Software without restriction, including
+   9:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** without limitation the rights to use, copy, modify, merge, publish, 
+  10:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** distribute, sublicense, and/or sell copies of the Software, and to
+  11:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** permit persons to whom the Software is furnished to do so, subject to
+  12:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** the following conditions: 
+  13:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  14:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** Redistributions of source code must retain the above copyright notice, 
+  15:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** this list of conditions and the following disclaimers. Redistributions in
+  16:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** binary form must reproduce the above copyright notice, this list of
+  17:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** conditions and the following disclaimers in the documentation and/or 
+  18:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** other materials provided with the distribution.
+  19:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  20:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** In no event shall the authors or copyright holders be liable for any special,
+  21:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** incidental, indirect or consequential damages of any kind, or any damages 
+  22:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** whatsoever resulting from loss of use, data or profits, whether or not 
+  23:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** advised of the possibility of damage, and on any theory of liability, 
+  24:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** arising out of or in connection with the use or performance of this software.
+  25:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****  
+  26:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  27:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  28:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  29:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  30:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+  31:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+  32:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** DEALINGS WITH THE SOFTWARE
+  33:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ARM GAS  /tmp/ccUuuSOT.s 			page 2
+
+
+  34:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** *****************************************************************************/
+  35:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** //#include <sys/param.h>
+  36:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** //#include <sys/systm.h> 
+  37:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #include <stdint.h>
+  38:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #include "aes.h"
+  39:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #include "cmac.h"
+  40:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #include "utilities.h"
+  41:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  42:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #define LSHIFT(v, r) do {                                       \
+  43:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****   int32_t i;                                                  \
+  44:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            for (i = 0; i < 15; i++)                                \
+  45:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     (r)[i] = (v)[i] << 1 | (v)[i + 1] >> 7;         \
+  46:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             (r)[15] = (v)[15] << 1;                                 \
+  47:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     } while (0)
+  48:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     
+  49:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** #define XOR(v, r) do {                                          \
+  50:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             int32_t i;                                                  \
+  51:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             for (i = 0; i < 16; i++)     \
+  52:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****         {   \
+  53:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     (r)[i] = (r)[i] ^ (v)[i]; \
+  54:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****         }                          \
+  55:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     } while (0) \
+  56:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  57:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  58:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** void AES_CMAC_Init(AES_CMAC_CTX *ctx)
+  59:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** {
+  26              		.loc 1 59 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 0400     		movs	r4, r0
+  60:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             memset1(ctx->X, 0, sizeof ctx->X);
+  37              		.loc 1 60 0
+  38 0004 F130     		adds	r0, r0, #241
+  39              	.LVL1:
+  40 0006 1022     		movs	r2, #16
+  41 0008 0021     		movs	r1, #0
+  42 000a FFF7FEFF 		bl	memset1
+  43              	.LVL2:
+  61:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             ctx->M_n = 0;
+  44              		.loc 1 61 0
+  45 000e 8A23     		movs	r3, #138
+  46 0010 5B00     		lsls	r3, r3, #1
+  47 0012 0022     		movs	r2, #0
+  48 0014 E250     		str	r2, [r4, r3]
+  62:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****         memset1(ctx->rijndael.ksch, '\0', 240);
+  49              		.loc 1 62 0
+  50 0016 F032     		adds	r2, r2, #240
+  51 0018 0021     		movs	r1, #0
+  52 001a 2000     		movs	r0, r4
+  53 001c FFF7FEFF 		bl	memset1
+ARM GAS  /tmp/ccUuuSOT.s 			page 3
+
+
+  54              	.LVL3:
+  63:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** }
+  55              		.loc 1 63 0
+  56              		@ sp needed
+  57              	.LVL4:
+  58 0020 10BD     		pop	{r4, pc}
+  59              		.cfi_endproc
+  60              	.LFE82:
+  62              		.section	.text.AES_CMAC_SetKey,"ax",%progbits
+  63              		.align	1
+  64              		.global	AES_CMAC_SetKey
+  65              		.syntax unified
+  66              		.code	16
+  67              		.thumb_func
+  68              		.fpu softvfp
+  70              	AES_CMAC_SetKey:
+  71              	.LFB83:
+  64:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     
+  65:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** void AES_CMAC_SetKey(AES_CMAC_CTX *ctx, const uint8_t key[AES_CMAC_KEY_LENGTH])
+  66:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** {
+  72              		.loc 1 66 0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              	.LVL5:
+  77 0000 10B5     		push	{r4, lr}
+  78              	.LCFI1:
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 4, -8
+  81              		.cfi_offset 14, -4
+  82 0002 0200     		movs	r2, r0
+  83 0004 0800     		movs	r0, r1
+  84              	.LVL6:
+  67:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            //rijndael_set_key_enc_only(&ctx->rijndael, key, 128);
+  68:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****        aes_set_key( key, AES_CMAC_KEY_LENGTH, &ctx->rijndael);
+  85              		.loc 1 68 0
+  86 0006 1021     		movs	r1, #16
+  87              	.LVL7:
+  88 0008 FFF7FEFF 		bl	aes_set_key
+  89              	.LVL8:
+  69:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** }
+  90              		.loc 1 69 0
+  91              		@ sp needed
+  92 000c 10BD     		pop	{r4, pc}
+  93              		.cfi_endproc
+  94              	.LFE83:
+  96              		.section	.text.AES_CMAC_Update,"ax",%progbits
+  97              		.align	1
+  98              		.global	AES_CMAC_Update
+  99              		.syntax unified
+ 100              		.code	16
+ 101              		.thumb_func
+ 102              		.fpu softvfp
+ 104              	AES_CMAC_Update:
+ 105              	.LFB84:
+  70:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     
+  71:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** void AES_CMAC_Update(AES_CMAC_CTX *ctx, const uint8_t *data, uint32_t len)
+ARM GAS  /tmp/ccUuuSOT.s 			page 4
+
+
+  72:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** {
+ 106              		.loc 1 72 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 16
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              	.LVL9:
+ 111 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 112              	.LCFI2:
+ 113              		.cfi_def_cfa_offset 20
+ 114              		.cfi_offset 4, -20
+ 115              		.cfi_offset 5, -16
+ 116              		.cfi_offset 6, -12
+ 117              		.cfi_offset 7, -8
+ 118              		.cfi_offset 14, -4
+ 119 0002 C646     		mov	lr, r8
+ 120 0004 00B5     		push	{lr}
+ 121              	.LCFI3:
+ 122              		.cfi_def_cfa_offset 24
+ 123              		.cfi_offset 8, -24
+ 124 0006 84B0     		sub	sp, sp, #16
+ 125              	.LCFI4:
+ 126              		.cfi_def_cfa_offset 40
+ 127 0008 0400     		movs	r4, r0
+ 128 000a 0D00     		movs	r5, r1
+ 129 000c 1600     		movs	r6, r2
+  73:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             uint32_t mlen;
+  74:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****         uint8_t in[16];
+  75:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****     
+  76:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             if (ctx->M_n > 0) {
+ 130              		.loc 1 76 0
+ 131 000e 8A23     		movs	r3, #138
+ 132 0010 5B00     		lsls	r3, r3, #1
+ 133 0012 C058     		ldr	r0, [r0, r3]
+ 134              	.LVL10:
+ 135 0014 0028     		cmp	r0, #0
+ 136 0016 4AD0     		beq	.L9
+  77:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                   mlen = MIN(16 - ctx->M_n, len);
+ 137              		.loc 1 77 0
+ 138 0018 053B     		subs	r3, r3, #5
+ 139 001a FF3B     		subs	r3, r3, #255
+ 140 001c 1B1A     		subs	r3, r3, r0
+ 141 001e 9846     		mov	r8, r3
+ 142 0020 1F00     		movs	r7, r3
+ 143 0022 9342     		cmp	r3, r2
+ 144 0024 00D9     		bls	.L5
+ 145 0026 1700     		movs	r7, r2
+ 146              	.L5:
+ 147              	.LVL11:
+  78:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     memcpy1(ctx->M_last + ctx->M_n, data, mlen);
+ 148              		.loc 1 78 0
+ 149 0028 A31C     		adds	r3, r4, #2
+ 150 002a FF33     		adds	r3, r3, #255
+ 151 002c BAB2     		uxth	r2, r7
+ 152              	.LVL12:
+ 153 002e 1818     		adds	r0, r3, r0
+ 154 0030 2900     		movs	r1, r5
+ 155              	.LVL13:
+ARM GAS  /tmp/ccUuuSOT.s 			page 5
+
+
+ 156 0032 FFF7FEFF 		bl	memcpy1
+ 157              	.LVL14:
+  79:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     ctx->M_n += mlen;
+ 158              		.loc 1 79 0
+ 159 0036 8A22     		movs	r2, #138
+ 160 0038 5200     		lsls	r2, r2, #1
+ 161 003a A358     		ldr	r3, [r4, r2]
+ 162 003c FB18     		adds	r3, r7, r3
+ 163 003e A350     		str	r3, [r4, r2]
+  80:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     if (ctx->M_n < 16 || len == mlen)
+ 164              		.loc 1 80 0
+ 165 0040 0F2B     		cmp	r3, #15
+ 166 0042 41D9     		bls	.L3
+ 167              		.loc 1 80 0 is_stmt 0 discriminator 1
+ 168 0044 B045     		cmp	r8, r6
+ 169 0046 3FD2     		bcs	.L3
+ 170              	.LBB2:
+  81:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                             return;
+  82:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    XOR(ctx->M_last, ctx->X);
+ 171              		.loc 1 82 0 is_stmt 1
+ 172 0048 0022     		movs	r2, #0
+ 173 004a 09E0     		b	.L7
+ 174              	.LVL15:
+ 175              	.L8:
+ 176              		.loc 1 82 0 is_stmt 0 discriminator 3
+ 177 004c A318     		adds	r3, r4, r2
+ 178 004e 1800     		movs	r0, r3
+ 179 0050 F130     		adds	r0, r0, #241
+ 180 0052 0178     		ldrb	r1, [r0]
+ 181 0054 0233     		adds	r3, r3, #2
+ 182 0056 FF33     		adds	r3, r3, #255
+ 183 0058 1B78     		ldrb	r3, [r3]
+ 184 005a 4B40     		eors	r3, r1
+ 185 005c 0370     		strb	r3, [r0]
+ 186 005e 0132     		adds	r2, r2, #1
+ 187              	.LVL16:
+ 188              	.L7:
+ 189              		.loc 1 82 0 discriminator 1
+ 190 0060 0F2A     		cmp	r2, #15
+ 191 0062 F3DD     		ble	.L8
+ 192              	.LBE2:
+  83:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     //rijndael_encrypt(&ctx->rijndael, ctx->X, ctx->X);
+  84:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             aes_encrypt( ctx->X, ctx->X, &ctx->rijndael);
+ 193              		.loc 1 84 0 is_stmt 1
+ 194 0064 2200     		movs	r2, r4
+ 195              	.LVL17:
+ 196 0066 2000     		movs	r0, r4
+ 197 0068 F130     		adds	r0, r0, #241
+ 198 006a 0100     		movs	r1, r0
+ 199 006c FFF7FEFF 		bl	aes_encrypt
+ 200              	.LVL18:
+  85:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     data += mlen;
+ 201              		.loc 1 85 0
+ 202 0070 ED19     		adds	r5, r5, r7
+ 203              	.LVL19:
+  86:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     len -= mlen;
+ 204              		.loc 1 86 0
+ARM GAS  /tmp/ccUuuSOT.s 			page 6
+
+
+ 205 0072 F61B     		subs	r6, r6, r7
+ 206              	.LVL20:
+ 207 0074 1BE0     		b	.L9
+ 208              	.LVL21:
+ 209              	.L10:
+ 210              	.LBB3:
+  87:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             }
+  88:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             while (len > 16) {      /* not last block */
+  89:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  90:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     XOR(data, ctx->X);
+ 211              		.loc 1 90 0 discriminator 3
+ 212 0076 E218     		adds	r2, r4, r3
+ 213 0078 F132     		adds	r2, r2, #241
+ 214 007a 1178     		ldrb	r1, [r2]
+ 215 007c E85C     		ldrb	r0, [r5, r3]
+ 216 007e 4140     		eors	r1, r0
+ 217 0080 1170     		strb	r1, [r2]
+ 218 0082 0133     		adds	r3, r3, #1
+ 219              	.LVL22:
+ 220              	.L11:
+ 221              		.loc 1 90 0 is_stmt 0 discriminator 1
+ 222 0084 0F2B     		cmp	r3, #15
+ 223 0086 F6DD     		ble	.L10
+ 224              	.LBE3:
+  91:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     //rijndael_encrypt(&ctx->rijndael, ctx->X, ctx->X);
+  92:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  93:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     memcpy1(in, &ctx->X[0], 16); //Bestela ez du ondo iten
+ 225              		.loc 1 93 0 is_stmt 1
+ 226 0088 1022     		movs	r2, #16
+ 227 008a 2700     		movs	r7, r4
+ 228 008c F137     		adds	r7, r7, #241
+ 229 008e 3900     		movs	r1, r7
+ 230 0090 6846     		mov	r0, sp
+ 231 0092 FFF7FEFF 		bl	memcpy1
+ 232              	.LVL23:
+  94:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             aes_encrypt( in, in, &ctx->rijndael);
+ 233              		.loc 1 94 0
+ 234 0096 2200     		movs	r2, r4
+ 235 0098 6946     		mov	r1, sp
+ 236 009a 6846     		mov	r0, sp
+ 237 009c FFF7FEFF 		bl	aes_encrypt
+ 238              	.LVL24:
+  95:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     memcpy1(&ctx->X[0], in, 16);
+ 239              		.loc 1 95 0
+ 240 00a0 1022     		movs	r2, #16
+ 241 00a2 6946     		mov	r1, sp
+ 242 00a4 3800     		movs	r0, r7
+ 243 00a6 FFF7FEFF 		bl	memcpy1
+ 244              	.LVL25:
+  96:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+  97:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     data += 16;
+ 245              		.loc 1 97 0
+ 246 00aa 1035     		adds	r5, r5, #16
+ 247              	.LVL26:
+  98:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     len -= 16;
+ 248              		.loc 1 98 0
+ 249 00ac 103E     		subs	r6, r6, #16
+ARM GAS  /tmp/ccUuuSOT.s 			page 7
+
+
+ 250              	.LVL27:
+ 251              	.L9:
+  88:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 252              		.loc 1 88 0
+ 253 00ae 102E     		cmp	r6, #16
+ 254 00b0 01D9     		bls	.L14
+ 255              	.LBB4:
+  90:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     //rijndael_encrypt(&ctx->rijndael, ctx->X, ctx->X);
+ 256              		.loc 1 90 0
+ 257 00b2 0023     		movs	r3, #0
+ 258 00b4 E6E7     		b	.L11
+ 259              	.L14:
+ 260              	.LBE4:
+  99:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             }
+ 100:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             /* potential last block, save it */
+ 101:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             memcpy1(ctx->M_last, data, len);
+ 261              		.loc 1 101 0
+ 262 00b6 A01C     		adds	r0, r4, #2
+ 263 00b8 FF30     		adds	r0, r0, #255
+ 264 00ba B2B2     		uxth	r2, r6
+ 265 00bc 2900     		movs	r1, r5
+ 266 00be FFF7FEFF 		bl	memcpy1
+ 267              	.LVL28:
+ 102:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             ctx->M_n = len;
+ 268              		.loc 1 102 0
+ 269 00c2 8A23     		movs	r3, #138
+ 270 00c4 5B00     		lsls	r3, r3, #1
+ 271 00c6 E650     		str	r6, [r4, r3]
+ 272              	.L3:
+ 103:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** }
+ 273              		.loc 1 103 0
+ 274 00c8 04B0     		add	sp, sp, #16
+ 275              		@ sp needed
+ 276              	.LVL29:
+ 277              	.LVL30:
+ 278              	.LVL31:
+ 279 00ca 04BC     		pop	{r2}
+ 280 00cc 9046     		mov	r8, r2
+ 281 00ce F0BD     		pop	{r4, r5, r6, r7, pc}
+ 282              		.cfi_endproc
+ 283              	.LFE84:
+ 285              		.section	.text.AES_CMAC_Final,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	AES_CMAC_Final
+ 288              		.syntax unified
+ 289              		.code	16
+ 290              		.thumb_func
+ 291              		.fpu softvfp
+ 293              	AES_CMAC_Final:
+ 294              	.LFB85:
+ 104:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****    
+ 105:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** void AES_CMAC_Final(uint8_t digest[AES_CMAC_DIGEST_LENGTH], AES_CMAC_CTX *ctx)
+ 106:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** {
+ 295              		.loc 1 106 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 32
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccUuuSOT.s 			page 8
+
+
+ 299              	.LVL32:
+ 300 0000 70B5     		push	{r4, r5, r6, lr}
+ 301              	.LCFI5:
+ 302              		.cfi_def_cfa_offset 16
+ 303              		.cfi_offset 4, -16
+ 304              		.cfi_offset 5, -12
+ 305              		.cfi_offset 6, -8
+ 306              		.cfi_offset 14, -4
+ 307 0002 88B0     		sub	sp, sp, #32
+ 308              	.LCFI6:
+ 309              		.cfi_def_cfa_offset 48
+ 310 0004 0400     		movs	r4, r0
+ 311 0006 0D00     		movs	r5, r1
+ 107:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             uint8_t K[16];
+ 108:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****         uint8_t in[16];
+ 109:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             /* generate subkey K1 */
+ 110:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             memset1(K, '\0', 16);
+ 312              		.loc 1 110 0
+ 313 0008 04AE     		add	r6, sp, #16
+ 314 000a 1022     		movs	r2, #16
+ 315 000c 0021     		movs	r1, #0
+ 316              	.LVL33:
+ 317 000e 3000     		movs	r0, r6
+ 318              	.LVL34:
+ 319 0010 FFF7FEFF 		bl	memset1
+ 320              	.LVL35:
+ 111:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 112:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             //rijndael_encrypt(&ctx->rijndael, K, K);
+ 113:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 114:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             aes_encrypt( K, K, &ctx->rijndael);
+ 321              		.loc 1 114 0
+ 322 0014 2A00     		movs	r2, r5
+ 323 0016 3100     		movs	r1, r6
+ 324 0018 3000     		movs	r0, r6
+ 325 001a FFF7FEFF 		bl	aes_encrypt
+ 326              	.LVL36:
+ 115:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 116:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             if (K[0] & 0x80) {
+ 327              		.loc 1 116 0
+ 328 001e 0023     		movs	r3, #0
+ 329 0020 F356     		ldrsb	r3, [r6, r3]
+ 330 0022 002B     		cmp	r3, #0
+ 331 0024 15DB     		blt	.L36
+ 332              	.LBB5:
+ 117:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 118:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    K[15] ^= 0x87;
+ 119:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             } else
+ 120:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 333              		.loc 1 120 0
+ 334 0026 0022     		movs	r2, #0
+ 335 0028 1EE0     		b	.L17
+ 336              	.LVL37:
+ 337              	.L18:
+ 338              	.LBE5:
+ 339              	.LBB6:
+ 117:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 340              		.loc 1 117 0 discriminator 3
+ARM GAS  /tmp/ccUuuSOT.s 			page 9
+
+
+ 341 002a 04A9     		add	r1, sp, #16
+ 342 002c 885C     		ldrb	r0, [r1, r2]
+ 343 002e 4000     		lsls	r0, r0, #1
+ 344 0030 561C     		adds	r6, r2, #1
+ 345 0032 8B5D     		ldrb	r3, [r1, r6]
+ 346 0034 DB09     		lsrs	r3, r3, #7
+ 347 0036 0343     		orrs	r3, r0
+ 348 0038 8B54     		strb	r3, [r1, r2]
+ 349              	.LVL38:
+ 350 003a 3200     		movs	r2, r6
+ 351              	.LVL39:
+ 352              	.L16:
+ 117:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 353              		.loc 1 117 0 is_stmt 0 discriminator 1
+ 354 003c 0E2A     		cmp	r2, #14
+ 355 003e F4DD     		ble	.L18
+ 117:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 356              		.loc 1 117 0 discriminator 4
+ 357 0040 04A9     		add	r1, sp, #16
+ 358 0042 CB7B     		ldrb	r3, [r1, #15]
+ 359 0044 5B00     		lsls	r3, r3, #1
+ 360 0046 DBB2     		uxtb	r3, r3
+ 361              	.LBE6:
+ 118:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             } else
+ 362              		.loc 1 118 0 is_stmt 1 discriminator 4
+ 363 0048 7922     		movs	r2, #121
+ 364              	.LVL40:
+ 365 004a 5242     		rsbs	r2, r2, #0
+ 366 004c 5340     		eors	r3, r2
+ 367 004e CB73     		strb	r3, [r1, #15]
+ 368 0050 10E0     		b	.L19
+ 369              	.L36:
+ 370              	.LBB7:
+ 117:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     LSHIFT(K, K);
+ 371              		.loc 1 117 0
+ 372 0052 0022     		movs	r2, #0
+ 373 0054 F2E7     		b	.L16
+ 374              	.LVL41:
+ 375              	.L20:
+ 376              	.LBE7:
+ 377              	.LBB8:
+ 378              		.loc 1 120 0 discriminator 3
+ 379 0056 04A9     		add	r1, sp, #16
+ 380 0058 885C     		ldrb	r0, [r1, r2]
+ 381 005a 4000     		lsls	r0, r0, #1
+ 382 005c 561C     		adds	r6, r2, #1
+ 383 005e 8B5D     		ldrb	r3, [r1, r6]
+ 384 0060 DB09     		lsrs	r3, r3, #7
+ 385 0062 0343     		orrs	r3, r0
+ 386 0064 8B54     		strb	r3, [r1, r2]
+ 387              	.LVL42:
+ 388 0066 3200     		movs	r2, r6
+ 389              	.LVL43:
+ 390              	.L17:
+ 391              		.loc 1 120 0 is_stmt 0 discriminator 1
+ 392 0068 0E2A     		cmp	r2, #14
+ 393 006a F4DD     		ble	.L20
+ARM GAS  /tmp/ccUuuSOT.s 			page 10
+
+
+ 394              		.loc 1 120 0 discriminator 4
+ 395 006c 04AA     		add	r2, sp, #16
+ 396              	.LVL44:
+ 397 006e D37B     		ldrb	r3, [r2, #15]
+ 398 0070 5B00     		lsls	r3, r3, #1
+ 399 0072 D373     		strb	r3, [r2, #15]
+ 400              	.L19:
+ 401              	.LBE8:
+ 121:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 122:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 123:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****             if (ctx->M_n == 16) {
+ 402              		.loc 1 123 0 is_stmt 1
+ 403 0074 8A23     		movs	r3, #138
+ 404 0076 5B00     		lsls	r3, r3, #1
+ 405 0078 EB58     		ldr	r3, [r5, r3]
+ 406 007a 102B     		cmp	r3, #16
+ 407 007c 12D0     		beq	.L40
+ 124:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     /* last block was a complete block */
+ 125:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                     XOR(K, ctx->M_last);
+ 126:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 127:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            } else {
+ 128:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    /* generate subkey K2 */
+ 129:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                   if (K[0] & 0x80) {
+ 408              		.loc 1 129 0
+ 409 007e 04AB     		add	r3, sp, #16
+ 410 0080 1B78     		ldrb	r3, [r3]
+ 411 0082 5BB2     		sxtb	r3, r3
+ 412 0084 002B     		cmp	r3, #0
+ 413 0086 23DB     		blt	.L38
+ 414              	.LBB9:
+ 130:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           LSHIFT(K, K);
+ 131:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           K[15] ^= 0x87;
+ 132:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                   } else
+ 133:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                            LSHIFT(K, K);
+ 415              		.loc 1 133 0
+ 416 0088 0022     		movs	r2, #0
+ 417 008a 2CE0     		b	.L26
+ 418              	.LVL45:
+ 419              	.L23:
+ 420              	.LBE9:
+ 421              	.LBB10:
+ 125:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 422              		.loc 1 125 0 discriminator 3
+ 423 008c EA18     		adds	r2, r5, r3
+ 424 008e 0232     		adds	r2, r2, #2
+ 425 0090 FF32     		adds	r2, r2, #255
+ 426 0092 1178     		ldrb	r1, [r2]
+ 427 0094 04A8     		add	r0, sp, #16
+ 428 0096 C05C     		ldrb	r0, [r0, r3]
+ 429 0098 4140     		eors	r1, r0
+ 430 009a 1170     		strb	r1, [r2]
+ 431 009c 0133     		adds	r3, r3, #1
+ 432              	.LVL46:
+ 433              	.L21:
+ 125:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 434              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 435 009e 0F2B     		cmp	r3, #15
+ARM GAS  /tmp/ccUuuSOT.s 			page 11
+
+
+ 436 00a0 F4DD     		ble	.L23
+ 437 00a2 48E0     		b	.L24
+ 438              	.LVL47:
+ 439              	.L40:
+ 125:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 440              		.loc 1 125 0
+ 441 00a4 0023     		movs	r3, #0
+ 442 00a6 FAE7     		b	.L21
+ 443              	.LVL48:
+ 444              	.L27:
+ 445              	.LBE10:
+ 446              	.LBB11:
+ 130:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           LSHIFT(K, K);
+ 447              		.loc 1 130 0 is_stmt 1 discriminator 3
+ 448 00a8 04A9     		add	r1, sp, #16
+ 449 00aa 885C     		ldrb	r0, [r1, r2]
+ 450 00ac 4000     		lsls	r0, r0, #1
+ 451 00ae 561C     		adds	r6, r2, #1
+ 452 00b0 8B5D     		ldrb	r3, [r1, r6]
+ 453 00b2 DB09     		lsrs	r3, r3, #7
+ 454 00b4 0343     		orrs	r3, r0
+ 455 00b6 8B54     		strb	r3, [r1, r2]
+ 456              	.LVL49:
+ 457 00b8 3200     		movs	r2, r6
+ 458              	.LVL50:
+ 459              	.L25:
+ 130:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           LSHIFT(K, K);
+ 460              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 461 00ba 0E2A     		cmp	r2, #14
+ 462 00bc F4DD     		ble	.L27
+ 130:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           LSHIFT(K, K);
+ 463              		.loc 1 130 0 discriminator 4
+ 464 00be 04A9     		add	r1, sp, #16
+ 465 00c0 CB7B     		ldrb	r3, [r1, #15]
+ 466 00c2 5B00     		lsls	r3, r3, #1
+ 467 00c4 DBB2     		uxtb	r3, r3
+ 468              	.LBE11:
+ 131:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                   } else
+ 469              		.loc 1 131 0 is_stmt 1 discriminator 4
+ 470 00c6 7922     		movs	r2, #121
+ 471              	.LVL51:
+ 472 00c8 5242     		rsbs	r2, r2, #0
+ 473 00ca 5340     		eors	r3, r2
+ 474 00cc CB73     		strb	r3, [r1, #15]
+ 475 00ce 10E0     		b	.L28
+ 476              	.L38:
+ 477              	.LBB12:
+ 130:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                           LSHIFT(K, K);
+ 478              		.loc 1 130 0
+ 479 00d0 0022     		movs	r2, #0
+ 480 00d2 F2E7     		b	.L25
+ 481              	.LVL52:
+ 482              	.L29:
+ 483              	.LBE12:
+ 484              	.LBB13:
+ 485              		.loc 1 133 0 discriminator 3
+ 486 00d4 04A9     		add	r1, sp, #16
+ARM GAS  /tmp/ccUuuSOT.s 			page 12
+
+
+ 487 00d6 885C     		ldrb	r0, [r1, r2]
+ 488 00d8 4000     		lsls	r0, r0, #1
+ 489 00da 561C     		adds	r6, r2, #1
+ 490 00dc 8B5D     		ldrb	r3, [r1, r6]
+ 491 00de DB09     		lsrs	r3, r3, #7
+ 492 00e0 0343     		orrs	r3, r0
+ 493 00e2 8B54     		strb	r3, [r1, r2]
+ 494              	.LVL53:
+ 495 00e4 3200     		movs	r2, r6
+ 496              	.LVL54:
+ 497              	.L26:
+ 498              		.loc 1 133 0 is_stmt 0 discriminator 1
+ 499 00e6 0E2A     		cmp	r2, #14
+ 500 00e8 F4DD     		ble	.L29
+ 501              		.loc 1 133 0 discriminator 4
+ 502 00ea 04AA     		add	r2, sp, #16
+ 503              	.LVL55:
+ 504 00ec D37B     		ldrb	r3, [r2, #15]
+ 505 00ee 5B00     		lsls	r3, r3, #1
+ 506 00f0 D373     		strb	r3, [r2, #15]
+ 507              	.L28:
+ 508              	.LBE13:
+ 134:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 135:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    /* padding(M_last) */
+ 136:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    ctx->M_last[ctx->M_n] = 0x80;
+ 509              		.loc 1 136 0 is_stmt 1
+ 510 00f2 8A23     		movs	r3, #138
+ 511 00f4 5B00     		lsls	r3, r3, #1
+ 512 00f6 EB58     		ldr	r3, [r5, r3]
+ 513 00f8 EB18     		adds	r3, r5, r3
+ 514 00fa 0233     		adds	r3, r3, #2
+ 515 00fc FF33     		adds	r3, r3, #255
+ 516 00fe 8022     		movs	r2, #128
+ 517 0100 1A70     		strb	r2, [r3]
+ 137:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    while (++ctx->M_n < 16)
+ 518              		.loc 1 137 0
+ 519 0102 04E0     		b	.L30
+ 520              	.L31:
+ 138:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                          ctx->M_last[ctx->M_n] = 0;
+ 521              		.loc 1 138 0
+ 522 0104 EB18     		adds	r3, r5, r3
+ 523 0106 0233     		adds	r3, r3, #2
+ 524 0108 FF33     		adds	r3, r3, #255
+ 525 010a 0022     		movs	r2, #0
+ 526 010c 1A70     		strb	r2, [r3]
+ 527              	.L30:
+ 137:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                    while (++ctx->M_n < 16)
+ 528              		.loc 1 137 0
+ 529 010e 8A22     		movs	r2, #138
+ 530 0110 5200     		lsls	r2, r2, #1
+ 531 0112 AB58     		ldr	r3, [r5, r2]
+ 532 0114 0133     		adds	r3, r3, #1
+ 533 0116 AB50     		str	r3, [r5, r2]
+ 534 0118 0F2B     		cmp	r3, #15
+ 535 011a F3D9     		bls	.L31
+ 536              	.LBB14:
+ 139:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****    
+ARM GAS  /tmp/ccUuuSOT.s 			page 13
+
+
+ 140:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****                   XOR(K, ctx->M_last);
+ 537              		.loc 1 140 0
+ 538 011c 0023     		movs	r3, #0
+ 539 011e 08E0     		b	.L32
+ 540              	.LVL56:
+ 541              	.L33:
+ 542              		.loc 1 140 0 is_stmt 0 discriminator 3
+ 543 0120 EA18     		adds	r2, r5, r3
+ 544 0122 0232     		adds	r2, r2, #2
+ 545 0124 FF32     		adds	r2, r2, #255
+ 546 0126 1178     		ldrb	r1, [r2]
+ 547 0128 04A8     		add	r0, sp, #16
+ 548 012a C05C     		ldrb	r0, [r0, r3]
+ 549 012c 4140     		eors	r1, r0
+ 550 012e 1170     		strb	r1, [r2]
+ 551 0130 0133     		adds	r3, r3, #1
+ 552              	.LVL57:
+ 553              	.L32:
+ 554              		.loc 1 140 0 discriminator 1
+ 555 0132 0F2B     		cmp	r3, #15
+ 556 0134 F4DD     		ble	.L33
+ 557              	.LVL58:
+ 558              	.L24:
+ 559 0136 0022     		movs	r2, #0
+ 560 0138 09E0     		b	.L34
+ 561              	.LVL59:
+ 562              	.L35:
+ 563              	.LBE14:
+ 564              	.LBB15:
+ 141:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 142:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 143:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            }
+ 144:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            XOR(ctx->M_last, ctx->X);
+ 565              		.loc 1 144 0 is_stmt 1 discriminator 3
+ 566 013a AB18     		adds	r3, r5, r2
+ 567 013c 1800     		movs	r0, r3
+ 568 013e F130     		adds	r0, r0, #241
+ 569 0140 0178     		ldrb	r1, [r0]
+ 570 0142 0233     		adds	r3, r3, #2
+ 571 0144 FF33     		adds	r3, r3, #255
+ 572 0146 1B78     		ldrb	r3, [r3]
+ 573 0148 4B40     		eors	r3, r1
+ 574 014a 0370     		strb	r3, [r0]
+ 575 014c 0132     		adds	r2, r2, #1
+ 576              	.LVL60:
+ 577              	.L34:
+ 578              		.loc 1 144 0 is_stmt 0 discriminator 1
+ 579 014e 0F2A     		cmp	r2, #15
+ 580 0150 F3DD     		ble	.L35
+ 581              	.LBE15:
+ 145:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 146:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            //rijndael_encrypt(&ctx->rijndael, ctx->X, digest);
+ 147:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 148:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****        memcpy1(in, &ctx->X[0], 16); //Bestela ez du ondo iten
+ 582              		.loc 1 148 0 is_stmt 1
+ 583 0152 2900     		movs	r1, r5
+ 584 0154 F131     		adds	r1, r1, #241
+ARM GAS  /tmp/ccUuuSOT.s 			page 14
+
+
+ 585 0156 1022     		movs	r2, #16
+ 586              	.LVL61:
+ 587 0158 6846     		mov	r0, sp
+ 588 015a FFF7FEFF 		bl	memcpy1
+ 589              	.LVL62:
+ 149:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****        aes_encrypt(in, digest, &ctx->rijndael);
+ 590              		.loc 1 149 0
+ 591 015e 2A00     		movs	r2, r5
+ 592 0160 2100     		movs	r1, r4
+ 593 0162 6846     		mov	r0, sp
+ 594 0164 FFF7FEFF 		bl	aes_encrypt
+ 595              	.LVL63:
+ 150:./Middlewares/Third_Party/Lora/Crypto/cmac.c ****            memset1(K, 0, sizeof K);
+ 596              		.loc 1 150 0
+ 597 0168 1022     		movs	r2, #16
+ 598 016a 0021     		movs	r1, #0
+ 599 016c 04A8     		add	r0, sp, #16
+ 600 016e FFF7FEFF 		bl	memset1
+ 601              	.LVL64:
+ 151:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** 
+ 152:./Middlewares/Third_Party/Lora/Crypto/cmac.c **** }
+ 602              		.loc 1 152 0
+ 603 0172 08B0     		add	sp, sp, #32
+ 604              		@ sp needed
+ 605              	.LVL65:
+ 606              	.LVL66:
+ 607 0174 70BD     		pop	{r4, r5, r6, pc}
+ 608              		.cfi_endproc
+ 609              	.LFE85:
+ 611              		.text
+ 612              	.Letext0:
+ 613              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 614              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 615              		.file 4 "./Middlewares/Third_Party/Lora/Crypto/aes.h"
+ 616              		.file 5 "./Middlewares/Third_Party/Lora/Crypto/cmac.h"
+ 617              		.file 6 "/usr/arm-none-eabi/include/sys/lock.h"
+ 618              		.file 7 "/usr/arm-none-eabi/include/sys/_types.h"
+ 619              		.file 8 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 620              		.file 9 "/usr/arm-none-eabi/include/sys/reent.h"
+ 621              		.file 10 "/usr/arm-none-eabi/include/math.h"
+ 622              		.file 11 "Middlewares/Third_Party/Lora/Utilities/utilities.h"
+ARM GAS  /tmp/ccUuuSOT.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 cmac.c
+     /tmp/ccUuuSOT.s:16     .text.AES_CMAC_Init:0000000000000000 $t
+     /tmp/ccUuuSOT.s:23     .text.AES_CMAC_Init:0000000000000000 AES_CMAC_Init
+     /tmp/ccUuuSOT.s:63     .text.AES_CMAC_SetKey:0000000000000000 $t
+     /tmp/ccUuuSOT.s:70     .text.AES_CMAC_SetKey:0000000000000000 AES_CMAC_SetKey
+     /tmp/ccUuuSOT.s:97     .text.AES_CMAC_Update:0000000000000000 $t
+     /tmp/ccUuuSOT.s:104    .text.AES_CMAC_Update:0000000000000000 AES_CMAC_Update
+     /tmp/ccUuuSOT.s:286    .text.AES_CMAC_Final:0000000000000000 $t
+     /tmp/ccUuuSOT.s:293    .text.AES_CMAC_Final:0000000000000000 AES_CMAC_Final
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+memset1
+aes_set_key
+memcpy1
+aes_encrypt

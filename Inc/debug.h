@@ -69,7 +69,7 @@
 
 void DBG_Init( void );
 
-void Error_Handler( void );
+//void Error_Handler( void );
 
 #ifdef DEBUG
 
@@ -115,6 +115,10 @@ void Error_Handler( void );
 #define DBG_RTC_OUTPUT RTC_OUTPUT_DISABLE;
 
 #endif /* DEBUG */
+
+ void _Error_Handler(char *, int);
+
+#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
 
 #ifdef __cplusplus
 }

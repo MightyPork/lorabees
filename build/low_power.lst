@@ -1,0 +1,657 @@
+ARM GAS  /tmp/ccBl10G9.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"low_power.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.LowPower_Disable,"ax",%progbits
+  16              		.align	1
+  17              		.global	LowPower_Disable
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	LowPower_Disable:
+  24              	.LFB96:
+  25              		.file 1 "./Middlewares/Third_Party/Lora/Utilities/low_power.c"
+   1:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  /*******************************************************************************
+   2:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @file    low_power.c
+   3:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @author  MCD Application Team
+   4:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @version V1.1.2
+   5:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @date    08-September-2017
+   6:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @brief   driver for low power
+   7:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   ******************************************************************************
+   8:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * @attention
+   9:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *
+  10:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  11:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * All rights reserved.</center></h2>
+  12:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *
+  13:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * Redistribution and use in source and binary forms, with or without 
+  14:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * modification, are permitted, provided that the following conditions are met:
+  15:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *
+  16:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  17:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    this list of conditions and the following disclaimer.
+  18:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  19:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    this list of conditions and the following disclaimer in the documentation
+  20:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    and/or other materials provided with the distribution.
+  21:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  22:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    contributors to this software may be used to endorse or promote products 
+  23:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    derived from this software without specific written permission.
+  24:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * 4. This software, including modifications and/or derivative works of this 
+  25:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    software, must execute solely and exclusively on microcontroller or
+  26:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  27:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  28:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    this license is void and will automatically terminate your rights under 
+  29:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *    this license. 
+  30:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *
+  31:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  32:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  33:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+ARM GAS  /tmp/ccBl10G9.s 			page 2
+
+
+  34:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  35:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  36:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  37:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  38:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  39:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  40:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  41:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  42:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  43:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   *
+  44:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   ******************************************************************************
+  45:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   */
+  46:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  47:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Includes ------------------------------------------------------------------*/
+  48:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** #include "hw.h"
+  49:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** #include "low_power.h"
+  50:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  51:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Private typedef -----------------------------------------------------------*/
+  52:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Private define ------------------------------------------------------------*/
+  53:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Private macro -------------------------------------------------------------*/
+  54:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Private variables ---------------------------------------------------------*/
+  55:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  56:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /**
+  57:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \brief Flag to indicate if MCU can go to low power mode
+  58:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  *        When 0, MCU is authorized to go in low power mode
+  59:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  */
+  60:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** static uint32_t LowPower_State = 0;
+  61:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  62:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Private function prototypes -----------------------------------------------*/
+  63:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  64:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  65:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  66:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /* Exported functions ---------------------------------------------------------*/
+  67:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  68:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /**
+  69:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \brief API to set flag allowing power mode
+  70:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  *
+  71:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \param [IN] enum e_LOW_POWER_State_Id_t  
+  72:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  */
+  73:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** void LowPower_Disable( e_LOW_POWER_State_Id_t state )
+  74:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** {
+  26              		.loc 1 74 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  32              	.LBB14:
+  33              	.LBB15:
+  34              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+ARM GAS  /tmp/ccBl10G9.s 			page 3
+
+
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ARM GAS  /tmp/ccBl10G9.s 			page 4
+
+
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ARM GAS  /tmp/ccBl10G9.s 			page 5
+
+
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ARM GAS  /tmp/ccBl10G9.s 			page 6
+
+
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+  35              		.loc 2 203 0
+  36              		.syntax divided
+  37              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  38 0000 EFF31083 		MRS r3, primask
+  39              	@ 0 "" 2
+  40              		.thumb
+  41              		.syntax unified
+  42              	.LBE15:
+  43              	.LBE14:
+  44              	.LBB16:
+  45              	.LBB17:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  46              		.loc 2 71 0
+  47              		.syntax divided
+  48              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  49 0004 72B6     		cpsid i
+  50              	@ 0 "" 2
+  51              		.thumb
+  52              		.syntax unified
+  53              	.LBE17:
+  54              	.LBE16:
+  75:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   BACKUP_PRIMASK();
+  76:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  77:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   DISABLE_IRQ( );
+  78:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  79:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   LowPower_State |= state;
+  55              		.loc 1 79 0
+  56 0006 034A     		ldr	r2, .L2
+  57 0008 1168     		ldr	r1, [r2]
+  58 000a 0843     		orrs	r0, r1
+  59              	.LVL1:
+  60 000c 1060     		str	r0, [r2]
+ARM GAS  /tmp/ccBl10G9.s 			page 7
+
+
+  61              	.LBB18:
+  62              	.LBB19:
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+  63              		.loc 2 215 0
+  64              		.syntax divided
+  65              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  66 000e 83F31088 		MSR primask, r3
+  67              	@ 0 "" 2
+  68              		.thumb
+  69              		.syntax unified
+  70              	.LBE19:
+  71              	.LBE18:
+  80:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  81:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   RESTORE_PRIMASK( );
+  82:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** }
+  72              		.loc 1 82 0
+  73              		@ sp needed
+  74 0012 7047     		bx	lr
+  75              	.L3:
+  76              		.align	2
+  77              	.L2:
+  78 0014 00000000 		.word	.LANCHOR0
+  79              		.cfi_endproc
+  80              	.LFE96:
+  82              		.section	.text.LowPower_Enable,"ax",%progbits
+  83              		.align	1
+  84              		.global	LowPower_Enable
+  85              		.syntax unified
+  86              		.code	16
+  87              		.thumb_func
+  88              		.fpu softvfp
+  90              	LowPower_Enable:
+  91              	.LFB97:
+  83:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+  84:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /**
+  85:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \brief API to reset flag allowing power mode
+  86:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  *
+  87:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \param [IN] enum e_LOW_POWER_State_Id_t 
+  88:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  */
+  89:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** void LowPower_Enable( e_LOW_POWER_State_Id_t state )
+  90:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** {
+  92              		.loc 1 90 0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+ARM GAS  /tmp/ccBl10G9.s 			page 8
+
+
+  97              	.LVL2:
+  98              	.LBB20:
+  99              	.LBB21:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 100              		.loc 2 203 0
+ 101              		.syntax divided
+ 102              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 103 0000 EFF31083 		MRS r3, primask
+ 104              	@ 0 "" 2
+ 105              		.thumb
+ 106              		.syntax unified
+ 107              	.LBE21:
+ 108              	.LBE20:
+ 109              	.LBB22:
+ 110              	.LBB23:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 111              		.loc 2 71 0
+ 112              		.syntax divided
+ 113              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 114 0004 72B6     		cpsid i
+ 115              	@ 0 "" 2
+ 116              		.thumb
+ 117              		.syntax unified
+ 118              	.LBE23:
+ 119              	.LBE22:
+  91:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   BACKUP_PRIMASK();
+  92:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  93:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   DISABLE_IRQ( );
+  94:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  95:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   LowPower_State &= ~state;
+ 120              		.loc 1 95 0
+ 121 0006 0349     		ldr	r1, .L5
+ 122 0008 0A68     		ldr	r2, [r1]
+ 123 000a 8243     		bics	r2, r0
+ 124 000c 0A60     		str	r2, [r1]
+ 125              	.LBB24:
+ 126              	.LBB25:
+ 127              		.loc 2 215 0
+ 128              		.syntax divided
+ 129              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 130 000e 83F31088 		MSR primask, r3
+ 131              	@ 0 "" 2
+ 132              		.thumb
+ 133              		.syntax unified
+ 134              	.LBE25:
+ 135              	.LBE24:
+  96:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+  97:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   RESTORE_PRIMASK( );
+  98:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** }
+ 136              		.loc 1 98 0
+ 137              		@ sp needed
+ 138 0012 7047     		bx	lr
+ 139              	.L6:
+ 140              		.align	2
+ 141              	.L5:
+ 142 0014 00000000 		.word	.LANCHOR0
+ 143              		.cfi_endproc
+ARM GAS  /tmp/ccBl10G9.s 			page 9
+
+
+ 144              	.LFE97:
+ 146              		.section	.text.LowPower_GetState,"ax",%progbits
+ 147              		.align	1
+ 148              		.global	LowPower_GetState
+ 149              		.syntax unified
+ 150              		.code	16
+ 151              		.thumb_func
+ 152              		.fpu softvfp
+ 154              	LowPower_GetState:
+ 155              	.LFB98:
+  99:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+ 100:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /**
+ 101:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \brief API to get flag allowing power mode
+ 102:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \note When flag is 0, low power mode is allowed
+ 103:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \param [IN] state
+ 104:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * \retval flag state 
+ 105:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  */
+ 106:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** uint32_t LowPower_GetState( void )
+ 107:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** {
+ 156              		.loc 1 107 0
+ 157              		.cfi_startproc
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160              		@ link register save eliminated.
+ 108:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   return LowPower_State;
+ 161              		.loc 1 108 0
+ 162 0000 014B     		ldr	r3, .L8
+ 163 0002 1868     		ldr	r0, [r3]
+ 109:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** }
+ 164              		.loc 1 109 0
+ 165              		@ sp needed
+ 166 0004 7047     		bx	lr
+ 167              	.L9:
+ 168 0006 C046     		.align	2
+ 169              	.L8:
+ 170 0008 00000000 		.word	.LANCHOR0
+ 171              		.cfi_endproc
+ 172              	.LFE98:
+ 174              		.section	.text.LowPower_Handler,"ax",%progbits
+ 175              		.align	1
+ 176              		.global	LowPower_Handler
+ 177              		.syntax unified
+ 178              		.code	16
+ 179              		.thumb_func
+ 180              		.fpu softvfp
+ 182              	LowPower_Handler:
+ 183              	.LFB99:
+ 110:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+ 111:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** /**
+ 112:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * @brief  Handle Low Power
+ 113:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * @param  None
+ 114:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  * @retval None
+ 115:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****  */
+ 116:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+ 117:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** void LowPower_Handler( void )
+ 118:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** {
+ 184              		.loc 1 118 0
+ARM GAS  /tmp/ccBl10G9.s 			page 10
+
+
+ 185              		.cfi_startproc
+ 186              		@ args = 0, pretend = 0, frame = 0
+ 187              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188 0000 10B5     		push	{r4, lr}
+ 189              	.LCFI0:
+ 190              		.cfi_def_cfa_offset 8
+ 191              		.cfi_offset 4, -8
+ 192              		.cfi_offset 14, -4
+ 119:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   DBG_GPIO_RST(GPIOB, GPIO_PIN_15);
+ 120:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+ 121:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   DBG_GPIO_RST(GPIOB, GPIO_PIN_14);
+ 122:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+ 123:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   if ( LowPower_State == 0 )
+ 193              		.loc 1 123 0
+ 194 0002 074B     		ldr	r3, .L14
+ 195 0004 1B68     		ldr	r3, [r3]
+ 196 0006 002B     		cmp	r3, #0
+ 197 0008 02D0     		beq	.L13
+ 124:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   {    
+ 125:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 126:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     DBG_PRINTF_CRITICAL("dz\n\r");
+ 127:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 128:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     HW_EnterStopMode( );
+ 129:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 130:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     /* mcu dependent. to be implemented by user*/
+ 131:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     HW_ExitStopMode();
+ 132:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 133:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     DBG_GPIO_SET(GPIOB, GPIO_PIN_15);
+ 134:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 135:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     HW_RTC_setMcuWakeUpTime( );
+ 136:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   }
+ 137:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   else
+ 138:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   {
+ 139:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     DBG_PRINTF_CRITICAL("z\n\r");
+ 140:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 141:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     HW_EnterSleepMode( );
+ 198              		.loc 1 141 0
+ 199 000a FFF7FEFF 		bl	HW_EnterSleepMode
+ 200              	.LVL3:
+ 201              	.L10:
+ 142:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** 
+ 143:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     DBG_GPIO_SET(GPIOB, GPIO_PIN_14);
+ 144:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   }
+ 145:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   
+ 146:./Middlewares/Third_Party/Lora/Utilities/low_power.c **** }
+ 202              		.loc 1 146 0
+ 203              		@ sp needed
+ 204 000e 10BD     		pop	{r4, pc}
+ 205              	.L13:
+ 128:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 206              		.loc 1 128 0
+ 207 0010 FFF7FEFF 		bl	HW_EnterStopMode
+ 208              	.LVL4:
+ 131:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****     
+ 209              		.loc 1 131 0
+ 210 0014 FFF7FEFF 		bl	HW_ExitStopMode
+ 211              	.LVL5:
+ARM GAS  /tmp/ccBl10G9.s 			page 11
+
+
+ 135:./Middlewares/Third_Party/Lora/Utilities/low_power.c ****   }
+ 212              		.loc 1 135 0
+ 213 0018 FFF7FEFF 		bl	HW_RTC_setMcuWakeUpTime
+ 214              	.LVL6:
+ 215 001c F7E7     		b	.L10
+ 216              	.L15:
+ 217 001e C046     		.align	2
+ 218              	.L14:
+ 219 0020 00000000 		.word	.LANCHOR0
+ 220              		.cfi_endproc
+ 221              	.LFE99:
+ 223              		.section	.bss.LowPower_State,"aw",%nobits
+ 224              		.align	2
+ 225              		.set	.LANCHOR0,. + 0
+ 228              	LowPower_State:
+ 229 0000 00000000 		.space	4
+ 230              		.text
+ 231              	.Letext0:
+ 232              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 233              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 234              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 235              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 236              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
+ 237              		.file 8 "/usr/arm-none-eabi/include/math.h"
+ 238              		.file 9 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 239              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 240              		.file 11 "Inc/hw_msp.h"
+ 241              		.file 12 "Inc/hw_rtc.h"
+ARM GAS  /tmp/ccBl10G9.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 low_power.c
+     /tmp/ccBl10G9.s:16     .text.LowPower_Disable:0000000000000000 $t
+     /tmp/ccBl10G9.s:23     .text.LowPower_Disable:0000000000000000 LowPower_Disable
+     /tmp/ccBl10G9.s:78     .text.LowPower_Disable:0000000000000014 $d
+     /tmp/ccBl10G9.s:83     .text.LowPower_Enable:0000000000000000 $t
+     /tmp/ccBl10G9.s:90     .text.LowPower_Enable:0000000000000000 LowPower_Enable
+     /tmp/ccBl10G9.s:142    .text.LowPower_Enable:0000000000000014 $d
+     /tmp/ccBl10G9.s:147    .text.LowPower_GetState:0000000000000000 $t
+     /tmp/ccBl10G9.s:154    .text.LowPower_GetState:0000000000000000 LowPower_GetState
+     /tmp/ccBl10G9.s:170    .text.LowPower_GetState:0000000000000008 $d
+     /tmp/ccBl10G9.s:175    .text.LowPower_Handler:0000000000000000 $t
+     /tmp/ccBl10G9.s:182    .text.LowPower_Handler:0000000000000000 LowPower_Handler
+     /tmp/ccBl10G9.s:219    .text.LowPower_Handler:0000000000000020 $d
+     /tmp/ccBl10G9.s:224    .bss.LowPower_State:0000000000000000 $d
+     /tmp/ccBl10G9.s:228    .bss.LowPower_State:0000000000000000 LowPower_State
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HW_EnterSleepMode
+HW_EnterStopMode
+HW_ExitStopMode
+HW_RTC_setMcuWakeUpTime

@@ -1,0 +1,2208 @@
+ARM GAS  /tmp/cciGOlRU.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Region.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.RegionIsActive,"ax",%progbits
+  16              		.align	1
+  17              		.global	RegionIsActive
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	RegionIsActive:
+  24              	.LFB82:
+  25              		.file 1 "./Middlewares/Third_Party/Lora/Mac/region/Region.c"
+   1:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** /*
+   2:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****  / _____)             _              | |
+   3:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     (C)2013 Semtech
+   8:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****  ___ _____ _   ___ _  _____ ___  ___  ___ ___
+   9:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** / __|_   _/_\ / __| |/ / __/ _ \| _ \/ __| __|
+  10:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** \__ \ | |/ _ \ (__| ' <| _| (_) |   / (__| _|
+  11:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** |___/ |_/_/ \_\___|_|\_\_| \___/|_|_\\___|___|
+  12:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** embedded.connectivity.solutions===============
+  13:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  14:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** Description: LoRa MAC region implementation
+  15:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  16:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  17:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  18:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** Maintainer: Miguel Luis ( Semtech ), Gregory Cristian ( Semtech ) and Daniel Jaeckle ( STACKFORCE )
+  19:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** */
+  20:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include <stdbool.h>
+  21:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include <string.h>
+  22:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include <stdint.h>
+  23:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  24:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "timer.h"
+  25:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "LoRaMac.h"
+  26:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  27:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  28:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  29:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** // Regional includes
+  30:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "Region.h"
+  31:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  32:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  33:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ARM GAS  /tmp/cciGOlRU.s 			page 2
+
+
+  34:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** // Setup regions
+  35:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_AS923
+  36:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionAS923.h"
+  37:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CASE                                 case LORAMAC_REGION_AS923:
+  38:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_IS_ACTIVE( )                         AS923_CASE { return true; }
+  39:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_GET_PHY_PARAM( )                     AS923_CASE { return RegionAS923GetPhyParam( getP
+  40:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_SET_BAND_TX_DONE( )                  AS923_CASE { RegionAS923SetBandTxDone( txDone );
+  41:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_INIT_DEFAULTS( )                     AS923_CASE { RegionAS923InitDefaults( type ); br
+  42:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_VERIFY( )                            AS923_CASE { return RegionAS923Verify( verify, p
+  43:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_APPLY_CF_LIST( )                     AS923_CASE { RegionAS923ApplyCFList( applyCFList
+  44:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHAN_MASK_SET( )                     AS923_CASE { return RegionAS923ChanMaskSet( chan
+  45:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_ADR_NEXT( )                          AS923_CASE { return RegionAS923AdrNext( adrNext,
+  46:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_COMPUTE_RX_WINDOW_PARAMETERS( )      AS923_CASE { RegionAS923ComputeRxWindowParameter
+  47:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_RX_CONFIG( )                         AS923_CASE { return RegionAS923RxConfig( rxConfi
+  48:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_TX_CONFIG( )                         AS923_CASE { return RegionAS923TxConfig( txConfi
+  49:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_LINK_ADR_REQ( )                      AS923_CASE { return RegionAS923LinkAdrReq( linkA
+  50:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_RX_PARAM_SETUP_REQ( )                AS923_CASE { return RegionAS923RxParamSetupReq( 
+  51:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_NEW_CHANNEL_REQ( )                   AS923_CASE { return RegionAS923NewChannelReq( ne
+  52:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_TX_PARAM_SETUP_REQ( )                AS923_CASE { return RegionAS923TxParamSetupReq( 
+  53:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_DL_CHANNEL_REQ( )                    AS923_CASE { return RegionAS923DlChannelReq( dlC
+  54:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_ALTERNATE_DR( )                      AS923_CASE { return RegionAS923AlternateDr( alte
+  55:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CALC_BACKOFF( )                      AS923_CASE { RegionAS923CalcBackOff( calcBackOff
+  56:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_NEXT_CHANNEL( )                      AS923_CASE { return RegionAS923NextChannel( next
+  57:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHANNEL_ADD( )                       AS923_CASE { return RegionAS923ChannelAdd( chann
+  58:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHANNEL_REMOVE( )                    AS923_CASE { return RegionAS923ChannelsRemove( c
+  59:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_SET_CONTINUOUS_WAVE( )               AS923_CASE { RegionAS923SetContinuousWave( conti
+  60:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_APPLY_DR_OFFSET( )                   AS923_CASE { return RegionAS923ApplyDrOffset( do
+  61:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+  62:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_IS_ACTIVE( )
+  63:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_GET_PHY_PARAM( )
+  64:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_SET_BAND_TX_DONE( )
+  65:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_INIT_DEFAULTS( )
+  66:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_VERIFY( )
+  67:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_APPLY_CF_LIST( )
+  68:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHAN_MASK_SET( )
+  69:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_ADR_NEXT( )
+  70:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_COMPUTE_RX_WINDOW_PARAMETERS( )
+  71:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_RX_CONFIG( )
+  72:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_TX_CONFIG( )
+  73:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_LINK_ADR_REQ( )
+  74:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_RX_PARAM_SETUP_REQ( )
+  75:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_NEW_CHANNEL_REQ( )
+  76:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_TX_PARAM_SETUP_REQ( )
+  77:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_DL_CHANNEL_REQ( )
+  78:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_ALTERNATE_DR( )
+  79:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CALC_BACKOFF( )
+  80:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_NEXT_CHANNEL( )
+  81:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHANNEL_ADD( )
+  82:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_CHANNEL_REMOVE( )
+  83:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_SET_CONTINUOUS_WAVE( )
+  84:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AS923_APPLY_DR_OFFSET( )
+  85:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+  86:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+  87:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_AU915
+  88:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionAU915.h"
+  89:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CASE                                 case LORAMAC_REGION_AU915:
+  90:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_IS_ACTIVE( )                         AU915_CASE { return true; }
+ARM GAS  /tmp/cciGOlRU.s 			page 3
+
+
+  91:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_GET_PHY_PARAM( )                     AU915_CASE { return RegionAU915GetPhyParam( getP
+  92:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_SET_BAND_TX_DONE( )                  AU915_CASE { RegionAU915SetBandTxDone( txDone );
+  93:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_INIT_DEFAULTS( )                     AU915_CASE { RegionAU915InitDefaults( type ); br
+  94:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_VERIFY( )                            AU915_CASE { return RegionAU915Verify( verify, p
+  95:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_APPLY_CF_LIST( )                     AU915_CASE { RegionAU915ApplyCFList( applyCFList
+  96:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHAN_MASK_SET( )                     AU915_CASE { return RegionAU915ChanMaskSet( chan
+  97:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_ADR_NEXT( )                          AU915_CASE { return RegionAU915AdrNext( adrNext,
+  98:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_COMPUTE_RX_WINDOW_PARAMETERS( )      AU915_CASE { RegionAU915ComputeRxWindowParameter
+  99:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_RX_CONFIG( )                         AU915_CASE { return RegionAU915RxConfig( rxConfi
+ 100:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_TX_CONFIG( )                         AU915_CASE { return RegionAU915TxConfig( txConfi
+ 101:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_LINK_ADR_REQ( )                      AU915_CASE { return RegionAU915LinkAdrReq( linkA
+ 102:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_RX_PARAM_SETUP_REQ( )                AU915_CASE { return RegionAU915RxParamSetupReq( 
+ 103:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_NEW_CHANNEL_REQ( )                   AU915_CASE { return RegionAU915NewChannelReq( ne
+ 104:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_TX_PARAM_SETUP_REQ( )                AU915_CASE { return RegionAU915TxParamSetupReq( 
+ 105:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_DL_CHANNEL_REQ( )                    AU915_CASE { return RegionAU915DlChannelReq( dlC
+ 106:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_ALTERNATE_DR( )                      AU915_CASE { return RegionAU915AlternateDr( alte
+ 107:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CALC_BACKOFF( )                      AU915_CASE { RegionAU915CalcBackOff( calcBackOff
+ 108:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_NEXT_CHANNEL( )                      AU915_CASE { return RegionAU915NextChannel( next
+ 109:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHANNEL_ADD( )                       AU915_CASE { return RegionAU915ChannelAdd( chann
+ 110:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHANNEL_REMOVE( )                    AU915_CASE { return RegionAU915ChannelsRemove( c
+ 111:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_SET_CONTINUOUS_WAVE( )               AU915_CASE { RegionAU915SetContinuousWave( conti
+ 112:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_APPLY_DR_OFFSET( )                   AU915_CASE { return RegionAU915ApplyDrOffset( do
+ 113:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 114:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_IS_ACTIVE( )
+ 115:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_GET_PHY_PARAM( )
+ 116:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_SET_BAND_TX_DONE( )
+ 117:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_INIT_DEFAULTS( )
+ 118:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_VERIFY( )
+ 119:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_APPLY_CF_LIST( )
+ 120:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHAN_MASK_SET( )
+ 121:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_ADR_NEXT( )
+ 122:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 123:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_RX_CONFIG( )
+ 124:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_TX_CONFIG( )
+ 125:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_LINK_ADR_REQ( )
+ 126:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_RX_PARAM_SETUP_REQ( )
+ 127:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_NEW_CHANNEL_REQ( )
+ 128:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_TX_PARAM_SETUP_REQ( )
+ 129:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_DL_CHANNEL_REQ( )
+ 130:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_ALTERNATE_DR( )
+ 131:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CALC_BACKOFF( )
+ 132:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_NEXT_CHANNEL( )
+ 133:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHANNEL_ADD( )
+ 134:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_CHANNEL_REMOVE( )
+ 135:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_SET_CONTINUOUS_WAVE( )
+ 136:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define AU915_APPLY_DR_OFFSET( )
+ 137:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 138:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 139:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_CN470
+ 140:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionCN470.h"
+ 141:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CASE                                 case LORAMAC_REGION_CN470:
+ 142:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_IS_ACTIVE( )                         CN470_CASE { return true; }
+ 143:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_GET_PHY_PARAM( )                     CN470_CASE { return RegionCN470GetPhyParam( getP
+ 144:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_SET_BAND_TX_DONE( )                  CN470_CASE { RegionCN470SetBandTxDone( txDone );
+ 145:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_INIT_DEFAULTS( )                     CN470_CASE { RegionCN470InitDefaults( type ); br
+ 146:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_VERIFY( )                            CN470_CASE { return RegionCN470Verify( verify, p
+ 147:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_APPLY_CF_LIST( )                     CN470_CASE { RegionCN470ApplyCFList( applyCFList
+ARM GAS  /tmp/cciGOlRU.s 			page 4
+
+
+ 148:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHAN_MASK_SET( )                     CN470_CASE { return RegionCN470ChanMaskSet( chan
+ 149:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_ADR_NEXT( )                          CN470_CASE { return RegionCN470AdrNext( adrNext,
+ 150:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_COMPUTE_RX_WINDOW_PARAMETERS( )      CN470_CASE { RegionCN470ComputeRxWindowParameter
+ 151:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_RX_CONFIG( )                         CN470_CASE { return RegionCN470RxConfig( rxConfi
+ 152:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_TX_CONFIG( )                         CN470_CASE { return RegionCN470TxConfig( txConfi
+ 153:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_LINK_ADR_REQ( )                      CN470_CASE { return RegionCN470LinkAdrReq( linkA
+ 154:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_RX_PARAM_SETUP_REQ( )                CN470_CASE { return RegionCN470RxParamSetupReq( 
+ 155:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_NEW_CHANNEL_REQ( )                   CN470_CASE { return RegionCN470NewChannelReq( ne
+ 156:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_TX_PARAM_SETUP_REQ( )                CN470_CASE { return RegionCN470TxParamSetupReq( 
+ 157:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_DL_CHANNEL_REQ( )                    CN470_CASE { return RegionCN470DlChannelReq( dlC
+ 158:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_ALTERNATE_DR( )                      CN470_CASE { return RegionCN470AlternateDr( alte
+ 159:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CALC_BACKOFF( )                      CN470_CASE { RegionCN470CalcBackOff( calcBackOff
+ 160:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_NEXT_CHANNEL( )                      CN470_CASE { return RegionCN470NextChannel( next
+ 161:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHANNEL_ADD( )                       CN470_CASE { return RegionCN470ChannelAdd( chann
+ 162:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHANNEL_REMOVE( )                    CN470_CASE { return RegionCN470ChannelsRemove( c
+ 163:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_SET_CONTINUOUS_WAVE( )               CN470_CASE { RegionCN470SetContinuousWave( conti
+ 164:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_APPLY_DR_OFFSET( )                   CN470_CASE { return RegionCN470ApplyDrOffset( do
+ 165:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 166:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_IS_ACTIVE( )
+ 167:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_GET_PHY_PARAM( )
+ 168:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_SET_BAND_TX_DONE( )
+ 169:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_INIT_DEFAULTS( )
+ 170:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_VERIFY( )
+ 171:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_APPLY_CF_LIST( )
+ 172:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHAN_MASK_SET( )
+ 173:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_ADR_NEXT( )
+ 174:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 175:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_RX_CONFIG( )
+ 176:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_TX_CONFIG( )
+ 177:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_LINK_ADR_REQ( )
+ 178:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_RX_PARAM_SETUP_REQ( )
+ 179:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_NEW_CHANNEL_REQ( )
+ 180:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_TX_PARAM_SETUP_REQ( )
+ 181:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_DL_CHANNEL_REQ( )
+ 182:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_ALTERNATE_DR( )
+ 183:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CALC_BACKOFF( )
+ 184:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_NEXT_CHANNEL( )
+ 185:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHANNEL_ADD( )
+ 186:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_CHANNEL_REMOVE( )
+ 187:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_SET_CONTINUOUS_WAVE( )
+ 188:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN470_APPLY_DR_OFFSET( )
+ 189:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 190:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 191:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_CN779
+ 192:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionCN779.h"
+ 193:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CASE                                 case LORAMAC_REGION_CN779:
+ 194:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_IS_ACTIVE( )                         CN779_CASE { return true; }
+ 195:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_GET_PHY_PARAM( )                     CN779_CASE { return RegionCN779GetPhyParam( getP
+ 196:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_SET_BAND_TX_DONE( )                  CN779_CASE { RegionCN779SetBandTxDone( txDone );
+ 197:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_INIT_DEFAULTS( )                     CN779_CASE { RegionCN779InitDefaults( type ); br
+ 198:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_VERIFY( )                            CN779_CASE { return RegionCN779Verify( verify, p
+ 199:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_APPLY_CF_LIST( )                     CN779_CASE { RegionCN779ApplyCFList( applyCFList
+ 200:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHAN_MASK_SET( )                     CN779_CASE { return RegionCN779ChanMaskSet( chan
+ 201:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_ADR_NEXT( )                          CN779_CASE { return RegionCN779AdrNext( adrNext,
+ 202:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_COMPUTE_RX_WINDOW_PARAMETERS( )      CN779_CASE { RegionCN779ComputeRxWindowParameter
+ 203:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_RX_CONFIG( )                         CN779_CASE { return RegionCN779RxConfig( rxConfi
+ 204:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_TX_CONFIG( )                         CN779_CASE { return RegionCN779TxConfig( txConfi
+ARM GAS  /tmp/cciGOlRU.s 			page 5
+
+
+ 205:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_LINK_ADR_REQ( )                      CN779_CASE { return RegionCN779LinkAdrReq( linkA
+ 206:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_RX_PARAM_SETUP_REQ( )                CN779_CASE { return RegionCN779RxParamSetupReq( 
+ 207:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_NEW_CHANNEL_REQ( )                   CN779_CASE { return RegionCN779NewChannelReq( ne
+ 208:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_TX_PARAM_SETUP_REQ( )                CN779_CASE { return RegionCN779TxParamSetupReq( 
+ 209:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_DL_CHANNEL_REQ( )                    CN779_CASE { return RegionCN779DlChannelReq( dlC
+ 210:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_ALTERNATE_DR( )                      CN779_CASE { return RegionCN779AlternateDr( alte
+ 211:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CALC_BACKOFF( )                      CN779_CASE { RegionCN779CalcBackOff( calcBackOff
+ 212:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_NEXT_CHANNEL( )                      CN779_CASE { return RegionCN779NextChannel( next
+ 213:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHANNEL_ADD( )                       CN779_CASE { return RegionCN779ChannelAdd( chann
+ 214:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHANNEL_REMOVE( )                    CN779_CASE { return RegionCN779ChannelsRemove( c
+ 215:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_SET_CONTINUOUS_WAVE( )               CN779_CASE { RegionCN779SetContinuousWave( conti
+ 216:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_APPLY_DR_OFFSET( )                   CN779_CASE { return RegionCN779ApplyDrOffset( do
+ 217:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 218:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_IS_ACTIVE( )
+ 219:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_GET_PHY_PARAM( )
+ 220:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_SET_BAND_TX_DONE( )
+ 221:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_INIT_DEFAULTS( )
+ 222:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_VERIFY( )
+ 223:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_APPLY_CF_LIST( )
+ 224:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHAN_MASK_SET( )
+ 225:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_ADR_NEXT( )
+ 226:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 227:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_RX_CONFIG( )
+ 228:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_TX_CONFIG( )
+ 229:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_LINK_ADR_REQ( )
+ 230:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_RX_PARAM_SETUP_REQ( )
+ 231:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_NEW_CHANNEL_REQ( )
+ 232:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_TX_PARAM_SETUP_REQ( )
+ 233:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_DL_CHANNEL_REQ( )
+ 234:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_ALTERNATE_DR( )
+ 235:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CALC_BACKOFF( )
+ 236:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_NEXT_CHANNEL( )
+ 237:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHANNEL_ADD( )
+ 238:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_CHANNEL_REMOVE( )
+ 239:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_SET_CONTINUOUS_WAVE( )
+ 240:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define CN779_APPLY_DR_OFFSET( )
+ 241:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 242:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 243:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_EU433
+ 244:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionEU433.h"
+ 245:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CASE                                 case LORAMAC_REGION_EU433:
+ 246:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_IS_ACTIVE( )                         EU433_CASE { return true; }
+ 247:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_GET_PHY_PARAM( )                     EU433_CASE { return RegionEU433GetPhyParam( getP
+ 248:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_SET_BAND_TX_DONE( )                  EU433_CASE { RegionEU433SetBandTxDone( txDone );
+ 249:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_INIT_DEFAULTS( )                     EU433_CASE { RegionEU433InitDefaults( type ); br
+ 250:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_VERIFY( )                            EU433_CASE { return RegionEU433Verify( verify, p
+ 251:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_APPLY_CF_LIST( )                     EU433_CASE { RegionEU433ApplyCFList( applyCFList
+ 252:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHAN_MASK_SET( )                     EU433_CASE { return RegionEU433ChanMaskSet( chan
+ 253:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_ADR_NEXT( )                          EU433_CASE { return RegionEU433AdrNext( adrNext,
+ 254:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_COMPUTE_RX_WINDOW_PARAMETERS( )      EU433_CASE { RegionEU433ComputeRxWindowParameter
+ 255:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_RX_CONFIG( )                         EU433_CASE { return RegionEU433RxConfig( rxConfi
+ 256:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_TX_CONFIG( )                         EU433_CASE { return RegionEU433TxConfig( txConfi
+ 257:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_LINK_ADR_REQ( )                      EU433_CASE { return RegionEU433LinkAdrReq( linkA
+ 258:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_RX_PARAM_SETUP_REQ( )                EU433_CASE { return RegionEU433RxParamSetupReq( 
+ 259:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_NEW_CHANNEL_REQ( )                   EU433_CASE { return RegionEU433NewChannelReq( ne
+ 260:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_TX_PARAM_SETUP_REQ( )                EU433_CASE { return RegionEU433TxParamSetupReq( 
+ 261:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_DL_CHANNEL_REQ( )                    EU433_CASE { return RegionEU433DlChannelReq( dlC
+ARM GAS  /tmp/cciGOlRU.s 			page 6
+
+
+ 262:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_ALTERNATE_DR( )                      EU433_CASE { return RegionEU433AlternateDr( alte
+ 263:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CALC_BACKOFF( )                      EU433_CASE { RegionEU433CalcBackOff( calcBackOff
+ 264:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_NEXT_CHANNEL( )                      EU433_CASE { return RegionEU433NextChannel( next
+ 265:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHANNEL_ADD( )                       EU433_CASE { return RegionEU433ChannelAdd( chann
+ 266:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHANNEL_REMOVE( )                    EU433_CASE { return RegionEU433ChannelsRemove( c
+ 267:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_SET_CONTINUOUS_WAVE( )               EU433_CASE { RegionEU433SetContinuousWave( conti
+ 268:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_APPLY_DR_OFFSET( )                   EU433_CASE { return RegionEU433ApplyDrOffset( do
+ 269:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 270:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_IS_ACTIVE( )
+ 271:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_GET_PHY_PARAM( )
+ 272:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_SET_BAND_TX_DONE( )
+ 273:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_INIT_DEFAULTS( )
+ 274:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_VERIFY( )
+ 275:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_APPLY_CF_LIST( )
+ 276:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHAN_MASK_SET( )
+ 277:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_ADR_NEXT( )
+ 278:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 279:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_RX_CONFIG( )
+ 280:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_TX_CONFIG( )
+ 281:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_LINK_ADR_REQ( )
+ 282:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_RX_PARAM_SETUP_REQ( )
+ 283:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_NEW_CHANNEL_REQ( )
+ 284:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_TX_PARAM_SETUP_REQ( )
+ 285:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_DL_CHANNEL_REQ( )
+ 286:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_ALTERNATE_DR( )
+ 287:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CALC_BACKOFF( )
+ 288:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_NEXT_CHANNEL( )
+ 289:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHANNEL_ADD( )
+ 290:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_CHANNEL_REMOVE( )
+ 291:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_SET_CONTINUOUS_WAVE( )
+ 292:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU433_APPLY_DR_OFFSET( )
+ 293:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 294:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 295:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_EU868
+ 296:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionEU868.h"
+ 297:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CASE                                 case LORAMAC_REGION_EU868:
+ 298:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_IS_ACTIVE( )                         EU868_CASE { return true; }
+ 299:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_GET_PHY_PARAM( )                     EU868_CASE { return RegionEU868GetPhyParam( getP
+ 300:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_SET_BAND_TX_DONE( )                  EU868_CASE { RegionEU868SetBandTxDone( txDone );
+ 301:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_INIT_DEFAULTS( )                     EU868_CASE { RegionEU868InitDefaults( type ); br
+ 302:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_VERIFY( )                            EU868_CASE { return RegionEU868Verify( verify, p
+ 303:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_APPLY_CF_LIST( )                     EU868_CASE { RegionEU868ApplyCFList( applyCFList
+ 304:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHAN_MASK_SET( )                     EU868_CASE { return RegionEU868ChanMaskSet( chan
+ 305:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_ADR_NEXT( )                          EU868_CASE { return RegionEU868AdrNext( adrNext,
+ 306:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_COMPUTE_RX_WINDOW_PARAMETERS( )      EU868_CASE { RegionEU868ComputeRxWindowParameter
+ 307:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_RX_CONFIG( )                         EU868_CASE { return RegionEU868RxConfig( rxConfi
+ 308:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_TX_CONFIG( )                         EU868_CASE { return RegionEU868TxConfig( txConfi
+ 309:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_LINK_ADR_REQ( )                      EU868_CASE { return RegionEU868LinkAdrReq( linkA
+ 310:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_RX_PARAM_SETUP_REQ( )                EU868_CASE { return RegionEU868RxParamSetupReq( 
+ 311:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_NEW_CHANNEL_REQ( )                   EU868_CASE { return RegionEU868NewChannelReq( ne
+ 312:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_TX_PARAM_SETUP_REQ( )                EU868_CASE { return RegionEU868TxParamSetupReq( 
+ 313:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_DL_CHANNEL_REQ( )                    EU868_CASE { return RegionEU868DlChannelReq( dlC
+ 314:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_ALTERNATE_DR( )                      EU868_CASE { return RegionEU868AlternateDr( alte
+ 315:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CALC_BACKOFF( )                      EU868_CASE { RegionEU868CalcBackOff( calcBackOff
+ 316:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_NEXT_CHANNEL( )                      EU868_CASE { return RegionEU868NextChannel( next
+ 317:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHANNEL_ADD( )                       EU868_CASE { return RegionEU868ChannelAdd( chann
+ 318:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHANNEL_REMOVE( )                    EU868_CASE { return RegionEU868ChannelsRemove( c
+ARM GAS  /tmp/cciGOlRU.s 			page 7
+
+
+ 319:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_SET_CONTINUOUS_WAVE( )               EU868_CASE { RegionEU868SetContinuousWave( conti
+ 320:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_APPLY_DR_OFFSET( )                   EU868_CASE { return RegionEU868ApplyDrOffset( do
+ 321:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 322:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_IS_ACTIVE( )
+ 323:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_GET_PHY_PARAM( )
+ 324:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_SET_BAND_TX_DONE( )
+ 325:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_INIT_DEFAULTS( )
+ 326:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_VERIFY( )
+ 327:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_APPLY_CF_LIST( )
+ 328:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHAN_MASK_SET( )
+ 329:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_ADR_NEXT( )
+ 330:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 331:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_RX_CONFIG( )
+ 332:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_TX_CONFIG( )
+ 333:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_LINK_ADR_REQ( )
+ 334:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_RX_PARAM_SETUP_REQ( )
+ 335:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_NEW_CHANNEL_REQ( )
+ 336:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_TX_PARAM_SETUP_REQ( )
+ 337:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_DL_CHANNEL_REQ( )
+ 338:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_ALTERNATE_DR( )
+ 339:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CALC_BACKOFF( )
+ 340:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_NEXT_CHANNEL( )
+ 341:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHANNEL_ADD( )
+ 342:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_CHANNEL_REMOVE( )
+ 343:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_SET_CONTINUOUS_WAVE( )
+ 344:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define EU868_APPLY_DR_OFFSET( )
+ 345:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 346:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 347:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_KR920
+ 348:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionKR920.h"
+ 349:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CASE                                 case LORAMAC_REGION_KR920:
+ 350:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_IS_ACTIVE( )                         KR920_CASE { return true; }
+ 351:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_GET_PHY_PARAM( )                     KR920_CASE { return RegionKR920GetPhyParam( getP
+ 352:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_SET_BAND_TX_DONE( )                  KR920_CASE { RegionKR920SetBandTxDone( txDone );
+ 353:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_INIT_DEFAULTS( )                     KR920_CASE { RegionKR920InitDefaults( type ); br
+ 354:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_VERIFY( )                            KR920_CASE { return RegionKR920Verify( verify, p
+ 355:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_APPLY_CF_LIST( )                     KR920_CASE { RegionKR920ApplyCFList( applyCFList
+ 356:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHAN_MASK_SET( )                     KR920_CASE { return RegionKR920ChanMaskSet( chan
+ 357:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_ADR_NEXT( )                          KR920_CASE { return RegionKR920AdrNext( adrNext,
+ 358:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_COMPUTE_RX_WINDOW_PARAMETERS( )      KR920_CASE { RegionKR920ComputeRxWindowParameter
+ 359:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_RX_CONFIG( )                         KR920_CASE { return RegionKR920RxConfig( rxConfi
+ 360:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_TX_CONFIG( )                         KR920_CASE { return RegionKR920TxConfig( txConfi
+ 361:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_LINK_ADR_REQ( )                      KR920_CASE { return RegionKR920LinkAdrReq( linkA
+ 362:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_RX_PARAM_SETUP_REQ( )                KR920_CASE { return RegionKR920RxParamSetupReq( 
+ 363:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_NEW_CHANNEL_REQ( )                   KR920_CASE { return RegionKR920NewChannelReq( ne
+ 364:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_TX_PARAM_SETUP_REQ( )                KR920_CASE { return RegionKR920TxParamSetupReq( 
+ 365:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_DL_CHANNEL_REQ( )                    KR920_CASE { return RegionKR920DlChannelReq( dlC
+ 366:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_ALTERNATE_DR( )                      KR920_CASE { return RegionKR920AlternateDr( alte
+ 367:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CALC_BACKOFF( )                      KR920_CASE { RegionKR920CalcBackOff( calcBackOff
+ 368:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_NEXT_CHANNEL( )                      KR920_CASE { return RegionKR920NextChannel( next
+ 369:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHANNEL_ADD( )                       KR920_CASE { return RegionKR920ChannelAdd( chann
+ 370:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHANNEL_REMOVE( )                    KR920_CASE { return RegionKR920ChannelsRemove( c
+ 371:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_SET_CONTINUOUS_WAVE( )               KR920_CASE { RegionKR920SetContinuousWave( conti
+ 372:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_APPLY_DR_OFFSET( )                   KR920_CASE { return RegionKR920ApplyDrOffset( do
+ 373:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 374:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_IS_ACTIVE( )
+ 375:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_GET_PHY_PARAM( )
+ARM GAS  /tmp/cciGOlRU.s 			page 8
+
+
+ 376:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_SET_BAND_TX_DONE( )
+ 377:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_INIT_DEFAULTS( )
+ 378:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_VERIFY( )
+ 379:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_APPLY_CF_LIST( )
+ 380:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHAN_MASK_SET( )
+ 381:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_ADR_NEXT( )
+ 382:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 383:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_RX_CONFIG( )
+ 384:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_TX_CONFIG( )
+ 385:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_LINK_ADR_REQ( )
+ 386:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_RX_PARAM_SETUP_REQ( )
+ 387:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_NEW_CHANNEL_REQ( )
+ 388:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_TX_PARAM_SETUP_REQ( )
+ 389:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_DL_CHANNEL_REQ( )
+ 390:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_ALTERNATE_DR( )
+ 391:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CALC_BACKOFF( )
+ 392:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_NEXT_CHANNEL( )
+ 393:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHANNEL_ADD( )
+ 394:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_CHANNEL_REMOVE( )
+ 395:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_SET_CONTINUOUS_WAVE( )
+ 396:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define KR920_APPLY_DR_OFFSET( )
+ 397:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 398:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 399:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_IN865
+ 400:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionIN865.h"
+ 401:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CASE                                 case LORAMAC_REGION_IN865:
+ 402:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_IS_ACTIVE( )                         IN865_CASE { return true; }
+ 403:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_GET_PHY_PARAM( )                     IN865_CASE { return RegionIN865GetPhyParam( getP
+ 404:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_SET_BAND_TX_DONE( )                  IN865_CASE { RegionIN865SetBandTxDone( txDone );
+ 405:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_INIT_DEFAULTS( )                     IN865_CASE { RegionIN865InitDefaults( type ); br
+ 406:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_VERIFY( )                            IN865_CASE { return RegionIN865Verify( verify, p
+ 407:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_APPLY_CF_LIST( )                     IN865_CASE { RegionIN865ApplyCFList( applyCFList
+ 408:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHAN_MASK_SET( )                     IN865_CASE { return RegionIN865ChanMaskSet( chan
+ 409:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_ADR_NEXT( )                          IN865_CASE { return RegionIN865AdrNext( adrNext,
+ 410:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_COMPUTE_RX_WINDOW_PARAMETERS( )      IN865_CASE { RegionIN865ComputeRxWindowParameter
+ 411:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_RX_CONFIG( )                         IN865_CASE { return RegionIN865RxConfig( rxConfi
+ 412:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_TX_CONFIG( )                         IN865_CASE { return RegionIN865TxConfig( txConfi
+ 413:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_LINK_ADR_REQ( )                      IN865_CASE { return RegionIN865LinkAdrReq( linkA
+ 414:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_RX_PARAM_SETUP_REQ( )                IN865_CASE { return RegionIN865RxParamSetupReq( 
+ 415:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_NEW_CHANNEL_REQ( )                   IN865_CASE { return RegionIN865NewChannelReq( ne
+ 416:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_TX_PARAM_SETUP_REQ( )                IN865_CASE { return RegionIN865TxParamSetupReq( 
+ 417:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_DL_CHANNEL_REQ( )                    IN865_CASE { return RegionIN865DlChannelReq( dlC
+ 418:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_ALTERNATE_DR( )                      IN865_CASE { return RegionIN865AlternateDr( alte
+ 419:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CALC_BACKOFF( )                      IN865_CASE { RegionIN865CalcBackOff( calcBackOff
+ 420:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_NEXT_CHANNEL( )                      IN865_CASE { return RegionIN865NextChannel( next
+ 421:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHANNEL_ADD( )                       IN865_CASE { return RegionIN865ChannelAdd( chann
+ 422:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHANNEL_REMOVE( )                    IN865_CASE { return RegionIN865ChannelsRemove( c
+ 423:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_SET_CONTINUOUS_WAVE( )               IN865_CASE { RegionIN865SetContinuousWave( conti
+ 424:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_APPLY_DR_OFFSET( )                   IN865_CASE { return RegionIN865ApplyDrOffset( do
+ 425:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 426:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_IS_ACTIVE( )
+ 427:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_GET_PHY_PARAM( )
+ 428:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_SET_BAND_TX_DONE( )
+ 429:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_INIT_DEFAULTS( )
+ 430:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_VERIFY( )
+ 431:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_APPLY_CF_LIST( )
+ 432:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHAN_MASK_SET( )
+ARM GAS  /tmp/cciGOlRU.s 			page 9
+
+
+ 433:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_ADR_NEXT( )
+ 434:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 435:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_RX_CONFIG( )
+ 436:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_TX_CONFIG( )
+ 437:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_LINK_ADR_REQ( )
+ 438:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_RX_PARAM_SETUP_REQ( )
+ 439:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_NEW_CHANNEL_REQ( )
+ 440:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_TX_PARAM_SETUP_REQ( )
+ 441:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_DL_CHANNEL_REQ( )
+ 442:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_ALTERNATE_DR( )
+ 443:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CALC_BACKOFF( )
+ 444:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_NEXT_CHANNEL( )
+ 445:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHANNEL_ADD( )
+ 446:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_CHANNEL_REMOVE( )
+ 447:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_SET_CONTINUOUS_WAVE( )
+ 448:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define IN865_APPLY_DR_OFFSET( )
+ 449:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 450:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 451:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_US915
+ 452:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionUS915.h"
+ 453:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CASE                                 case LORAMAC_REGION_US915:
+ 454:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_IS_ACTIVE( )                         US915_CASE { return true; }
+ 455:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_GET_PHY_PARAM( )                     US915_CASE { return RegionUS915GetPhyParam( getP
+ 456:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_SET_BAND_TX_DONE( )                  US915_CASE { RegionUS915SetBandTxDone( txDone );
+ 457:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_INIT_DEFAULTS( )                     US915_CASE { RegionUS915InitDefaults( type ); br
+ 458:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_VERIFY( )                            US915_CASE { return RegionUS915Verify( verify, p
+ 459:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_APPLY_CF_LIST( )                     US915_CASE { RegionUS915ApplyCFList( applyCFList
+ 460:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHAN_MASK_SET( )                     US915_CASE { return RegionUS915ChanMaskSet( chan
+ 461:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_ADR_NEXT( )                          US915_CASE { return RegionUS915AdrNext( adrNext,
+ 462:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_COMPUTE_RX_WINDOW_PARAMETERS( )      US915_CASE { RegionUS915ComputeRxWindowParameter
+ 463:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_RX_CONFIG( )                         US915_CASE { return RegionUS915RxConfig( rxConfi
+ 464:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_TX_CONFIG( )                         US915_CASE { return RegionUS915TxConfig( txConfi
+ 465:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_LINK_ADR_REQ( )                      US915_CASE { return RegionUS915LinkAdrReq( linkA
+ 466:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_RX_PARAM_SETUP_REQ( )                US915_CASE { return RegionUS915RxParamSetupReq( 
+ 467:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_NEW_CHANNEL_REQ( )                   US915_CASE { return RegionUS915NewChannelReq( ne
+ 468:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_TX_PARAM_SETUP_REQ( )                US915_CASE { return RegionUS915TxParamSetupReq( 
+ 469:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_DL_CHANNEL_REQ( )                    US915_CASE { return RegionUS915DlChannelReq( dlC
+ 470:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_ALTERNATE_DR( )                      US915_CASE { return RegionUS915AlternateDr( alte
+ 471:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CALC_BACKOFF( )                      US915_CASE { RegionUS915CalcBackOff( calcBackOff
+ 472:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_NEXT_CHANNEL( )                      US915_CASE { return RegionUS915NextChannel( next
+ 473:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHANNEL_ADD( )                       US915_CASE { return RegionUS915ChannelAdd( chann
+ 474:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHANNEL_REMOVE( )                    US915_CASE { return RegionUS915ChannelsRemove( c
+ 475:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_SET_CONTINUOUS_WAVE( )               US915_CASE { RegionUS915SetContinuousWave( conti
+ 476:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_APPLY_DR_OFFSET( )                   US915_CASE { return RegionUS915ApplyDrOffset( do
+ 477:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 478:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_IS_ACTIVE( )
+ 479:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_GET_PHY_PARAM( )
+ 480:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_SET_BAND_TX_DONE( )
+ 481:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_INIT_DEFAULTS( )
+ 482:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_VERIFY( )
+ 483:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_APPLY_CF_LIST( )
+ 484:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHAN_MASK_SET( )
+ 485:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_ADR_NEXT( )
+ 486:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 487:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_RX_CONFIG( )
+ 488:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_TX_CONFIG( )
+ 489:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_LINK_ADR_REQ( )
+ARM GAS  /tmp/cciGOlRU.s 			page 10
+
+
+ 490:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_RX_PARAM_SETUP_REQ( )
+ 491:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_NEW_CHANNEL_REQ( )
+ 492:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_TX_PARAM_SETUP_REQ( )
+ 493:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_DL_CHANNEL_REQ( )
+ 494:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_ALTERNATE_DR( )
+ 495:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CALC_BACKOFF( )
+ 496:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_NEXT_CHANNEL( )
+ 497:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHANNEL_ADD( )
+ 498:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_CHANNEL_REMOVE( )
+ 499:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_SET_CONTINUOUS_WAVE( )
+ 500:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_APPLY_DR_OFFSET( )
+ 501:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 502:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 503:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #ifdef REGION_US915_HYBRID
+ 504:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #include "RegionUS915-Hybrid.h"
+ 505:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CASE                                 case LORAMAC_REGION_US915_HYBRID:
+ 506:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_IS_ACTIVE( )                         US915_HYBRID_CASE { return true; }
+ 507:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_GET_PHY_PARAM( )                     US915_HYBRID_CASE { return RegionUS915Hyb
+ 508:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_SET_BAND_TX_DONE( )                  US915_HYBRID_CASE { RegionUS915HybridSetB
+ 509:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_INIT_DEFAULTS( )                     US915_HYBRID_CASE { RegionUS915HybridInit
+ 510:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_VERIFY( )                            US915_HYBRID_CASE { return RegionUS915Hyb
+ 511:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_APPLY_CF_LIST( )                     US915_HYBRID_CASE { RegionUS915HybridAppl
+ 512:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHAN_MASK_SET( )                     US915_HYBRID_CASE { return RegionUS915Hyb
+ 513:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_ADR_NEXT( )                          US915_HYBRID_CASE { return RegionUS915Hyb
+ 514:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_COMPUTE_RX_WINDOW_PARAMETERS( )      US915_HYBRID_CASE { RegionUS915HybridComp
+ 515:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_RX_CONFIG( )                         US915_HYBRID_CASE { return RegionUS915Hyb
+ 516:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_TX_CONFIG( )                         US915_HYBRID_CASE { return RegionUS915Hyb
+ 517:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_LINK_ADR_REQ( )                      US915_HYBRID_CASE { return RegionUS915Hyb
+ 518:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_RX_PARAM_SETUP_REQ( )                US915_HYBRID_CASE { return RegionUS915Hyb
+ 519:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_NEW_CHANNEL_REQ( )                   US915_HYBRID_CASE { return RegionUS915Hyb
+ 520:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_TX_PARAM_SETUP_REQ( )                US915_HYBRID_CASE { return RegionUS915Hyb
+ 521:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_DL_CHANNEL_REQ( )                    US915_HYBRID_CASE { return RegionUS915Hyb
+ 522:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_ALTERNATE_DR( )                      US915_HYBRID_CASE { return RegionUS915Hyb
+ 523:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CALC_BACKOFF( )                      US915_HYBRID_CASE { RegionUS915HybridCalc
+ 524:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_NEXT_CHANNEL( )                      US915_HYBRID_CASE { return RegionUS915Hyb
+ 525:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHANNEL_ADD( )                       US915_HYBRID_CASE { return RegionUS915Hyb
+ 526:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHANNEL_REMOVE( )                    US915_HYBRID_CASE { return RegionUS915Hyb
+ 527:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_SET_CONTINUOUS_WAVE( )               US915_HYBRID_CASE { RegionUS915HybridSetC
+ 528:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_APPLY_DR_OFFSET( )                   US915_HYBRID_CASE { return RegionUS915Hyb
+ 529:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #else
+ 530:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_IS_ACTIVE( )
+ 531:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_GET_PHY_PARAM( )
+ 532:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_SET_BAND_TX_DONE( )
+ 533:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_INIT_DEFAULTS( )
+ 534:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_VERIFY( )
+ 535:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_APPLY_CF_LIST( )
+ 536:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHAN_MASK_SET( )
+ 537:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_ADR_NEXT( )
+ 538:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_COMPUTE_RX_WINDOW_PARAMETERS( )
+ 539:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_RX_CONFIG( )
+ 540:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_TX_CONFIG( )
+ 541:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_LINK_ADR_REQ( )
+ 542:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_RX_PARAM_SETUP_REQ( )
+ 543:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_NEW_CHANNEL_REQ( )
+ 544:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_TX_PARAM_SETUP_REQ( )
+ 545:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_DL_CHANNEL_REQ( )
+ 546:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_ALTERNATE_DR( )
+ARM GAS  /tmp/cciGOlRU.s 			page 11
+
+
+ 547:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CALC_BACKOFF( )
+ 548:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_NEXT_CHANNEL( )
+ 549:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHANNEL_ADD( )
+ 550:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_CHANNEL_REMOVE( )
+ 551:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_SET_CONTINUOUS_WAVE( )
+ 552:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #define US915_HYBRID_APPLY_DR_OFFSET( )
+ 553:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** #endif
+ 554:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 555:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionIsActive( LoRaMacRegion_t region )
+ 556:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+  26              		.loc 1 556 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 557:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+  32              		.loc 1 557 0
+  33 0000 0528     		cmp	r0, #5
+  34 0002 01D0     		beq	.L6
+ 558:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 559:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_IS_ACTIVE( );
+ 560:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_IS_ACTIVE( );
+ 561:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_IS_ACTIVE( );
+ 562:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_IS_ACTIVE( );
+ 563:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_IS_ACTIVE( );
+ 564:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_IS_ACTIVE( );
+ 565:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_IS_ACTIVE( );
+ 566:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_IS_ACTIVE( );
+ 567:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_IS_ACTIVE( );
+ 568:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_IS_ACTIVE( );
+ 569:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 570:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 571:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+  35              		.loc 1 571 0
+  36 0004 0020     		movs	r0, #0
+  37              	.LVL1:
+  38              	.L2:
+ 572:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 573:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 574:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+  39              		.loc 1 574 0
+  40              		@ sp needed
+  41 0006 7047     		bx	lr
+  42              	.LVL2:
+  43              	.L6:
+ 564:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_IS_ACTIVE( );
+  44              		.loc 1 564 0
+  45 0008 0438     		subs	r0, r0, #4
+  46              	.LVL3:
+  47 000a FCE7     		b	.L2
+  48              		.cfi_endproc
+  49              	.LFE82:
+  51              		.section	.text.RegionGetPhyParam,"ax",%progbits
+  52              		.align	1
+  53              		.global	RegionGetPhyParam
+  54              		.syntax unified
+ARM GAS  /tmp/cciGOlRU.s 			page 12
+
+
+  55              		.code	16
+  56              		.thumb_func
+  57              		.fpu softvfp
+  59              	RegionGetPhyParam:
+  60              	.LFB83:
+ 575:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 576:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** PhyParam_t RegionGetPhyParam( LoRaMacRegion_t region, GetPhyParams_t* getPhy )
+ 577:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+  61              		.loc 1 577 0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              	.LVL4:
+  66 0000 10B5     		push	{r4, lr}
+  67              	.LCFI0:
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 4, -8
+  70              		.cfi_offset 14, -4
+ 578:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     PhyParam_t phyParam = { 0 };
+ 579:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+  71              		.loc 1 579 0
+  72 0002 0528     		cmp	r0, #5
+  73 0004 01D0     		beq	.L12
+ 580:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 581:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_GET_PHY_PARAM( );
+ 582:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_GET_PHY_PARAM( );
+ 583:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_GET_PHY_PARAM( );
+ 584:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_GET_PHY_PARAM( );
+ 585:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_GET_PHY_PARAM( );
+ 586:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_GET_PHY_PARAM( );
+ 587:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_GET_PHY_PARAM( );
+ 588:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_GET_PHY_PARAM( );
+ 589:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_GET_PHY_PARAM( );
+ 590:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_GET_PHY_PARAM( );
+ 591:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 592:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 593:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return phyParam;
+  74              		.loc 1 593 0
+  75 0006 0020     		movs	r0, #0
+  76              	.LVL5:
+  77              	.L10:
+ 594:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 595:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 596:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+  78              		.loc 1 596 0
+  79              		@ sp needed
+  80 0008 10BD     		pop	{r4, pc}
+  81              	.LVL6:
+  82              	.L12:
+ 586:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_GET_PHY_PARAM( );
+  83              		.loc 1 586 0
+  84 000a 0800     		movs	r0, r1
+  85              	.LVL7:
+  86 000c FFF7FEFF 		bl	RegionEU868GetPhyParam
+  87              	.LVL8:
+  88 0010 FAE7     		b	.L10
+  89              		.cfi_endproc
+ARM GAS  /tmp/cciGOlRU.s 			page 13
+
+
+  90              	.LFE83:
+  92              		.section	.text.RegionSetBandTxDone,"ax",%progbits
+  93              		.align	1
+  94              		.global	RegionSetBandTxDone
+  95              		.syntax unified
+  96              		.code	16
+  97              		.thumb_func
+  98              		.fpu softvfp
+ 100              	RegionSetBandTxDone:
+ 101              	.LFB84:
+ 597:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 598:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionSetBandTxDone( LoRaMacRegion_t region, SetBandTxDoneParams_t* txDone )
+ 599:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 102              		.loc 1 599 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              	.LVL9:
+ 107 0000 10B5     		push	{r4, lr}
+ 108              	.LCFI1:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 4, -8
+ 111              		.cfi_offset 14, -4
+ 600:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 112              		.loc 1 600 0
+ 113 0002 0528     		cmp	r0, #5
+ 114 0004 00D0     		beq	.L16
+ 115              	.LVL10:
+ 116              	.L13:
+ 601:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 602:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_SET_BAND_TX_DONE( );
+ 603:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_SET_BAND_TX_DONE( );
+ 604:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_SET_BAND_TX_DONE( );
+ 605:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_SET_BAND_TX_DONE( );
+ 606:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_SET_BAND_TX_DONE( );
+ 607:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_SET_BAND_TX_DONE( );
+ 608:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_SET_BAND_TX_DONE( );
+ 609:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_SET_BAND_TX_DONE( );
+ 610:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_SET_BAND_TX_DONE( );
+ 611:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_SET_BAND_TX_DONE( );
+ 612:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 613:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 614:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return;
+ 615:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 616:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 617:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 117              		.loc 1 617 0
+ 118              		@ sp needed
+ 119 0006 10BD     		pop	{r4, pc}
+ 120              	.LVL11:
+ 121              	.L16:
+ 607:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_SET_BAND_TX_DONE( );
+ 122              		.loc 1 607 0
+ 123 0008 0800     		movs	r0, r1
+ 124              	.LVL12:
+ 125 000a FFF7FEFF 		bl	RegionEU868SetBandTxDone
+ 126              	.LVL13:
+ARM GAS  /tmp/cciGOlRU.s 			page 14
+
+
+ 127 000e FAE7     		b	.L13
+ 128              		.cfi_endproc
+ 129              	.LFE84:
+ 131              		.section	.text.RegionInitDefaults,"ax",%progbits
+ 132              		.align	1
+ 133              		.global	RegionInitDefaults
+ 134              		.syntax unified
+ 135              		.code	16
+ 136              		.thumb_func
+ 137              		.fpu softvfp
+ 139              	RegionInitDefaults:
+ 140              	.LFB85:
+ 618:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 619:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionInitDefaults( LoRaMacRegion_t region, InitType_t type )
+ 620:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 141              		.loc 1 620 0
+ 142              		.cfi_startproc
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145              	.LVL14:
+ 146 0000 10B5     		push	{r4, lr}
+ 147              	.LCFI2:
+ 148              		.cfi_def_cfa_offset 8
+ 149              		.cfi_offset 4, -8
+ 150              		.cfi_offset 14, -4
+ 621:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 151              		.loc 1 621 0
+ 152 0002 0528     		cmp	r0, #5
+ 153 0004 00D0     		beq	.L20
+ 154              	.LVL15:
+ 155              	.L17:
+ 622:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 623:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_INIT_DEFAULTS( );
+ 624:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_INIT_DEFAULTS( );
+ 625:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_INIT_DEFAULTS( );
+ 626:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_INIT_DEFAULTS( );
+ 627:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_INIT_DEFAULTS( );
+ 628:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_INIT_DEFAULTS( );
+ 629:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_INIT_DEFAULTS( );
+ 630:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_INIT_DEFAULTS( );
+ 631:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_INIT_DEFAULTS( );
+ 632:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_INIT_DEFAULTS( );
+ 633:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 634:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 635:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             break;
+ 636:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 637:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 638:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 156              		.loc 1 638 0
+ 157              		@ sp needed
+ 158 0006 10BD     		pop	{r4, pc}
+ 159              	.LVL16:
+ 160              	.L20:
+ 628:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_INIT_DEFAULTS( );
+ 161              		.loc 1 628 0
+ 162 0008 0800     		movs	r0, r1
+ 163              	.LVL17:
+ARM GAS  /tmp/cciGOlRU.s 			page 15
+
+
+ 164 000a FFF7FEFF 		bl	RegionEU868InitDefaults
+ 165              	.LVL18:
+ 166              		.loc 1 638 0
+ 167 000e FAE7     		b	.L17
+ 168              		.cfi_endproc
+ 169              	.LFE85:
+ 171              		.section	.text.RegionVerify,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	RegionVerify
+ 174              		.syntax unified
+ 175              		.code	16
+ 176              		.thumb_func
+ 177              		.fpu softvfp
+ 179              	RegionVerify:
+ 180              	.LFB86:
+ 639:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 640:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionVerify( LoRaMacRegion_t region, VerifyParams_t* verify, PhyAttribute_t phyAttribute )
+ 641:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 181              		.loc 1 641 0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185              	.LVL19:
+ 186 0000 10B5     		push	{r4, lr}
+ 187              	.LCFI3:
+ 188              		.cfi_def_cfa_offset 8
+ 189              		.cfi_offset 4, -8
+ 190              		.cfi_offset 14, -4
+ 191 0002 0B00     		movs	r3, r1
+ 642:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 192              		.loc 1 642 0
+ 193 0004 0528     		cmp	r0, #5
+ 194 0006 01D0     		beq	.L26
+ 643:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 644:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_VERIFY( );
+ 645:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_VERIFY( );
+ 646:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_VERIFY( );
+ 647:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_VERIFY( );
+ 648:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_VERIFY( );
+ 649:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_VERIFY( );
+ 650:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_VERIFY( );
+ 651:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_VERIFY( );
+ 652:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_VERIFY( );
+ 653:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_VERIFY( );
+ 654:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 655:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 656:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 195              		.loc 1 656 0
+ 196 0008 0020     		movs	r0, #0
+ 197              	.LVL20:
+ 198              	.L22:
+ 657:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 658:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 659:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 199              		.loc 1 659 0
+ 200              		@ sp needed
+ 201 000a 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/cciGOlRU.s 			page 16
+
+
+ 202              	.LVL21:
+ 203              	.L26:
+ 649:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_VERIFY( );
+ 204              		.loc 1 649 0
+ 205 000c 1100     		movs	r1, r2
+ 206              	.LVL22:
+ 207 000e 1800     		movs	r0, r3
+ 208              	.LVL23:
+ 209 0010 FFF7FEFF 		bl	RegionEU868Verify
+ 210              	.LVL24:
+ 211 0014 F9E7     		b	.L22
+ 212              		.cfi_endproc
+ 213              	.LFE86:
+ 215              		.section	.text.RegionApplyCFList,"ax",%progbits
+ 216              		.align	1
+ 217              		.global	RegionApplyCFList
+ 218              		.syntax unified
+ 219              		.code	16
+ 220              		.thumb_func
+ 221              		.fpu softvfp
+ 223              	RegionApplyCFList:
+ 224              	.LFB87:
+ 660:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 661:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionApplyCFList( LoRaMacRegion_t region, ApplyCFListParams_t* applyCFList )
+ 662:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 225              		.loc 1 662 0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229              	.LVL25:
+ 230 0000 10B5     		push	{r4, lr}
+ 231              	.LCFI4:
+ 232              		.cfi_def_cfa_offset 8
+ 233              		.cfi_offset 4, -8
+ 234              		.cfi_offset 14, -4
+ 663:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 235              		.loc 1 663 0
+ 236 0002 0528     		cmp	r0, #5
+ 237 0004 00D0     		beq	.L30
+ 238              	.LVL26:
+ 239              	.L27:
+ 664:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 665:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_APPLY_CF_LIST( );
+ 666:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_APPLY_CF_LIST( );
+ 667:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_APPLY_CF_LIST( );
+ 668:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_APPLY_CF_LIST( );
+ 669:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_APPLY_CF_LIST( );
+ 670:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_APPLY_CF_LIST( );
+ 671:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_APPLY_CF_LIST( );
+ 672:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_APPLY_CF_LIST( );
+ 673:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_APPLY_CF_LIST( );
+ 674:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_APPLY_CF_LIST( );
+ 675:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 676:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 677:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             break;
+ 678:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 679:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ARM GAS  /tmp/cciGOlRU.s 			page 17
+
+
+ 680:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 240              		.loc 1 680 0
+ 241              		@ sp needed
+ 242 0006 10BD     		pop	{r4, pc}
+ 243              	.LVL27:
+ 244              	.L30:
+ 670:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_APPLY_CF_LIST( );
+ 245              		.loc 1 670 0
+ 246 0008 0800     		movs	r0, r1
+ 247              	.LVL28:
+ 248 000a FFF7FEFF 		bl	RegionEU868ApplyCFList
+ 249              	.LVL29:
+ 250              		.loc 1 680 0
+ 251 000e FAE7     		b	.L27
+ 252              		.cfi_endproc
+ 253              	.LFE87:
+ 255              		.section	.text.RegionChanMaskSet,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	RegionChanMaskSet
+ 258              		.syntax unified
+ 259              		.code	16
+ 260              		.thumb_func
+ 261              		.fpu softvfp
+ 263              	RegionChanMaskSet:
+ 264              	.LFB88:
+ 681:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 682:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionChanMaskSet( LoRaMacRegion_t region, ChanMaskSetParams_t* chanMaskSet )
+ 683:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 265              		.loc 1 683 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              	.LVL30:
+ 270 0000 10B5     		push	{r4, lr}
+ 271              	.LCFI5:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 4, -8
+ 274              		.cfi_offset 14, -4
+ 684:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 275              		.loc 1 684 0
+ 276 0002 0528     		cmp	r0, #5
+ 277 0004 01D0     		beq	.L36
+ 685:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 686:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_CHAN_MASK_SET( );
+ 687:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_CHAN_MASK_SET( );
+ 688:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_CHAN_MASK_SET( );
+ 689:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_CHAN_MASK_SET( );
+ 690:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_CHAN_MASK_SET( );
+ 691:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_CHAN_MASK_SET( );
+ 692:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CHAN_MASK_SET( );
+ 693:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_CHAN_MASK_SET( );
+ 694:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_CHAN_MASK_SET( );
+ 695:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_CHAN_MASK_SET( );
+ 696:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 697:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 698:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 278              		.loc 1 698 0
+ARM GAS  /tmp/cciGOlRU.s 			page 18
+
+
+ 279 0006 0020     		movs	r0, #0
+ 280              	.LVL31:
+ 281              	.L32:
+ 699:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 700:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 701:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 282              		.loc 1 701 0
+ 283              		@ sp needed
+ 284 0008 10BD     		pop	{r4, pc}
+ 285              	.LVL32:
+ 286              	.L36:
+ 691:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CHAN_MASK_SET( );
+ 287              		.loc 1 691 0
+ 288 000a 0800     		movs	r0, r1
+ 289              	.LVL33:
+ 290 000c FFF7FEFF 		bl	RegionEU868ChanMaskSet
+ 291              	.LVL34:
+ 292 0010 FAE7     		b	.L32
+ 293              		.cfi_endproc
+ 294              	.LFE88:
+ 296              		.section	.text.RegionAdrNext,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	RegionAdrNext
+ 299              		.syntax unified
+ 300              		.code	16
+ 301              		.thumb_func
+ 302              		.fpu softvfp
+ 304              	RegionAdrNext:
+ 305              	.LFB89:
+ 702:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 703:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionAdrNext( LoRaMacRegion_t region, AdrNextParams_t* adrNext, int8_t* drOut, int8_t* txPowO
+ 704:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 306              		.loc 1 704 0
+ 307              		.cfi_startproc
+ 308              		@ args = 4, pretend = 0, frame = 0
+ 309              		@ frame_needed = 0, uses_anonymous_args = 0
+ 310              	.LVL35:
+ 311 0000 10B5     		push	{r4, lr}
+ 312              	.LCFI6:
+ 313              		.cfi_def_cfa_offset 8
+ 314              		.cfi_offset 4, -8
+ 315              		.cfi_offset 14, -4
+ 316 0002 0C00     		movs	r4, r1
+ 317 0004 1100     		movs	r1, r2
+ 318              	.LVL36:
+ 319 0006 1A00     		movs	r2, r3
+ 320              	.LVL37:
+ 705:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 321              		.loc 1 705 0
+ 322 0008 0528     		cmp	r0, #5
+ 323 000a 01D0     		beq	.L42
+ 706:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 707:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_ADR_NEXT( );
+ 708:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_ADR_NEXT( );
+ 709:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_ADR_NEXT( );
+ 710:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_ADR_NEXT( );
+ 711:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_ADR_NEXT( );
+ARM GAS  /tmp/cciGOlRU.s 			page 19
+
+
+ 712:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_ADR_NEXT( );
+ 713:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_ADR_NEXT( );
+ 714:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_ADR_NEXT( );
+ 715:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_ADR_NEXT( );
+ 716:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_ADR_NEXT( );
+ 717:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 718:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 719:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 324              		.loc 1 719 0
+ 325 000c 0020     		movs	r0, #0
+ 326              	.LVL38:
+ 327              	.L38:
+ 720:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 721:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 722:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 328              		.loc 1 722 0
+ 329              		@ sp needed
+ 330              	.LVL39:
+ 331 000e 10BD     		pop	{r4, pc}
+ 332              	.LVL40:
+ 333              	.L42:
+ 712:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_ADR_NEXT( );
+ 334              		.loc 1 712 0
+ 335 0010 029B     		ldr	r3, [sp, #8]
+ 336 0012 2000     		movs	r0, r4
+ 337              	.LVL41:
+ 338 0014 FFF7FEFF 		bl	RegionEU868AdrNext
+ 339              	.LVL42:
+ 340 0018 F9E7     		b	.L38
+ 341              		.cfi_endproc
+ 342              	.LFE89:
+ 344              		.section	.text.RegionComputeRxWindowParameters,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	RegionComputeRxWindowParameters
+ 347              		.syntax unified
+ 348              		.code	16
+ 349              		.thumb_func
+ 350              		.fpu softvfp
+ 352              	RegionComputeRxWindowParameters:
+ 353              	.LFB90:
+ 723:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 724:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionComputeRxWindowParameters( LoRaMacRegion_t region, int8_t datarate, uint8_t minRxSymbols
+ 725:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 354              		.loc 1 725 0
+ 355              		.cfi_startproc
+ 356              		@ args = 4, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              	.LVL43:
+ 359 0000 10B5     		push	{r4, lr}
+ 360              	.LCFI7:
+ 361              		.cfi_def_cfa_offset 8
+ 362              		.cfi_offset 4, -8
+ 363              		.cfi_offset 14, -4
+ 364 0002 0C00     		movs	r4, r1
+ 365 0004 1100     		movs	r1, r2
+ 366              	.LVL44:
+ 367 0006 1A00     		movs	r2, r3
+ARM GAS  /tmp/cciGOlRU.s 			page 20
+
+
+ 368              	.LVL45:
+ 726:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 369              		.loc 1 726 0
+ 370 0008 0528     		cmp	r0, #5
+ 371 000a 00D0     		beq	.L46
+ 372              	.LVL46:
+ 373              	.L43:
+ 727:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 728:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 729:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 730:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 731:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 732:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 733:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 734:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 735:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 736:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 737:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 738:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 739:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 740:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             break;
+ 741:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 742:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 743:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 374              		.loc 1 743 0
+ 375              		@ sp needed
+ 376 000c 10BD     		pop	{r4, pc}
+ 377              	.LVL47:
+ 378              	.L46:
+ 733:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_COMPUTE_RX_WINDOW_PARAMETERS( );
+ 379              		.loc 1 733 0
+ 380 000e 029B     		ldr	r3, [sp, #8]
+ 381 0010 2000     		movs	r0, r4
+ 382              	.LVL48:
+ 383 0012 FFF7FEFF 		bl	RegionEU868ComputeRxWindowParameters
+ 384              	.LVL49:
+ 385              		.loc 1 743 0
+ 386 0016 F9E7     		b	.L43
+ 387              		.cfi_endproc
+ 388              	.LFE90:
+ 390              		.section	.text.RegionRxConfig,"ax",%progbits
+ 391              		.align	1
+ 392              		.global	RegionRxConfig
+ 393              		.syntax unified
+ 394              		.code	16
+ 395              		.thumb_func
+ 396              		.fpu softvfp
+ 398              	RegionRxConfig:
+ 399              	.LFB91:
+ 744:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 745:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionRxConfig( LoRaMacRegion_t region, RxConfigParams_t* rxConfig, int8_t* datarate )
+ 746:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 400              		.loc 1 746 0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+ 404              	.LVL50:
+ARM GAS  /tmp/cciGOlRU.s 			page 21
+
+
+ 405 0000 10B5     		push	{r4, lr}
+ 406              	.LCFI8:
+ 407              		.cfi_def_cfa_offset 8
+ 408              		.cfi_offset 4, -8
+ 409              		.cfi_offset 14, -4
+ 410 0002 0B00     		movs	r3, r1
+ 747:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 411              		.loc 1 747 0
+ 412 0004 0528     		cmp	r0, #5
+ 413 0006 01D0     		beq	.L52
+ 748:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 749:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_RX_CONFIG( );
+ 750:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_RX_CONFIG( );
+ 751:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_RX_CONFIG( );
+ 752:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_RX_CONFIG( );
+ 753:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_RX_CONFIG( );
+ 754:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_RX_CONFIG( );
+ 755:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_RX_CONFIG( );
+ 756:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_RX_CONFIG( );
+ 757:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_RX_CONFIG( );
+ 758:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_RX_CONFIG( );
+ 759:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 760:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 761:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 414              		.loc 1 761 0
+ 415 0008 0020     		movs	r0, #0
+ 416              	.LVL51:
+ 417              	.L48:
+ 762:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 763:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 764:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 418              		.loc 1 764 0
+ 419              		@ sp needed
+ 420 000a 10BD     		pop	{r4, pc}
+ 421              	.LVL52:
+ 422              	.L52:
+ 754:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_RX_CONFIG( );
+ 423              		.loc 1 754 0
+ 424 000c 1100     		movs	r1, r2
+ 425              	.LVL53:
+ 426 000e 1800     		movs	r0, r3
+ 427              	.LVL54:
+ 428 0010 FFF7FEFF 		bl	RegionEU868RxConfig
+ 429              	.LVL55:
+ 430 0014 F9E7     		b	.L48
+ 431              		.cfi_endproc
+ 432              	.LFE91:
+ 434              		.section	.text.RegionTxConfig,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	RegionTxConfig
+ 437              		.syntax unified
+ 438              		.code	16
+ 439              		.thumb_func
+ 440              		.fpu softvfp
+ 442              	RegionTxConfig:
+ 443              	.LFB92:
+ 765:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ARM GAS  /tmp/cciGOlRU.s 			page 22
+
+
+ 766:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionTxConfig( LoRaMacRegion_t region, TxConfigParams_t* txConfig, int8_t* txPower, TimerTime
+ 767:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 444              		.loc 1 767 0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 0
+ 447              		@ frame_needed = 0, uses_anonymous_args = 0
+ 448              	.LVL56:
+ 449 0000 10B5     		push	{r4, lr}
+ 450              	.LCFI9:
+ 451              		.cfi_def_cfa_offset 8
+ 452              		.cfi_offset 4, -8
+ 453              		.cfi_offset 14, -4
+ 454 0002 0C00     		movs	r4, r1
+ 455 0004 1100     		movs	r1, r2
+ 456              	.LVL57:
+ 768:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 457              		.loc 1 768 0
+ 458 0006 0528     		cmp	r0, #5
+ 459 0008 01D0     		beq	.L58
+ 769:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 770:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_TX_CONFIG( );
+ 771:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_TX_CONFIG( );
+ 772:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_TX_CONFIG( );
+ 773:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_TX_CONFIG( );
+ 774:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_TX_CONFIG( );
+ 775:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_TX_CONFIG( );
+ 776:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_TX_CONFIG( );
+ 777:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_TX_CONFIG( );
+ 778:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_TX_CONFIG( );
+ 779:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_TX_CONFIG( );
+ 780:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 781:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 782:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 460              		.loc 1 782 0
+ 461 000a 0020     		movs	r0, #0
+ 462              	.LVL58:
+ 463              	.L54:
+ 783:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 784:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 785:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 464              		.loc 1 785 0
+ 465              		@ sp needed
+ 466              	.LVL59:
+ 467 000c 10BD     		pop	{r4, pc}
+ 468              	.LVL60:
+ 469              	.L58:
+ 775:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_TX_CONFIG( );
+ 470              		.loc 1 775 0
+ 471 000e 1A00     		movs	r2, r3
+ 472 0010 2000     		movs	r0, r4
+ 473              	.LVL61:
+ 474 0012 FFF7FEFF 		bl	RegionEU868TxConfig
+ 475              	.LVL62:
+ 476 0016 F9E7     		b	.L54
+ 477              		.cfi_endproc
+ 478              	.LFE92:
+ 480              		.section	.text.RegionLinkAdrReq,"ax",%progbits
+ARM GAS  /tmp/cciGOlRU.s 			page 23
+
+
+ 481              		.align	1
+ 482              		.global	RegionLinkAdrReq
+ 483              		.syntax unified
+ 484              		.code	16
+ 485              		.thumb_func
+ 486              		.fpu softvfp
+ 488              	RegionLinkAdrReq:
+ 489              	.LFB93:
+ 786:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 787:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** uint8_t RegionLinkAdrReq( LoRaMacRegion_t region, LinkAdrReqParams_t* linkAdrReq, int8_t* drOut, in
+ 788:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 490              		.loc 1 788 0
+ 491              		.cfi_startproc
+ 492              		@ args = 8, pretend = 0, frame = 0
+ 493              		@ frame_needed = 0, uses_anonymous_args = 0
+ 494              	.LVL63:
+ 495 0000 10B5     		push	{r4, lr}
+ 496              	.LCFI10:
+ 497              		.cfi_def_cfa_offset 8
+ 498              		.cfi_offset 4, -8
+ 499              		.cfi_offset 14, -4
+ 500 0002 82B0     		sub	sp, sp, #8
+ 501              	.LCFI11:
+ 502              		.cfi_def_cfa_offset 16
+ 503 0004 0C00     		movs	r4, r1
+ 504 0006 1100     		movs	r1, r2
+ 505              	.LVL64:
+ 506 0008 1A00     		movs	r2, r3
+ 507              	.LVL65:
+ 789:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 508              		.loc 1 789 0
+ 509 000a 0528     		cmp	r0, #5
+ 510 000c 02D0     		beq	.L64
+ 790:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 791:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_LINK_ADR_REQ( );
+ 792:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_LINK_ADR_REQ( );
+ 793:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_LINK_ADR_REQ( );
+ 794:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_LINK_ADR_REQ( );
+ 795:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_LINK_ADR_REQ( );
+ 796:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_LINK_ADR_REQ( );
+ 797:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_LINK_ADR_REQ( );
+ 798:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_LINK_ADR_REQ( );
+ 799:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_LINK_ADR_REQ( );
+ 800:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_LINK_ADR_REQ( );
+ 801:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 802:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 803:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 511              		.loc 1 803 0
+ 512 000e 0020     		movs	r0, #0
+ 513              	.LVL66:
+ 514              	.L60:
+ 804:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 805:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 806:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 515              		.loc 1 806 0
+ 516 0010 02B0     		add	sp, sp, #8
+ 517              		@ sp needed
+ARM GAS  /tmp/cciGOlRU.s 			page 24
+
+
+ 518              	.LVL67:
+ 519 0012 10BD     		pop	{r4, pc}
+ 520              	.LVL68:
+ 521              	.L64:
+ 796:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_LINK_ADR_REQ( );
+ 522              		.loc 1 796 0
+ 523 0014 059B     		ldr	r3, [sp, #20]
+ 524 0016 0093     		str	r3, [sp]
+ 525 0018 049B     		ldr	r3, [sp, #16]
+ 526 001a 2000     		movs	r0, r4
+ 527              	.LVL69:
+ 528 001c FFF7FEFF 		bl	RegionEU868LinkAdrReq
+ 529              	.LVL70:
+ 530 0020 F6E7     		b	.L60
+ 531              		.cfi_endproc
+ 532              	.LFE93:
+ 534              		.section	.text.RegionRxParamSetupReq,"ax",%progbits
+ 535              		.align	1
+ 536              		.global	RegionRxParamSetupReq
+ 537              		.syntax unified
+ 538              		.code	16
+ 539              		.thumb_func
+ 540              		.fpu softvfp
+ 542              	RegionRxParamSetupReq:
+ 543              	.LFB94:
+ 807:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 808:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** uint8_t RegionRxParamSetupReq( LoRaMacRegion_t region, RxParamSetupReqParams_t* rxParamSetupReq )
+ 809:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 544              		.loc 1 809 0
+ 545              		.cfi_startproc
+ 546              		@ args = 0, pretend = 0, frame = 0
+ 547              		@ frame_needed = 0, uses_anonymous_args = 0
+ 548              	.LVL71:
+ 549 0000 10B5     		push	{r4, lr}
+ 550              	.LCFI12:
+ 551              		.cfi_def_cfa_offset 8
+ 552              		.cfi_offset 4, -8
+ 553              		.cfi_offset 14, -4
+ 810:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 554              		.loc 1 810 0
+ 555 0002 0528     		cmp	r0, #5
+ 556 0004 01D0     		beq	.L70
+ 811:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 812:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_RX_PARAM_SETUP_REQ( );
+ 813:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_RX_PARAM_SETUP_REQ( );
+ 814:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_RX_PARAM_SETUP_REQ( );
+ 815:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_RX_PARAM_SETUP_REQ( );
+ 816:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_RX_PARAM_SETUP_REQ( );
+ 817:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_RX_PARAM_SETUP_REQ( );
+ 818:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_RX_PARAM_SETUP_REQ( );
+ 819:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_RX_PARAM_SETUP_REQ( );
+ 820:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_RX_PARAM_SETUP_REQ( );
+ 821:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_RX_PARAM_SETUP_REQ( );
+ 822:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 823:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 824:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 557              		.loc 1 824 0
+ARM GAS  /tmp/cciGOlRU.s 			page 25
+
+
+ 558 0006 0020     		movs	r0, #0
+ 559              	.LVL72:
+ 560              	.L66:
+ 825:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 826:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 827:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 561              		.loc 1 827 0
+ 562              		@ sp needed
+ 563 0008 10BD     		pop	{r4, pc}
+ 564              	.LVL73:
+ 565              	.L70:
+ 817:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_RX_PARAM_SETUP_REQ( );
+ 566              		.loc 1 817 0
+ 567 000a 0800     		movs	r0, r1
+ 568              	.LVL74:
+ 569 000c FFF7FEFF 		bl	RegionEU868RxParamSetupReq
+ 570              	.LVL75:
+ 571 0010 FAE7     		b	.L66
+ 572              		.cfi_endproc
+ 573              	.LFE94:
+ 575              		.section	.text.RegionNewChannelReq,"ax",%progbits
+ 576              		.align	1
+ 577              		.global	RegionNewChannelReq
+ 578              		.syntax unified
+ 579              		.code	16
+ 580              		.thumb_func
+ 581              		.fpu softvfp
+ 583              	RegionNewChannelReq:
+ 584              	.LFB95:
+ 828:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 829:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** uint8_t RegionNewChannelReq( LoRaMacRegion_t region, NewChannelReqParams_t* newChannelReq )
+ 830:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 585              		.loc 1 830 0
+ 586              		.cfi_startproc
+ 587              		@ args = 0, pretend = 0, frame = 0
+ 588              		@ frame_needed = 0, uses_anonymous_args = 0
+ 589              	.LVL76:
+ 590 0000 10B5     		push	{r4, lr}
+ 591              	.LCFI13:
+ 592              		.cfi_def_cfa_offset 8
+ 593              		.cfi_offset 4, -8
+ 594              		.cfi_offset 14, -4
+ 831:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 595              		.loc 1 831 0
+ 596 0002 0528     		cmp	r0, #5
+ 597 0004 01D0     		beq	.L76
+ 832:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 833:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_NEW_CHANNEL_REQ( );
+ 834:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_NEW_CHANNEL_REQ( );
+ 835:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_NEW_CHANNEL_REQ( );
+ 836:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_NEW_CHANNEL_REQ( );
+ 837:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_NEW_CHANNEL_REQ( );
+ 838:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_NEW_CHANNEL_REQ( );
+ 839:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_NEW_CHANNEL_REQ( );
+ 840:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_NEW_CHANNEL_REQ( );
+ 841:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_NEW_CHANNEL_REQ( );
+ 842:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_NEW_CHANNEL_REQ( );
+ARM GAS  /tmp/cciGOlRU.s 			page 26
+
+
+ 843:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 844:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 845:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 598              		.loc 1 845 0
+ 599 0006 0020     		movs	r0, #0
+ 600              	.LVL77:
+ 601              	.L72:
+ 846:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 847:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 848:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 602              		.loc 1 848 0
+ 603              		@ sp needed
+ 604 0008 10BD     		pop	{r4, pc}
+ 605              	.LVL78:
+ 606              	.L76:
+ 838:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_NEW_CHANNEL_REQ( );
+ 607              		.loc 1 838 0
+ 608 000a 0800     		movs	r0, r1
+ 609              	.LVL79:
+ 610 000c FFF7FEFF 		bl	RegionEU868NewChannelReq
+ 611              	.LVL80:
+ 612 0010 FAE7     		b	.L72
+ 613              		.cfi_endproc
+ 614              	.LFE95:
+ 616              		.section	.text.RegionTxParamSetupReq,"ax",%progbits
+ 617              		.align	1
+ 618              		.global	RegionTxParamSetupReq
+ 619              		.syntax unified
+ 620              		.code	16
+ 621              		.thumb_func
+ 622              		.fpu softvfp
+ 624              	RegionTxParamSetupReq:
+ 625              	.LFB96:
+ 849:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 850:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** int8_t RegionTxParamSetupReq( LoRaMacRegion_t region, TxParamSetupReqParams_t* txParamSetupReq )
+ 851:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 626              		.loc 1 851 0
+ 627              		.cfi_startproc
+ 628              		@ args = 0, pretend = 0, frame = 0
+ 629              		@ frame_needed = 0, uses_anonymous_args = 0
+ 630              	.LVL81:
+ 631 0000 10B5     		push	{r4, lr}
+ 632              	.LCFI14:
+ 633              		.cfi_def_cfa_offset 8
+ 634              		.cfi_offset 4, -8
+ 635              		.cfi_offset 14, -4
+ 852:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 636              		.loc 1 852 0
+ 637 0002 0528     		cmp	r0, #5
+ 638 0004 01D0     		beq	.L82
+ 853:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 854:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_TX_PARAM_SETUP_REQ( );
+ 855:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_TX_PARAM_SETUP_REQ( );
+ 856:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_TX_PARAM_SETUP_REQ( );
+ 857:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_TX_PARAM_SETUP_REQ( );
+ 858:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_TX_PARAM_SETUP_REQ( );
+ 859:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_TX_PARAM_SETUP_REQ( );
+ARM GAS  /tmp/cciGOlRU.s 			page 27
+
+
+ 860:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_TX_PARAM_SETUP_REQ( );
+ 861:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_TX_PARAM_SETUP_REQ( );
+ 862:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_TX_PARAM_SETUP_REQ( );
+ 863:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_TX_PARAM_SETUP_REQ( );
+ 864:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 865:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 866:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 639              		.loc 1 866 0
+ 640 0006 0020     		movs	r0, #0
+ 641              	.LVL82:
+ 642              	.L78:
+ 867:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 868:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 869:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 643              		.loc 1 869 0
+ 644              		@ sp needed
+ 645 0008 10BD     		pop	{r4, pc}
+ 646              	.LVL83:
+ 647              	.L82:
+ 859:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_TX_PARAM_SETUP_REQ( );
+ 648              		.loc 1 859 0
+ 649 000a 0800     		movs	r0, r1
+ 650              	.LVL84:
+ 651 000c FFF7FEFF 		bl	RegionEU868TxParamSetupReq
+ 652              	.LVL85:
+ 653 0010 FAE7     		b	.L78
+ 654              		.cfi_endproc
+ 655              	.LFE96:
+ 657              		.section	.text.RegionDlChannelReq,"ax",%progbits
+ 658              		.align	1
+ 659              		.global	RegionDlChannelReq
+ 660              		.syntax unified
+ 661              		.code	16
+ 662              		.thumb_func
+ 663              		.fpu softvfp
+ 665              	RegionDlChannelReq:
+ 666              	.LFB97:
+ 870:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 871:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** uint8_t RegionDlChannelReq( LoRaMacRegion_t region, DlChannelReqParams_t* dlChannelReq )
+ 872:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 667              		.loc 1 872 0
+ 668              		.cfi_startproc
+ 669              		@ args = 0, pretend = 0, frame = 0
+ 670              		@ frame_needed = 0, uses_anonymous_args = 0
+ 671              	.LVL86:
+ 672 0000 10B5     		push	{r4, lr}
+ 673              	.LCFI15:
+ 674              		.cfi_def_cfa_offset 8
+ 675              		.cfi_offset 4, -8
+ 676              		.cfi_offset 14, -4
+ 873:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 677              		.loc 1 873 0
+ 678 0002 0528     		cmp	r0, #5
+ 679 0004 01D0     		beq	.L88
+ 874:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 875:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_DL_CHANNEL_REQ( );
+ 876:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_DL_CHANNEL_REQ( );
+ARM GAS  /tmp/cciGOlRU.s 			page 28
+
+
+ 877:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_DL_CHANNEL_REQ( );
+ 878:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_DL_CHANNEL_REQ( );
+ 879:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_DL_CHANNEL_REQ( );
+ 880:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_DL_CHANNEL_REQ( );
+ 881:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_DL_CHANNEL_REQ( );
+ 882:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_DL_CHANNEL_REQ( );
+ 883:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_DL_CHANNEL_REQ( );
+ 884:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_DL_CHANNEL_REQ( );
+ 885:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 886:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 887:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 680              		.loc 1 887 0
+ 681 0006 0020     		movs	r0, #0
+ 682              	.LVL87:
+ 683              	.L84:
+ 888:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 889:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 890:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 684              		.loc 1 890 0
+ 685              		@ sp needed
+ 686 0008 10BD     		pop	{r4, pc}
+ 687              	.LVL88:
+ 688              	.L88:
+ 880:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_DL_CHANNEL_REQ( );
+ 689              		.loc 1 880 0
+ 690 000a 0800     		movs	r0, r1
+ 691              	.LVL89:
+ 692 000c FFF7FEFF 		bl	RegionEU868DlChannelReq
+ 693              	.LVL90:
+ 694 0010 FAE7     		b	.L84
+ 695              		.cfi_endproc
+ 696              	.LFE97:
+ 698              		.section	.text.RegionAlternateDr,"ax",%progbits
+ 699              		.align	1
+ 700              		.global	RegionAlternateDr
+ 701              		.syntax unified
+ 702              		.code	16
+ 703              		.thumb_func
+ 704              		.fpu softvfp
+ 706              	RegionAlternateDr:
+ 707              	.LFB98:
+ 891:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 892:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** int8_t RegionAlternateDr( LoRaMacRegion_t region, AlternateDrParams_t* alternateDr )
+ 893:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 708              		.loc 1 893 0
+ 709              		.cfi_startproc
+ 710              		@ args = 0, pretend = 0, frame = 0
+ 711              		@ frame_needed = 0, uses_anonymous_args = 0
+ 712              	.LVL91:
+ 713 0000 10B5     		push	{r4, lr}
+ 714              	.LCFI16:
+ 715              		.cfi_def_cfa_offset 8
+ 716              		.cfi_offset 4, -8
+ 717              		.cfi_offset 14, -4
+ 894:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 718              		.loc 1 894 0
+ 719 0002 0528     		cmp	r0, #5
+ARM GAS  /tmp/cciGOlRU.s 			page 29
+
+
+ 720 0004 01D0     		beq	.L94
+ 895:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 896:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_ALTERNATE_DR( );
+ 897:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_ALTERNATE_DR( );
+ 898:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_ALTERNATE_DR( );
+ 899:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_ALTERNATE_DR( );
+ 900:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_ALTERNATE_DR( );
+ 901:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_ALTERNATE_DR( );
+ 902:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_ALTERNATE_DR( );
+ 903:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_ALTERNATE_DR( );
+ 904:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_ALTERNATE_DR( );
+ 905:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_ALTERNATE_DR( );
+ 906:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 907:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 908:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return 0;
+ 721              		.loc 1 908 0
+ 722 0006 0020     		movs	r0, #0
+ 723              	.LVL92:
+ 724              	.L90:
+ 909:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 910:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 911:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 725              		.loc 1 911 0
+ 726              		@ sp needed
+ 727 0008 10BD     		pop	{r4, pc}
+ 728              	.LVL93:
+ 729              	.L94:
+ 901:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_ALTERNATE_DR( );
+ 730              		.loc 1 901 0
+ 731 000a 0800     		movs	r0, r1
+ 732              	.LVL94:
+ 733 000c FFF7FEFF 		bl	RegionEU868AlternateDr
+ 734              	.LVL95:
+ 735 0010 FAE7     		b	.L90
+ 736              		.cfi_endproc
+ 737              	.LFE98:
+ 739              		.section	.text.RegionCalcBackOff,"ax",%progbits
+ 740              		.align	1
+ 741              		.global	RegionCalcBackOff
+ 742              		.syntax unified
+ 743              		.code	16
+ 744              		.thumb_func
+ 745              		.fpu softvfp
+ 747              	RegionCalcBackOff:
+ 748              	.LFB99:
+ 912:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 913:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionCalcBackOff( LoRaMacRegion_t region, CalcBackOffParams_t* calcBackOff )
+ 914:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 749              		.loc 1 914 0
+ 750              		.cfi_startproc
+ 751              		@ args = 0, pretend = 0, frame = 0
+ 752              		@ frame_needed = 0, uses_anonymous_args = 0
+ 753              	.LVL96:
+ 754 0000 10B5     		push	{r4, lr}
+ 755              	.LCFI17:
+ 756              		.cfi_def_cfa_offset 8
+ 757              		.cfi_offset 4, -8
+ARM GAS  /tmp/cciGOlRU.s 			page 30
+
+
+ 758              		.cfi_offset 14, -4
+ 915:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 759              		.loc 1 915 0
+ 760 0002 0528     		cmp	r0, #5
+ 761 0004 00D0     		beq	.L98
+ 762              	.LVL97:
+ 763              	.L95:
+ 916:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 917:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_CALC_BACKOFF( );
+ 918:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_CALC_BACKOFF( );
+ 919:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_CALC_BACKOFF( );
+ 920:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_CALC_BACKOFF( );
+ 921:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_CALC_BACKOFF( );
+ 922:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_CALC_BACKOFF( );
+ 923:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CALC_BACKOFF( );
+ 924:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_CALC_BACKOFF( );
+ 925:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_CALC_BACKOFF( );
+ 926:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_CALC_BACKOFF( );
+ 927:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 928:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 929:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             break;
+ 930:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 931:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 932:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 764              		.loc 1 932 0
+ 765              		@ sp needed
+ 766 0006 10BD     		pop	{r4, pc}
+ 767              	.LVL98:
+ 768              	.L98:
+ 922:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CALC_BACKOFF( );
+ 769              		.loc 1 922 0
+ 770 0008 0800     		movs	r0, r1
+ 771              	.LVL99:
+ 772 000a FFF7FEFF 		bl	RegionEU868CalcBackOff
+ 773              	.LVL100:
+ 774              		.loc 1 932 0
+ 775 000e FAE7     		b	.L95
+ 776              		.cfi_endproc
+ 777              	.LFE99:
+ 779              		.section	.text.RegionNextChannel,"ax",%progbits
+ 780              		.align	1
+ 781              		.global	RegionNextChannel
+ 782              		.syntax unified
+ 783              		.code	16
+ 784              		.thumb_func
+ 785              		.fpu softvfp
+ 787              	RegionNextChannel:
+ 788              	.LFB100:
+ 933:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 934:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionNextChannel( LoRaMacRegion_t region, NextChanParams_t* nextChanParams, uint8_t* channel,
+ 935:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 789              		.loc 1 935 0
+ 790              		.cfi_startproc
+ 791              		@ args = 4, pretend = 0, frame = 0
+ 792              		@ frame_needed = 0, uses_anonymous_args = 0
+ 793              	.LVL101:
+ 794 0000 10B5     		push	{r4, lr}
+ARM GAS  /tmp/cciGOlRU.s 			page 31
+
+
+ 795              	.LCFI18:
+ 796              		.cfi_def_cfa_offset 8
+ 797              		.cfi_offset 4, -8
+ 798              		.cfi_offset 14, -4
+ 799 0002 0C00     		movs	r4, r1
+ 800 0004 1100     		movs	r1, r2
+ 801              	.LVL102:
+ 802 0006 1A00     		movs	r2, r3
+ 803              	.LVL103:
+ 936:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 804              		.loc 1 936 0
+ 805 0008 0528     		cmp	r0, #5
+ 806 000a 01D0     		beq	.L104
+ 937:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 938:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_NEXT_CHANNEL( );
+ 939:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_NEXT_CHANNEL( );
+ 940:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_NEXT_CHANNEL( );
+ 941:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_NEXT_CHANNEL( );
+ 942:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_NEXT_CHANNEL( );
+ 943:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_NEXT_CHANNEL( );
+ 944:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_NEXT_CHANNEL( );
+ 945:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_NEXT_CHANNEL( );
+ 946:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_NEXT_CHANNEL( );
+ 947:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_NEXT_CHANNEL( );
+ 948:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 949:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 950:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 807              		.loc 1 950 0
+ 808 000c 0020     		movs	r0, #0
+ 809              	.LVL104:
+ 810              	.L100:
+ 951:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 952:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 953:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 811              		.loc 1 953 0
+ 812              		@ sp needed
+ 813              	.LVL105:
+ 814 000e 10BD     		pop	{r4, pc}
+ 815              	.LVL106:
+ 816              	.L104:
+ 943:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_NEXT_CHANNEL( );
+ 817              		.loc 1 943 0
+ 818 0010 029B     		ldr	r3, [sp, #8]
+ 819 0012 2000     		movs	r0, r4
+ 820              	.LVL107:
+ 821 0014 FFF7FEFF 		bl	RegionEU868NextChannel
+ 822              	.LVL108:
+ 823 0018 F9E7     		b	.L100
+ 824              		.cfi_endproc
+ 825              	.LFE100:
+ 827              		.section	.text.RegionChannelAdd,"ax",%progbits
+ 828              		.align	1
+ 829              		.global	RegionChannelAdd
+ 830              		.syntax unified
+ 831              		.code	16
+ 832              		.thumb_func
+ 833              		.fpu softvfp
+ARM GAS  /tmp/cciGOlRU.s 			page 32
+
+
+ 835              	RegionChannelAdd:
+ 836              	.LFB101:
+ 954:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 955:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** LoRaMacStatus_t RegionChannelAdd( LoRaMacRegion_t region, ChannelAddParams_t* channelAdd )
+ 956:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 837              		.loc 1 956 0
+ 838              		.cfi_startproc
+ 839              		@ args = 0, pretend = 0, frame = 0
+ 840              		@ frame_needed = 0, uses_anonymous_args = 0
+ 841              	.LVL109:
+ 842 0000 10B5     		push	{r4, lr}
+ 843              	.LCFI19:
+ 844              		.cfi_def_cfa_offset 8
+ 845              		.cfi_offset 4, -8
+ 846              		.cfi_offset 14, -4
+ 957:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 847              		.loc 1 957 0
+ 848 0002 0528     		cmp	r0, #5
+ 849 0004 03D1     		bne	.L109
+ 958:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 959:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_CHANNEL_ADD( );
+ 960:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_CHANNEL_ADD( );
+ 961:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_CHANNEL_ADD( );
+ 962:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_CHANNEL_ADD( );
+ 963:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_CHANNEL_ADD( );
+ 964:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_CHANNEL_ADD( );
+ 850              		.loc 1 964 0
+ 851 0006 0800     		movs	r0, r1
+ 852              	.LVL110:
+ 853 0008 FFF7FEFF 		bl	RegionEU868ChannelAdd
+ 854              	.LVL111:
+ 855              	.L106:
+ 965:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CHANNEL_ADD( );
+ 966:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_CHANNEL_ADD( );
+ 967:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_CHANNEL_ADD( );
+ 968:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_CHANNEL_ADD( );
+ 969:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 970:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 971:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return LORAMAC_STATUS_PARAMETER_INVALID;
+ 972:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 973:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 974:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 856              		.loc 1 974 0
+ 857              		@ sp needed
+ 858 000c 10BD     		pop	{r4, pc}
+ 859              	.LVL112:
+ 860              	.L109:
+ 971:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 861              		.loc 1 971 0
+ 862 000e 0320     		movs	r0, #3
+ 863              	.LVL113:
+ 864 0010 FCE7     		b	.L106
+ 865              		.cfi_endproc
+ 866              	.LFE101:
+ 868              		.section	.text.RegionChannelsRemove,"ax",%progbits
+ 869              		.align	1
+ 870              		.global	RegionChannelsRemove
+ARM GAS  /tmp/cciGOlRU.s 			page 33
+
+
+ 871              		.syntax unified
+ 872              		.code	16
+ 873              		.thumb_func
+ 874              		.fpu softvfp
+ 876              	RegionChannelsRemove:
+ 877              	.LFB102:
+ 975:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 976:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** bool RegionChannelsRemove( LoRaMacRegion_t region, ChannelRemoveParams_t* channelRemove )
+ 977:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 878              		.loc 1 977 0
+ 879              		.cfi_startproc
+ 880              		@ args = 0, pretend = 0, frame = 0
+ 881              		@ frame_needed = 0, uses_anonymous_args = 0
+ 882              	.LVL114:
+ 883 0000 10B5     		push	{r4, lr}
+ 884              	.LCFI20:
+ 885              		.cfi_def_cfa_offset 8
+ 886              		.cfi_offset 4, -8
+ 887              		.cfi_offset 14, -4
+ 978:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 888              		.loc 1 978 0
+ 889 0002 0528     		cmp	r0, #5
+ 890 0004 01D0     		beq	.L115
+ 979:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+ 980:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_CHANNEL_REMOVE( );
+ 981:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_CHANNEL_REMOVE( );
+ 982:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_CHANNEL_REMOVE( );
+ 983:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_CHANNEL_REMOVE( );
+ 984:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_CHANNEL_REMOVE( );
+ 985:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_CHANNEL_REMOVE( );
+ 986:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CHANNEL_REMOVE( );
+ 987:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_CHANNEL_REMOVE( );
+ 988:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_CHANNEL_REMOVE( );
+ 989:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_CHANNEL_REMOVE( );
+ 990:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+ 991:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+ 992:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return false;
+ 891              		.loc 1 992 0
+ 892 0006 0020     		movs	r0, #0
+ 893              	.LVL115:
+ 894              	.L111:
+ 993:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+ 994:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+ 995:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 895              		.loc 1 995 0
+ 896              		@ sp needed
+ 897 0008 10BD     		pop	{r4, pc}
+ 898              	.LVL116:
+ 899              	.L115:
+ 985:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_CHANNEL_REMOVE( );
+ 900              		.loc 1 985 0
+ 901 000a 0800     		movs	r0, r1
+ 902              	.LVL117:
+ 903 000c FFF7FEFF 		bl	RegionEU868ChannelsRemove
+ 904              	.LVL118:
+ 905 0010 FAE7     		b	.L111
+ 906              		.cfi_endproc
+ARM GAS  /tmp/cciGOlRU.s 			page 34
+
+
+ 907              	.LFE102:
+ 909              		.section	.text.RegionSetContinuousWave,"ax",%progbits
+ 910              		.align	1
+ 911              		.global	RegionSetContinuousWave
+ 912              		.syntax unified
+ 913              		.code	16
+ 914              		.thumb_func
+ 915              		.fpu softvfp
+ 917              	RegionSetContinuousWave:
+ 918              	.LFB103:
+ 996:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+ 997:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** void RegionSetContinuousWave( LoRaMacRegion_t region, ContinuousWaveParams_t* continuousWave )
+ 998:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 919              		.loc 1 998 0
+ 920              		.cfi_startproc
+ 921              		@ args = 0, pretend = 0, frame = 0
+ 922              		@ frame_needed = 0, uses_anonymous_args = 0
+ 923              	.LVL119:
+ 924 0000 10B5     		push	{r4, lr}
+ 925              	.LCFI21:
+ 926              		.cfi_def_cfa_offset 8
+ 927              		.cfi_offset 4, -8
+ 928              		.cfi_offset 14, -4
+ 999:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 929              		.loc 1 999 0
+ 930 0002 0528     		cmp	r0, #5
+ 931 0004 00D0     		beq	.L119
+ 932              	.LVL120:
+ 933              	.L116:
+1000:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+1001:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_SET_CONTINUOUS_WAVE( );
+1002:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_SET_CONTINUOUS_WAVE( );
+1003:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_SET_CONTINUOUS_WAVE( );
+1004:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_SET_CONTINUOUS_WAVE( );
+1005:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_SET_CONTINUOUS_WAVE( );
+1006:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_SET_CONTINUOUS_WAVE( );
+1007:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_SET_CONTINUOUS_WAVE( );
+1008:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_SET_CONTINUOUS_WAVE( );
+1009:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_SET_CONTINUOUS_WAVE( );
+1010:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_SET_CONTINUOUS_WAVE( );
+1011:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+1012:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+1013:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             break;
+1014:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+1015:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+1016:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 934              		.loc 1 1016 0
+ 935              		@ sp needed
+ 936 0006 10BD     		pop	{r4, pc}
+ 937              	.LVL121:
+ 938              	.L119:
+1006:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_SET_CONTINUOUS_WAVE( );
+ 939              		.loc 1 1006 0
+ 940 0008 0800     		movs	r0, r1
+ 941              	.LVL122:
+ 942 000a FFF7FEFF 		bl	RegionEU868SetContinuousWave
+ 943              	.LVL123:
+ARM GAS  /tmp/cciGOlRU.s 			page 35
+
+
+ 944              		.loc 1 1016 0
+ 945 000e FAE7     		b	.L116
+ 946              		.cfi_endproc
+ 947              	.LFE103:
+ 949              		.section	.text.RegionApplyDrOffset,"ax",%progbits
+ 950              		.align	1
+ 951              		.global	RegionApplyDrOffset
+ 952              		.syntax unified
+ 953              		.code	16
+ 954              		.thumb_func
+ 955              		.fpu softvfp
+ 957              	RegionApplyDrOffset:
+ 958              	.LFB104:
+1017:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** 
+1018:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** uint8_t RegionApplyDrOffset( LoRaMacRegion_t region, uint8_t downlinkDwellTime, int8_t dr, int8_t d
+1019:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** {
+ 959              		.loc 1 1019 0
+ 960              		.cfi_startproc
+ 961              		@ args = 0, pretend = 0, frame = 0
+ 962              		@ frame_needed = 0, uses_anonymous_args = 0
+ 963              	.LVL124:
+ 964 0000 10B5     		push	{r4, lr}
+ 965              	.LCFI22:
+ 966              		.cfi_def_cfa_offset 8
+ 967              		.cfi_offset 4, -8
+ 968              		.cfi_offset 14, -4
+ 969 0002 0C00     		movs	r4, r1
+ 970 0004 1100     		movs	r1, r2
+ 971              	.LVL125:
+1020:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     switch( region )
+ 972              		.loc 1 1020 0
+ 973 0006 0528     		cmp	r0, #5
+ 974 0008 01D0     		beq	.L125
+1021:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     {
+1022:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AS923_APPLY_DR_OFFSET( );
+1023:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         AU915_APPLY_DR_OFFSET( );
+1024:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN470_APPLY_DR_OFFSET( );
+1025:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         CN779_APPLY_DR_OFFSET( );
+1026:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU433_APPLY_DR_OFFSET( );
+1027:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         EU868_APPLY_DR_OFFSET( );
+1028:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_APPLY_DR_OFFSET( );
+1029:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         IN865_APPLY_DR_OFFSET( );
+1030:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_APPLY_DR_OFFSET( );
+1031:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         US915_HYBRID_APPLY_DR_OFFSET( );
+1032:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         default:
+1033:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         {
+1034:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****             return dr;
+ 975              		.loc 1 1034 0
+ 976 000a D0B2     		uxtb	r0, r2
+ 977              	.LVL126:
+ 978              	.L123:
+1035:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         }
+1036:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****     }
+1037:./Middlewares/Third_Party/Lora/Mac/region/Region.c **** }
+ 979              		.loc 1 1037 0
+ 980              		@ sp needed
+ 981 000c 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/cciGOlRU.s 			page 36
+
+
+ 982              	.LVL127:
+ 983              	.L125:
+1027:./Middlewares/Third_Party/Lora/Mac/region/Region.c ****         KR920_APPLY_DR_OFFSET( );
+ 984              		.loc 1 1027 0
+ 985 000e 1A00     		movs	r2, r3
+ 986              	.LVL128:
+ 987 0010 2000     		movs	r0, r4
+ 988              	.LVL129:
+ 989 0012 FFF7FEFF 		bl	RegionEU868ApplyDrOffset
+ 990              	.LVL130:
+ 991 0016 F9E7     		b	.L123
+ 992              		.cfi_endproc
+ 993              	.LFE104:
+ 995              		.text
+ 996              	.Letext0:
+ 997              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 998              		.file 3 "/usr/arm-none-eabi/include/sys/lock.h"
+ 999              		.file 4 "/usr/arm-none-eabi/include/sys/_types.h"
+ 1000              		.file 5 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 1001              		.file 6 "/usr/arm-none-eabi/include/sys/reent.h"
+ 1002              		.file 7 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 1003              		.file 8 "/usr/arm-none-eabi/include/math.h"
+ 1004              		.file 9 "Middlewares/Third_Party/Lora/Utilities/utilities.h"
+ 1005              		.file 10 "Middlewares/Third_Party/Lora/Mac/LoRaMac.h"
+ 1006              		.file 11 "./Middlewares/Third_Party/Lora/Mac/region/Region.h"
+ 1007              		.file 12 "./Middlewares/Third_Party/Lora/Mac/region/RegionEU868.h"
+ARM GAS  /tmp/cciGOlRU.s 			page 37
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Region.c
+     /tmp/cciGOlRU.s:16     .text.RegionIsActive:0000000000000000 $t
+     /tmp/cciGOlRU.s:23     .text.RegionIsActive:0000000000000000 RegionIsActive
+     /tmp/cciGOlRU.s:52     .text.RegionGetPhyParam:0000000000000000 $t
+     /tmp/cciGOlRU.s:59     .text.RegionGetPhyParam:0000000000000000 RegionGetPhyParam
+     /tmp/cciGOlRU.s:93     .text.RegionSetBandTxDone:0000000000000000 $t
+     /tmp/cciGOlRU.s:100    .text.RegionSetBandTxDone:0000000000000000 RegionSetBandTxDone
+     /tmp/cciGOlRU.s:132    .text.RegionInitDefaults:0000000000000000 $t
+     /tmp/cciGOlRU.s:139    .text.RegionInitDefaults:0000000000000000 RegionInitDefaults
+     /tmp/cciGOlRU.s:172    .text.RegionVerify:0000000000000000 $t
+     /tmp/cciGOlRU.s:179    .text.RegionVerify:0000000000000000 RegionVerify
+     /tmp/cciGOlRU.s:216    .text.RegionApplyCFList:0000000000000000 $t
+     /tmp/cciGOlRU.s:223    .text.RegionApplyCFList:0000000000000000 RegionApplyCFList
+     /tmp/cciGOlRU.s:256    .text.RegionChanMaskSet:0000000000000000 $t
+     /tmp/cciGOlRU.s:263    .text.RegionChanMaskSet:0000000000000000 RegionChanMaskSet
+     /tmp/cciGOlRU.s:297    .text.RegionAdrNext:0000000000000000 $t
+     /tmp/cciGOlRU.s:304    .text.RegionAdrNext:0000000000000000 RegionAdrNext
+     /tmp/cciGOlRU.s:345    .text.RegionComputeRxWindowParameters:0000000000000000 $t
+     /tmp/cciGOlRU.s:352    .text.RegionComputeRxWindowParameters:0000000000000000 RegionComputeRxWindowParameters
+     /tmp/cciGOlRU.s:391    .text.RegionRxConfig:0000000000000000 $t
+     /tmp/cciGOlRU.s:398    .text.RegionRxConfig:0000000000000000 RegionRxConfig
+     /tmp/cciGOlRU.s:435    .text.RegionTxConfig:0000000000000000 $t
+     /tmp/cciGOlRU.s:442    .text.RegionTxConfig:0000000000000000 RegionTxConfig
+     /tmp/cciGOlRU.s:481    .text.RegionLinkAdrReq:0000000000000000 $t
+     /tmp/cciGOlRU.s:488    .text.RegionLinkAdrReq:0000000000000000 RegionLinkAdrReq
+     /tmp/cciGOlRU.s:535    .text.RegionRxParamSetupReq:0000000000000000 $t
+     /tmp/cciGOlRU.s:542    .text.RegionRxParamSetupReq:0000000000000000 RegionRxParamSetupReq
+     /tmp/cciGOlRU.s:576    .text.RegionNewChannelReq:0000000000000000 $t
+     /tmp/cciGOlRU.s:583    .text.RegionNewChannelReq:0000000000000000 RegionNewChannelReq
+     /tmp/cciGOlRU.s:617    .text.RegionTxParamSetupReq:0000000000000000 $t
+     /tmp/cciGOlRU.s:624    .text.RegionTxParamSetupReq:0000000000000000 RegionTxParamSetupReq
+     /tmp/cciGOlRU.s:658    .text.RegionDlChannelReq:0000000000000000 $t
+     /tmp/cciGOlRU.s:665    .text.RegionDlChannelReq:0000000000000000 RegionDlChannelReq
+     /tmp/cciGOlRU.s:699    .text.RegionAlternateDr:0000000000000000 $t
+     /tmp/cciGOlRU.s:706    .text.RegionAlternateDr:0000000000000000 RegionAlternateDr
+     /tmp/cciGOlRU.s:740    .text.RegionCalcBackOff:0000000000000000 $t
+     /tmp/cciGOlRU.s:747    .text.RegionCalcBackOff:0000000000000000 RegionCalcBackOff
+     /tmp/cciGOlRU.s:780    .text.RegionNextChannel:0000000000000000 $t
+     /tmp/cciGOlRU.s:787    .text.RegionNextChannel:0000000000000000 RegionNextChannel
+     /tmp/cciGOlRU.s:828    .text.RegionChannelAdd:0000000000000000 $t
+     /tmp/cciGOlRU.s:835    .text.RegionChannelAdd:0000000000000000 RegionChannelAdd
+     /tmp/cciGOlRU.s:869    .text.RegionChannelsRemove:0000000000000000 $t
+     /tmp/cciGOlRU.s:876    .text.RegionChannelsRemove:0000000000000000 RegionChannelsRemove
+     /tmp/cciGOlRU.s:910    .text.RegionSetContinuousWave:0000000000000000 $t
+     /tmp/cciGOlRU.s:917    .text.RegionSetContinuousWave:0000000000000000 RegionSetContinuousWave
+     /tmp/cciGOlRU.s:950    .text.RegionApplyDrOffset:0000000000000000 $t
+     /tmp/cciGOlRU.s:957    .text.RegionApplyDrOffset:0000000000000000 RegionApplyDrOffset
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+RegionEU868GetPhyParam
+RegionEU868SetBandTxDone
+RegionEU868InitDefaults
+RegionEU868Verify
+RegionEU868ApplyCFList
+RegionEU868ChanMaskSet
+ARM GAS  /tmp/cciGOlRU.s 			page 38
+
+
+RegionEU868AdrNext
+RegionEU868ComputeRxWindowParameters
+RegionEU868RxConfig
+RegionEU868TxConfig
+RegionEU868LinkAdrReq
+RegionEU868RxParamSetupReq
+RegionEU868NewChannelReq
+RegionEU868TxParamSetupReq
+RegionEU868DlChannelReq
+RegionEU868AlternateDr
+RegionEU868CalcBackOff
+RegionEU868NextChannel
+RegionEU868ChannelAdd
+RegionEU868ChannelsRemove
+RegionEU868SetContinuousWave
+RegionEU868ApplyDrOffset

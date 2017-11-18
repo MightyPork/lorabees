@@ -1,0 +1,1305 @@
+ARM GAS  /tmp/ccKytYSe.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stm32l0xx_hw.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.HW_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	HW_Init
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	HW_Init:
+  24              	.LFB96:
+  25              		.file 1 "./Src/stm32l0xx_hw.c"
+   1:./Src/stm32l0xx_hw.c **** /*
+   2:./Src/stm32l0xx_hw.c ****  / _____)             _              | |
+   3:./Src/stm32l0xx_hw.c **** ( (____  _____ ____ _| |_ _____  ____| |__
+   4:./Src/stm32l0xx_hw.c ****  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
+   5:./Src/stm32l0xx_hw.c ****  _____) ) ____| | | || |_| ____( (___| | | |
+   6:./Src/stm32l0xx_hw.c **** (______/|_____)_|_|_| \__)_____)\____)_| |_|
+   7:./Src/stm32l0xx_hw.c ****     (C)2013 Semtech
+   8:./Src/stm32l0xx_hw.c **** 
+   9:./Src/stm32l0xx_hw.c **** Description: Target board general functions implementation
+  10:./Src/stm32l0xx_hw.c **** 
+  11:./Src/stm32l0xx_hw.c **** License: Revised BSD License, see LICENSE.TXT file include in the project
+  12:./Src/stm32l0xx_hw.c **** 
+  13:./Src/stm32l0xx_hw.c **** Maintainer: Miguel Luis and Gregory Cristian
+  14:./Src/stm32l0xx_hw.c **** */
+  15:./Src/stm32l0xx_hw.c ****  /*******************************************************************************
+  16:./Src/stm32l0xx_hw.c ****   * @file    stm32l0xx_hw.c
+  17:./Src/stm32l0xx_hw.c ****   * @author  MCD Application Team
+  18:./Src/stm32l0xx_hw.c ****   * @version V1.1.2
+  19:./Src/stm32l0xx_hw.c ****   * @date    08-September-2017
+  20:./Src/stm32l0xx_hw.c ****   * @brief   system hardware driver
+  21:./Src/stm32l0xx_hw.c ****   ******************************************************************************
+  22:./Src/stm32l0xx_hw.c ****   * @attention
+  23:./Src/stm32l0xx_hw.c ****   *
+  24:./Src/stm32l0xx_hw.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  25:./Src/stm32l0xx_hw.c ****   * All rights reserved.</center></h2>
+  26:./Src/stm32l0xx_hw.c ****   *
+  27:./Src/stm32l0xx_hw.c ****   * Redistribution and use in source and binary forms, with or without 
+  28:./Src/stm32l0xx_hw.c ****   * modification, are permitted, provided that the following conditions are met:
+  29:./Src/stm32l0xx_hw.c ****   *
+  30:./Src/stm32l0xx_hw.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  31:./Src/stm32l0xx_hw.c ****   *    this list of conditions and the following disclaimer.
+  32:./Src/stm32l0xx_hw.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  33:./Src/stm32l0xx_hw.c ****   *    this list of conditions and the following disclaimer in the documentation
+ARM GAS  /tmp/ccKytYSe.s 			page 2
+
+
+  34:./Src/stm32l0xx_hw.c ****   *    and/or other materials provided with the distribution.
+  35:./Src/stm32l0xx_hw.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  36:./Src/stm32l0xx_hw.c ****   *    contributors to this software may be used to endorse or promote products 
+  37:./Src/stm32l0xx_hw.c ****   *    derived from this software without specific written permission.
+  38:./Src/stm32l0xx_hw.c ****   * 4. This software, including modifications and/or derivative works of this 
+  39:./Src/stm32l0xx_hw.c ****   *    software, must execute solely and exclusively on microcontroller or
+  40:./Src/stm32l0xx_hw.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  41:./Src/stm32l0xx_hw.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  42:./Src/stm32l0xx_hw.c ****   *    this license is void and will automatically terminate your rights under 
+  43:./Src/stm32l0xx_hw.c ****   *    this license. 
+  44:./Src/stm32l0xx_hw.c ****   *
+  45:./Src/stm32l0xx_hw.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  46:./Src/stm32l0xx_hw.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  47:./Src/stm32l0xx_hw.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  48:./Src/stm32l0xx_hw.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  49:./Src/stm32l0xx_hw.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  50:./Src/stm32l0xx_hw.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  51:./Src/stm32l0xx_hw.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  52:./Src/stm32l0xx_hw.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  53:./Src/stm32l0xx_hw.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  54:./Src/stm32l0xx_hw.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  55:./Src/stm32l0xx_hw.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  56:./Src/stm32l0xx_hw.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  57:./Src/stm32l0xx_hw.c ****   *
+  58:./Src/stm32l0xx_hw.c ****   ******************************************************************************
+  59:./Src/stm32l0xx_hw.c ****   */
+  60:./Src/stm32l0xx_hw.c **** #include "hw.h"
+  61:./Src/stm32l0xx_hw.c **** #include "radio.h"
+  62:./Src/stm32l0xx_hw.c **** #include "debug.h"
+  63:./Src/stm32l0xx_hw.c **** #include "vcom.h"
+  64:./Src/stm32l0xx_hw.c **** 
+  65:./Src/stm32l0xx_hw.c **** /*!
+  66:./Src/stm32l0xx_hw.c ****  *  \brief Unique Devices IDs register set ( STM32L0xxx )
+  67:./Src/stm32l0xx_hw.c ****  */
+  68:./Src/stm32l0xx_hw.c **** #define         ID1                                 ( 0x1FF80050 )
+  69:./Src/stm32l0xx_hw.c **** #define         ID2                                 ( 0x1FF80054 )
+  70:./Src/stm32l0xx_hw.c **** #define         ID3                                 ( 0x1FF80064 )
+  71:./Src/stm32l0xx_hw.c **** 
+  72:./Src/stm32l0xx_hw.c **** /*!
+  73:./Src/stm32l0xx_hw.c ****  * \brief ADC Vbat measurement constants
+  74:./Src/stm32l0xx_hw.c ****  */
+  75:./Src/stm32l0xx_hw.c **** 
+  76:./Src/stm32l0xx_hw.c ****  /* Internal voltage reference, parameter VREFINT_CAL*/
+  77:./Src/stm32l0xx_hw.c **** #define VREFINT_CAL       ((uint16_t*) ((uint32_t) 0x1FF80078))
+  78:./Src/stm32l0xx_hw.c **** #define LORAWAN_MAX_BAT   254
+  79:./Src/stm32l0xx_hw.c **** 
+  80:./Src/stm32l0xx_hw.c **** 
+  81:./Src/stm32l0xx_hw.c **** /* Internal temperature sensor: constants data used for indicative values in  */
+  82:./Src/stm32l0xx_hw.c **** /* this example. Refer to device datasheet for min/typ/max values.            */
+  83:./Src/stm32l0xx_hw.c **** 
+  84:./Src/stm32l0xx_hw.c **** /* Internal temperature sensor, parameter TS_CAL1: TS ADC raw data acquired at 
+  85:./Src/stm32l0xx_hw.c ****  *a temperature of 110 DegC (+-5 DegC), VDDA = 3.3 V (+-10 mV). */
+  86:./Src/stm32l0xx_hw.c **** #define TEMP30_CAL_ADDR   ((uint16_t*) ((uint32_t) 0x1FF8007A))
+  87:./Src/stm32l0xx_hw.c **** 
+  88:./Src/stm32l0xx_hw.c **** /* Internal temperature sensor, parameter TS_CAL2: TS ADC raw data acquired at 
+  89:./Src/stm32l0xx_hw.c ****  *a temperature of  30 DegC (+-5 DegC), VDDA = 3.3 V (+-10 mV). */
+  90:./Src/stm32l0xx_hw.c **** #define TEMP110_CAL_ADDR  ((uint16_t*) ((uint32_t) 0x1FF8007E))
+ARM GAS  /tmp/ccKytYSe.s 			page 3
+
+
+  91:./Src/stm32l0xx_hw.c **** 
+  92:./Src/stm32l0xx_hw.c **** /* Vdda value with which temperature sensor has been calibrated in production 
+  93:./Src/stm32l0xx_hw.c ****    (+-10 mV). */
+  94:./Src/stm32l0xx_hw.c **** #define VDDA_TEMP_CAL                  ((uint32_t) 3000)
+  95:./Src/stm32l0xx_hw.c **** 
+  96:./Src/stm32l0xx_hw.c **** /*!
+  97:./Src/stm32l0xx_hw.c ****  * Flag to indicate if the MCU is Initialized
+  98:./Src/stm32l0xx_hw.c ****  */
+  99:./Src/stm32l0xx_hw.c **** static bool McuInitialized = false;
+ 100:./Src/stm32l0xx_hw.c **** 
+ 101:./Src/stm32l0xx_hw.c **** /**
+ 102:./Src/stm32l0xx_hw.c ****   * @brief This function initializes the hardware
+ 103:./Src/stm32l0xx_hw.c ****   * @param None
+ 104:./Src/stm32l0xx_hw.c ****   * @retval None
+ 105:./Src/stm32l0xx_hw.c ****   */
+ 106:./Src/stm32l0xx_hw.c **** void HW_Init( void )
+ 107:./Src/stm32l0xx_hw.c **** {
+  26              		.loc 1 107 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 10B5     		push	{r4, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+ 108:./Src/stm32l0xx_hw.c ****   if( McuInitialized == false )
+  35              		.loc 1 108 0
+  36 0002 084B     		ldr	r3, .L3
+  37 0004 1B78     		ldrb	r3, [r3]
+  38 0006 002B     		cmp	r3, #0
+  39 0008 0BD1     		bne	.L1
+ 109:./Src/stm32l0xx_hw.c ****   {
+ 110:./Src/stm32l0xx_hw.c **** #if defined( USE_BOOTLOADER )
+ 111:./Src/stm32l0xx_hw.c ****     /* Set the Vector Table base location at 0x3000 */
+ 112:./Src/stm32l0xx_hw.c ****     NVIC_SetVectorTable( NVIC_VectTab_FLASH, 0x3000 );
+ 113:./Src/stm32l0xx_hw.c **** #endif
+ 114:./Src/stm32l0xx_hw.c **** 
+ 115:./Src/stm32l0xx_hw.c ****    // HW_AdcInit( );
+ 116:./Src/stm32l0xx_hw.c **** 
+ 117:./Src/stm32l0xx_hw.c ****     Radio.IoInit( );
+  40              		.loc 1 117 0
+  41 000a 074B     		ldr	r3, .L3+4
+  42 000c 1B68     		ldr	r3, [r3]
+  43 000e 9847     		blx	r3
+  44              	.LVL0:
+ 118:./Src/stm32l0xx_hw.c ****     
+ 119:./Src/stm32l0xx_hw.c ****     HW_SPI_Init( );
+  45              		.loc 1 119 0
+  46 0010 FFF7FEFF 		bl	HW_SPI_Init
+  47              	.LVL1:
+ 120:./Src/stm32l0xx_hw.c **** 
+ 121:./Src/stm32l0xx_hw.c ****     HW_RTC_Init( );
+  48              		.loc 1 121 0
+  49 0014 FFF7FEFF 		bl	HW_RTC_Init
+  50              	.LVL2:
+ 122:./Src/stm32l0xx_hw.c ****     
+ARM GAS  /tmp/ccKytYSe.s 			page 4
+
+
+ 123:./Src/stm32l0xx_hw.c ****     vcom_Init( );
+  51              		.loc 1 123 0
+  52 0018 FFF7FEFF 		bl	vcom_Init
+  53              	.LVL3:
+ 124:./Src/stm32l0xx_hw.c **** 
+ 125:./Src/stm32l0xx_hw.c ****     McuInitialized = true;
+  54              		.loc 1 125 0
+  55 001c 014B     		ldr	r3, .L3
+  56 001e 0122     		movs	r2, #1
+  57 0020 1A70     		strb	r2, [r3]
+  58              	.L1:
+ 126:./Src/stm32l0xx_hw.c ****   }
+ 127:./Src/stm32l0xx_hw.c **** }
+  59              		.loc 1 127 0
+  60              		@ sp needed
+  61 0022 10BD     		pop	{r4, pc}
+  62              	.L4:
+  63              		.align	2
+  64              	.L3:
+  65 0024 00000000 		.word	.LANCHOR0
+  66 0028 00000000 		.word	Radio
+  67              		.cfi_endproc
+  68              	.LFE96:
+  70              		.section	.text.HW_DeInit,"ax",%progbits
+  71              		.align	1
+  72              		.global	HW_DeInit
+  73              		.syntax unified
+  74              		.code	16
+  75              		.thumb_func
+  76              		.fpu softvfp
+  78              	HW_DeInit:
+  79              	.LFB97:
+ 128:./Src/stm32l0xx_hw.c **** 
+ 129:./Src/stm32l0xx_hw.c **** /**
+ 130:./Src/stm32l0xx_hw.c ****   * @brief This function Deinitializes the hardware
+ 131:./Src/stm32l0xx_hw.c ****   * @param None
+ 132:./Src/stm32l0xx_hw.c ****   * @retval None
+ 133:./Src/stm32l0xx_hw.c ****   */
+ 134:./Src/stm32l0xx_hw.c **** void HW_DeInit( void )
+ 135:./Src/stm32l0xx_hw.c **** {
+  80              		.loc 1 135 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84 0000 10B5     		push	{r4, lr}
+  85              	.LCFI1:
+  86              		.cfi_def_cfa_offset 8
+  87              		.cfi_offset 4, -8
+  88              		.cfi_offset 14, -4
+ 136:./Src/stm32l0xx_hw.c ****   HW_SPI_DeInit( );
+  89              		.loc 1 136 0
+  90 0002 FFF7FEFF 		bl	HW_SPI_DeInit
+  91              	.LVL4:
+ 137:./Src/stm32l0xx_hw.c ****   
+ 138:./Src/stm32l0xx_hw.c ****   Radio.IoDeInit( );
+  92              		.loc 1 138 0
+  93 0006 044B     		ldr	r3, .L6
+ARM GAS  /tmp/ccKytYSe.s 			page 5
+
+
+  94 0008 5B68     		ldr	r3, [r3, #4]
+  95 000a 9847     		blx	r3
+  96              	.LVL5:
+ 139:./Src/stm32l0xx_hw.c ****   
+ 140:./Src/stm32l0xx_hw.c ****   vcom_DeInit( );
+  97              		.loc 1 140 0
+  98 000c FFF7FEFF 		bl	vcom_DeInit
+  99              	.LVL6:
+ 141:./Src/stm32l0xx_hw.c ****    
+ 142:./Src/stm32l0xx_hw.c ****   McuInitialized = false;
+ 100              		.loc 1 142 0
+ 101 0010 024B     		ldr	r3, .L6+4
+ 102 0012 0022     		movs	r2, #0
+ 103 0014 1A70     		strb	r2, [r3]
+ 143:./Src/stm32l0xx_hw.c **** }
+ 104              		.loc 1 143 0
+ 105              		@ sp needed
+ 106 0016 10BD     		pop	{r4, pc}
+ 107              	.L7:
+ 108              		.align	2
+ 109              	.L6:
+ 110 0018 00000000 		.word	Radio
+ 111 001c 00000000 		.word	.LANCHOR0
+ 112              		.cfi_endproc
+ 113              	.LFE97:
+ 115              		.section	.text.HW_GpioInit,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	HW_GpioInit
+ 118              		.syntax unified
+ 119              		.code	16
+ 120              		.thumb_func
+ 121              		.fpu softvfp
+ 123              	HW_GpioInit:
+ 124              	.LFB100:
+ 144:./Src/stm32l0xx_hw.c **** 
+ 145:./Src/stm32l0xx_hw.c **** /**
+ 146:./Src/stm32l0xx_hw.c ****   * @brief This function Initializes the hardware Ios
+ 147:./Src/stm32l0xx_hw.c ****   * @param None
+ 148:./Src/stm32l0xx_hw.c ****   * @retval None
+ 149:./Src/stm32l0xx_hw.c ****   */
+ 150:./Src/stm32l0xx_hw.c **** static void HW_IoInit( void )
+ 151:./Src/stm32l0xx_hw.c **** {
+ 152:./Src/stm32l0xx_hw.c ****   HW_SPI_IoInit( );
+ 153:./Src/stm32l0xx_hw.c ****   
+ 154:./Src/stm32l0xx_hw.c ****   Radio.IoInit( );
+ 155:./Src/stm32l0xx_hw.c ****   
+ 156:./Src/stm32l0xx_hw.c ****   vcom_IoInit( );
+ 157:./Src/stm32l0xx_hw.c **** }
+ 158:./Src/stm32l0xx_hw.c **** 
+ 159:./Src/stm32l0xx_hw.c **** /**
+ 160:./Src/stm32l0xx_hw.c ****   * @brief This function Deinitializes the hardware Ios
+ 161:./Src/stm32l0xx_hw.c ****   * @param None
+ 162:./Src/stm32l0xx_hw.c ****   * @retval None
+ 163:./Src/stm32l0xx_hw.c ****   */
+ 164:./Src/stm32l0xx_hw.c **** static void HW_IoDeInit( void )
+ 165:./Src/stm32l0xx_hw.c **** {
+ 166:./Src/stm32l0xx_hw.c ****   HW_SPI_IoDeInit( );
+ARM GAS  /tmp/ccKytYSe.s 			page 6
+
+
+ 167:./Src/stm32l0xx_hw.c ****   
+ 168:./Src/stm32l0xx_hw.c ****   Radio.IoDeInit( );
+ 169:./Src/stm32l0xx_hw.c ****   
+ 170:./Src/stm32l0xx_hw.c ****   vcom_IoDeInit( );
+ 171:./Src/stm32l0xx_hw.c **** }
+ 172:./Src/stm32l0xx_hw.c **** 
+ 173:./Src/stm32l0xx_hw.c **** 
+ 174:./Src/stm32l0xx_hw.c **** void HW_GpioInit(void)
+ 175:./Src/stm32l0xx_hw.c **** {
+ 125              		.loc 1 175 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		@ link register save eliminated.
+ 176:./Src/stm32l0xx_hw.c ****   /* STM32L0 Gpios are all already configured in analog input at nReset*/
+ 177:./Src/stm32l0xx_hw.c **** }
+ 130              		.loc 1 177 0
+ 131              		@ sp needed
+ 132 0000 7047     		bx	lr
+ 133              		.cfi_endproc
+ 134              	.LFE100:
+ 136              		.section	.text.SystemClock_Config,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	SystemClock_Config
+ 139              		.syntax unified
+ 140              		.code	16
+ 141              		.thumb_func
+ 142              		.fpu softvfp
+ 144              	SystemClock_Config:
+ 145              	.LFB101:
+ 178:./Src/stm32l0xx_hw.c **** 
+ 179:./Src/stm32l0xx_hw.c **** /**
+ 180:./Src/stm32l0xx_hw.c ****   * @brief  System Clock Configuration
+ 181:./Src/stm32l0xx_hw.c ****   *         The system Clock is configured as follow :
+ 182:./Src/stm32l0xx_hw.c ****   *            System Clock source            = PLL (HSI)
+ 183:./Src/stm32l0xx_hw.c ****   *            SYSCLK(Hz)                     = 32000000
+ 184:./Src/stm32l0xx_hw.c ****   *            HCLK(Hz)                       = 32000000
+ 185:./Src/stm32l0xx_hw.c ****   *            AHB Prescaler                  = 1
+ 186:./Src/stm32l0xx_hw.c ****   *            APB1 Prescaler                 = 1
+ 187:./Src/stm32l0xx_hw.c ****   *            APB2 Prescaler                 = 1
+ 188:./Src/stm32l0xx_hw.c ****   *            HSI Frequency(Hz)              = 16000000
+ 189:./Src/stm32l0xx_hw.c ****   *            PLLMUL                         = 6
+ 190:./Src/stm32l0xx_hw.c ****   *            PLLDIV                         = 3
+ 191:./Src/stm32l0xx_hw.c ****   *            Flash Latency(WS)              = 1
+ 192:./Src/stm32l0xx_hw.c ****   * @retval None
+ 193:./Src/stm32l0xx_hw.c ****   */
+ 194:./Src/stm32l0xx_hw.c **** 
+ 195:./Src/stm32l0xx_hw.c **** void SystemClock_Config( void )
+ 196:./Src/stm32l0xx_hw.c **** {
+ 146              		.loc 1 196 0
+ 147              		.cfi_startproc
+ 148              		@ args = 0, pretend = 0, frame = 80
+ 149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150 0000 00B5     		push	{lr}
+ 151              	.LCFI2:
+ 152              		.cfi_def_cfa_offset 4
+ 153              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccKytYSe.s 			page 7
+
+
+ 154 0002 95B0     		sub	sp, sp, #84
+ 155              	.LCFI3:
+ 156              		.cfi_def_cfa_offset 88
+ 197:./Src/stm32l0xx_hw.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+ 157              		.loc 1 197 0
+ 158 0004 1422     		movs	r2, #20
+ 159 0006 0021     		movs	r1, #0
+ 160 0008 0FA8     		add	r0, sp, #60
+ 161 000a FFF7FEFF 		bl	memset
+ 162              	.LVL7:
+ 198:./Src/stm32l0xx_hw.c ****   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+ 163              		.loc 1 198 0
+ 164 000e 2C22     		movs	r2, #44
+ 165 0010 0021     		movs	r1, #0
+ 166 0012 02A8     		add	r0, sp, #8
+ 167 0014 FFF7FEFF 		bl	memset
+ 168              	.LVL8:
+ 199:./Src/stm32l0xx_hw.c **** 
+ 200:./Src/stm32l0xx_hw.c ****   /* Enable HSE Oscillator and Activate PLL with HSE as source */
+ 201:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
+ 169              		.loc 1 201 0
+ 170 0018 0223     		movs	r3, #2
+ 171 001a 0193     		str	r3, [sp, #4]
+ 202:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.HSEState            = RCC_HSE_OFF;
+ 203:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+ 172              		.loc 1 203 0
+ 173 001c 0122     		movs	r2, #1
+ 174 001e 0492     		str	r2, [sp, #16]
+ 204:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+ 175              		.loc 1 204 0
+ 176 0020 0F32     		adds	r2, r2, #15
+ 177 0022 0592     		str	r2, [sp, #20]
+ 205:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+ 178              		.loc 1 205 0
+ 179 0024 0B93     		str	r3, [sp, #44]
+ 206:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
+ 207:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLLMUL_6;
+ 180              		.loc 1 207 0
+ 181 0026 8023     		movs	r3, #128
+ 182 0028 1B03     		lsls	r3, r3, #12
+ 183 002a 0D93     		str	r3, [sp, #52]
+ 208:./Src/stm32l0xx_hw.c ****   RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLLDIV_3;
+ 184              		.loc 1 208 0
+ 185 002c 8023     		movs	r3, #128
+ 186 002e 1B04     		lsls	r3, r3, #16
+ 187 0030 0E93     		str	r3, [sp, #56]
+ 209:./Src/stm32l0xx_hw.c **** 
+ 210:./Src/stm32l0xx_hw.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 188              		.loc 1 210 0
+ 189 0032 01A8     		add	r0, sp, #4
+ 190 0034 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 191              	.LVL9:
+ 192 0038 0028     		cmp	r0, #0
+ 193 003a 21D1     		bne	.L13
+ 194              	.L10:
+ 211:./Src/stm32l0xx_hw.c ****   {
+ 212:./Src/stm32l0xx_hw.c ****     Error_Handler();
+ARM GAS  /tmp/ccKytYSe.s 			page 8
+
+
+ 213:./Src/stm32l0xx_hw.c ****   }
+ 214:./Src/stm32l0xx_hw.c **** 
+ 215:./Src/stm32l0xx_hw.c ****   /* Set Voltage scale1 as MCU will run at 32MHz */
+ 216:./Src/stm32l0xx_hw.c ****   __HAL_RCC_PWR_CLK_ENABLE();
+ 195              		.loc 1 216 0
+ 196 003c 154A     		ldr	r2, .L15
+ 197 003e 916B     		ldr	r1, [r2, #56]
+ 198 0040 8023     		movs	r3, #128
+ 199 0042 5B05     		lsls	r3, r3, #21
+ 200 0044 0B43     		orrs	r3, r1
+ 201 0046 9363     		str	r3, [r2, #56]
+ 217:./Src/stm32l0xx_hw.c ****   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+ 202              		.loc 1 217 0
+ 203 0048 1349     		ldr	r1, .L15+4
+ 204 004a 0B68     		ldr	r3, [r1]
+ 205 004c 134A     		ldr	r2, .L15+8
+ 206 004e 1A40     		ands	r2, r3
+ 207 0050 8023     		movs	r3, #128
+ 208 0052 1B01     		lsls	r3, r3, #4
+ 209 0054 1343     		orrs	r3, r2
+ 210 0056 0B60     		str	r3, [r1]
+ 211              	.L11:
+ 218:./Src/stm32l0xx_hw.c ****   
+ 219:./Src/stm32l0xx_hw.c ****   /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+ 220:./Src/stm32l0xx_hw.c ****   while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+ 212              		.loc 1 220 0 discriminator 1
+ 213 0058 0F4B     		ldr	r3, .L15+4
+ 214 005a 5B68     		ldr	r3, [r3, #4]
+ 215 005c DB06     		lsls	r3, r3, #27
+ 216 005e FBD4     		bmi	.L11
+ 221:./Src/stm32l0xx_hw.c **** 
+ 222:./Src/stm32l0xx_hw.c ****   /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+ 223:./Src/stm32l0xx_hw.c ****   clocks dividers */
+ 224:./Src/stm32l0xx_hw.c ****   RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | 
+ 217              		.loc 1 224 0
+ 218 0060 0F23     		movs	r3, #15
+ 219 0062 0F93     		str	r3, [sp, #60]
+ 225:./Src/stm32l0xx_hw.c ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+ 220              		.loc 1 225 0
+ 221 0064 0C3B     		subs	r3, r3, #12
+ 222 0066 1093     		str	r3, [sp, #64]
+ 226:./Src/stm32l0xx_hw.c ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 223              		.loc 1 226 0
+ 224 0068 0023     		movs	r3, #0
+ 225 006a 1193     		str	r3, [sp, #68]
+ 227:./Src/stm32l0xx_hw.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 226              		.loc 1 227 0
+ 227 006c 1293     		str	r3, [sp, #72]
+ 228:./Src/stm32l0xx_hw.c ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+ 228              		.loc 1 228 0
+ 229 006e 1393     		str	r3, [sp, #76]
+ 229:./Src/stm32l0xx_hw.c ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+ 230              		.loc 1 229 0
+ 231 0070 0121     		movs	r1, #1
+ 232 0072 0FA8     		add	r0, sp, #60
+ 233 0074 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+ 234              	.LVL10:
+ARM GAS  /tmp/ccKytYSe.s 			page 9
+
+
+ 235 0078 0028     		cmp	r0, #0
+ 236 007a 06D1     		bne	.L14
+ 237              	.L9:
+ 230:./Src/stm32l0xx_hw.c ****   {
+ 231:./Src/stm32l0xx_hw.c ****     Error_Handler();
+ 232:./Src/stm32l0xx_hw.c ****   }
+ 233:./Src/stm32l0xx_hw.c **** }
+ 238              		.loc 1 233 0
+ 239 007c 15B0     		add	sp, sp, #84
+ 240              		@ sp needed
+ 241 007e 00BD     		pop	{pc}
+ 242              	.L13:
+ 212:./Src/stm32l0xx_hw.c ****   }
+ 243              		.loc 1 212 0
+ 244 0080 D421     		movs	r1, #212
+ 245 0082 0748     		ldr	r0, .L15+12
+ 246 0084 FFF7FEFF 		bl	_Error_Handler
+ 247              	.LVL11:
+ 248 0088 D8E7     		b	.L10
+ 249              	.L14:
+ 231:./Src/stm32l0xx_hw.c ****   }
+ 250              		.loc 1 231 0
+ 251 008a E721     		movs	r1, #231
+ 252 008c 0448     		ldr	r0, .L15+12
+ 253 008e FFF7FEFF 		bl	_Error_Handler
+ 254              	.LVL12:
+ 255              		.loc 1 233 0
+ 256 0092 F3E7     		b	.L9
+ 257              	.L16:
+ 258              		.align	2
+ 259              	.L15:
+ 260 0094 00100240 		.word	1073876992
+ 261 0098 00700040 		.word	1073770496
+ 262 009c FFE7FFFF 		.word	-6145
+ 263 00a0 00000000 		.word	.LC4
+ 264              		.cfi_endproc
+ 265              	.LFE101:
+ 267              		.section	.text.HW_GetRandomSeed,"ax",%progbits
+ 268              		.align	1
+ 269              		.global	HW_GetRandomSeed
+ 270              		.syntax unified
+ 271              		.code	16
+ 272              		.thumb_func
+ 273              		.fpu softvfp
+ 275              	HW_GetRandomSeed:
+ 276              	.LFB102:
+ 234:./Src/stm32l0xx_hw.c **** /**
+ 235:./Src/stm32l0xx_hw.c ****   * @brief This function return a random seed
+ 236:./Src/stm32l0xx_hw.c ****   * @note based on the device unique ID
+ 237:./Src/stm32l0xx_hw.c ****   * @param None
+ 238:./Src/stm32l0xx_hw.c ****   * @retval see
+ 239:./Src/stm32l0xx_hw.c ****   */
+ 240:./Src/stm32l0xx_hw.c **** uint32_t HW_GetRandomSeed( void )
+ 241:./Src/stm32l0xx_hw.c **** {
+ 277              		.loc 1 241 0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccKytYSe.s 			page 10
+
+
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281              		@ link register save eliminated.
+ 242:./Src/stm32l0xx_hw.c ****   return ( ( *( uint32_t* )ID1 ) ^ ( *( uint32_t* )ID2 ) ^ ( *( uint32_t* )ID3 ) );
+ 282              		.loc 1 242 0
+ 283 0000 044B     		ldr	r3, .L18
+ 284 0002 1868     		ldr	r0, [r3]
+ 285 0004 044B     		ldr	r3, .L18+4
+ 286 0006 1B68     		ldr	r3, [r3]
+ 287 0008 5840     		eors	r0, r3
+ 288 000a 044B     		ldr	r3, .L18+8
+ 289 000c 1B68     		ldr	r3, [r3]
+ 290 000e 5840     		eors	r0, r3
+ 243:./Src/stm32l0xx_hw.c **** }
+ 291              		.loc 1 243 0
+ 292              		@ sp needed
+ 293 0010 7047     		bx	lr
+ 294              	.L19:
+ 295 0012 C046     		.align	2
+ 296              	.L18:
+ 297 0014 5000F81F 		.word	536346704
+ 298 0018 5400F81F 		.word	536346708
+ 299 001c 6400F81F 		.word	536346724
+ 300              		.cfi_endproc
+ 301              	.LFE102:
+ 303              		.section	.text.HW_GetUniqueId,"ax",%progbits
+ 304              		.align	1
+ 305              		.global	HW_GetUniqueId
+ 306              		.syntax unified
+ 307              		.code	16
+ 308              		.thumb_func
+ 309              		.fpu softvfp
+ 311              	HW_GetUniqueId:
+ 312              	.LFB103:
+ 244:./Src/stm32l0xx_hw.c **** 
+ 245:./Src/stm32l0xx_hw.c **** /**
+ 246:./Src/stm32l0xx_hw.c ****   * @brief This function return a unique ID
+ 247:./Src/stm32l0xx_hw.c ****   * @param unique ID
+ 248:./Src/stm32l0xx_hw.c ****   * @retval none
+ 249:./Src/stm32l0xx_hw.c ****   */
+ 250:./Src/stm32l0xx_hw.c **** void HW_GetUniqueId( uint8_t *id )
+ 251:./Src/stm32l0xx_hw.c **** {
+ 313              		.loc 1 251 0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              	.LVL13:
+ 318 0000 10B5     		push	{r4, lr}
+ 319              	.LCFI4:
+ 320              		.cfi_def_cfa_offset 8
+ 321              		.cfi_offset 4, -8
+ 322              		.cfi_offset 14, -4
+ 252:./Src/stm32l0xx_hw.c ****     id[7] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 24;
+ 323              		.loc 1 252 0
+ 324 0002 1349     		ldr	r1, .L21
+ 325 0004 134A     		ldr	r2, .L21+4
+ 326 0006 0B68     		ldr	r3, [r1]
+ 327 0008 1C00     		movs	r4, r3
+ARM GAS  /tmp/ccKytYSe.s 			page 11
+
+
+ 328 000a 1368     		ldr	r3, [r2]
+ 329 000c 9C46     		mov	ip, r3
+ 330 000e 6444     		add	r4, r4, ip
+ 331 0010 230E     		lsrs	r3, r4, #24
+ 332 0012 C371     		strb	r3, [r0, #7]
+ 253:./Src/stm32l0xx_hw.c ****     id[6] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 16;
+ 333              		.loc 1 253 0
+ 334 0014 0B68     		ldr	r3, [r1]
+ 335 0016 1C00     		movs	r4, r3
+ 336 0018 1368     		ldr	r3, [r2]
+ 337 001a 9C46     		mov	ip, r3
+ 338 001c 6444     		add	r4, r4, ip
+ 339 001e 230C     		lsrs	r3, r4, #16
+ 340 0020 8371     		strb	r3, [r0, #6]
+ 254:./Src/stm32l0xx_hw.c ****     id[5] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 8;
+ 341              		.loc 1 254 0
+ 342 0022 0B68     		ldr	r3, [r1]
+ 343 0024 1C00     		movs	r4, r3
+ 344 0026 1368     		ldr	r3, [r2]
+ 345 0028 9C46     		mov	ip, r3
+ 346 002a 6444     		add	r4, r4, ip
+ 347 002c 230A     		lsrs	r3, r4, #8
+ 348 002e 4371     		strb	r3, [r0, #5]
+ 255:./Src/stm32l0xx_hw.c ****     id[4] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) );
+ 349              		.loc 1 255 0
+ 350 0030 0B68     		ldr	r3, [r1]
+ 351 0032 1268     		ldr	r2, [r2]
+ 352 0034 9B18     		adds	r3, r3, r2
+ 353 0036 0371     		strb	r3, [r0, #4]
+ 256:./Src/stm32l0xx_hw.c ****     id[3] = ( ( *( uint32_t* )ID2 ) ) >> 24;
+ 354              		.loc 1 256 0
+ 355 0038 074B     		ldr	r3, .L21+8
+ 356 003a DA78     		ldrb	r2, [r3, #3]
+ 357 003c C270     		strb	r2, [r0, #3]
+ 257:./Src/stm32l0xx_hw.c ****     id[2] = ( ( *( uint32_t* )ID2 ) ) >> 16;
+ 358              		.loc 1 257 0
+ 359 003e 5A88     		ldrh	r2, [r3, #2]
+ 360 0040 8270     		strb	r2, [r0, #2]
+ 258:./Src/stm32l0xx_hw.c ****     id[1] = ( ( *( uint32_t* )ID2 ) ) >> 8;
+ 361              		.loc 1 258 0
+ 362 0042 1A68     		ldr	r2, [r3]
+ 363 0044 120A     		lsrs	r2, r2, #8
+ 364 0046 4270     		strb	r2, [r0, #1]
+ 259:./Src/stm32l0xx_hw.c ****     id[0] = ( ( *( uint32_t* )ID2 ) );
+ 365              		.loc 1 259 0
+ 366 0048 1B68     		ldr	r3, [r3]
+ 367 004a 0370     		strb	r3, [r0]
+ 260:./Src/stm32l0xx_hw.c **** }
+ 368              		.loc 1 260 0
+ 369              		@ sp needed
+ 370 004c 10BD     		pop	{r4, pc}
+ 371              	.L22:
+ 372 004e C046     		.align	2
+ 373              	.L21:
+ 374 0050 5000F81F 		.word	536346704
+ 375 0054 6400F81F 		.word	536346724
+ 376 0058 5400F81F 		.word	536346708
+ARM GAS  /tmp/ccKytYSe.s 			page 12
+
+
+ 377              		.cfi_endproc
+ 378              	.LFE103:
+ 380              		.section	.text.HW_EnterStopMode,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	HW_EnterStopMode
+ 383              		.syntax unified
+ 384              		.code	16
+ 385              		.thumb_func
+ 386              		.fpu softvfp
+ 388              	HW_EnterStopMode:
+ 389              	.LFB104:
+ 261:./Src/stm32l0xx_hw.c **** 
+ 262:./Src/stm32l0xx_hw.c **** 
+ 263:./Src/stm32l0xx_hw.c **** /**
+ 264:./Src/stm32l0xx_hw.c ****   * @brief Enters Low Power Stop Mode
+ 265:./Src/stm32l0xx_hw.c ****   * @note ARM exists the function when waking up
+ 266:./Src/stm32l0xx_hw.c ****   * @param none
+ 267:./Src/stm32l0xx_hw.c ****   * @retval none
+ 268:./Src/stm32l0xx_hw.c ****   */
+ 269:./Src/stm32l0xx_hw.c **** void HW_EnterStopMode( void)
+ 270:./Src/stm32l0xx_hw.c **** {
+ 390              		.loc 1 270 0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394 0000 10B5     		push	{r4, lr}
+ 395              	.LCFI5:
+ 396              		.cfi_def_cfa_offset 8
+ 397              		.cfi_offset 4, -8
+ 398              		.cfi_offset 14, -4
+ 399              	.LBB22:
+ 400              	.LBB23:
+ 401              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V4.30
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     20. October 2015
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Copyright (c) 2009 - 2015 ARM LIMITED
+   8:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****    All rights reserved.
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****    Redistribution and use in source and binary forms, with or without
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****    modification, are permitted provided that the following conditions are met:
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions of source code must retain the above copyright
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Redistributions in binary form must reproduce the above copyright
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****      notice, this list of conditions and the following disclaimer in the
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****      documentation and/or other materials provided with the distribution.
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****      to endorse or promote products derived from this software without
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****      specific prior written permission.
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****    *
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+ARM GAS  /tmp/ccKytYSe.s 			page 13
+
+
+  25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:Drivers/CMSIS/Include/cmsis_gcc.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:Drivers/CMSIS/Include/cmsis_gcc.h ****    POSSIBILITY OF SUCH DAMAGE.
+  32:Drivers/CMSIS/Include/cmsis_gcc.h ****    ---------------------------------------------------------------------------*/
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  36:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined ( __GNUC__ )
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  41:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  44:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  47:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  49:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+  51:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  53:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  54:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  55:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  57:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+  59:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  60:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  62:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  66:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  67:Drivers/CMSIS/Include/cmsis_gcc.h ****   Can only be executed in Privileged modes.
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  72:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  73:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  74:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  75:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+  77:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+  78:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  80:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+  81:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  /tmp/ccKytYSe.s 			page 14
+
+
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+  83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+  85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  87:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  88:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  89:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+  93:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  95:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+  97:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  98:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  99:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h ****     \return               xPSR Register value
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ARM GAS  /tmp/ccKytYSe.s 			page 15
+
+
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ARM GAS  /tmp/ccKytYSe.s 			page 16
+
+
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 402              		.loc 2 203 0
+ 403              		.syntax divided
+ 404              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 405 0002 EFF31084 		MRS r4, primask
+ 406              	@ 0 "" 2
+ 407              		.thumb
+ 408              		.syntax unified
+ 409              	.LBE23:
+ 410              	.LBE22:
+ 411              	.LBB24:
+ 412              	.LBB25:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 413              		.loc 2 71 0
+ 414              		.syntax divided
+ 415              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 416 0006 72B6     		cpsid i
+ 417              	@ 0 "" 2
+ 418              		.thumb
+ 419              		.syntax unified
+ 420              	.LBE25:
+ 421              	.LBE24:
+ 422              	.LBB26:
+ 423              	.LBB27:
+ 166:./Src/stm32l0xx_hw.c ****   
+ 424              		.loc 1 166 0
+ 425 0008 FFF7FEFF 		bl	HW_SPI_IoDeInit
+ 426              	.LVL14:
+ 168:./Src/stm32l0xx_hw.c ****   
+ 427              		.loc 1 168 0
+ 428 000c 084B     		ldr	r3, .L24
+ 429 000e 5B68     		ldr	r3, [r3, #4]
+ 430 0010 9847     		blx	r3
+ 431              	.LVL15:
+ 170:./Src/stm32l0xx_hw.c **** }
+ 432              		.loc 1 170 0
+ 433 0012 FFF7FEFF 		bl	vcom_IoDeInit
+ 434              	.LVL16:
+ 435              	.LBE27:
+ 436              	.LBE26:
+ 271:./Src/stm32l0xx_hw.c ****   BACKUP_PRIMASK();
+ 272:./Src/stm32l0xx_hw.c **** 
+ 273:./Src/stm32l0xx_hw.c ****   DISABLE_IRQ( );
+ 274:./Src/stm32l0xx_hw.c **** 
+ 275:./Src/stm32l0xx_hw.c ****   HW_IoDeInit( );
+ 276:./Src/stm32l0xx_hw.c ****   
+ 277:./Src/stm32l0xx_hw.c ****   /*clear wake up flag*/
+ 278:./Src/stm32l0xx_hw.c ****   SET_BIT(PWR->CR, PWR_CR_CWUF);
+ 437              		.loc 1 278 0
+ 438 0016 074A     		ldr	r2, .L24+4
+ARM GAS  /tmp/ccKytYSe.s 			page 17
+
+
+ 439 0018 1368     		ldr	r3, [r2]
+ 440 001a 0421     		movs	r1, #4
+ 441 001c 0B43     		orrs	r3, r1
+ 442 001e 1360     		str	r3, [r2]
+ 443              	.LBB28:
+ 444              	.LBB29:
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 445              		.loc 2 215 0
+ 446              		.syntax divided
+ 447              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 448 0020 84F31088 		MSR primask, r4
+ 449              	@ 0 "" 2
+ 450              		.thumb
+ 451              		.syntax unified
+ 452              	.LBE29:
+ 453              	.LBE28:
+ 279:./Src/stm32l0xx_hw.c ****   
+ 280:./Src/stm32l0xx_hw.c ****   RESTORE_PRIMASK( );
+ 281:./Src/stm32l0xx_hw.c **** 
+ 282:./Src/stm32l0xx_hw.c ****   /* Enter Stop Mode */
+ 283:./Src/stm32l0xx_hw.c ****   HAL_PWR_EnterSTOPMode ( PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI );
+ 454              		.loc 1 283 0
+ 455 0024 0339     		subs	r1, r1, #3
+ 456 0026 0120     		movs	r0, #1
+ 457 0028 FFF7FEFF 		bl	HAL_PWR_EnterSTOPMode
+ 458              	.LVL17:
+ 284:./Src/stm32l0xx_hw.c **** }
+ 459              		.loc 1 284 0
+ 460              		@ sp needed
+ 461 002c 10BD     		pop	{r4, pc}
+ 462              	.L25:
+ 463 002e C046     		.align	2
+ 464              	.L24:
+ 465 0030 00000000 		.word	Radio
+ 466 0034 00700040 		.word	1073770496
+ 467              		.cfi_endproc
+ 468              	.LFE104:
+ 470              		.section	.text.HW_ExitStopMode,"ax",%progbits
+ 471              		.align	1
+ 472              		.global	HW_ExitStopMode
+ 473              		.syntax unified
+ 474              		.code	16
+ 475              		.thumb_func
+ 476              		.fpu softvfp
+ 478              	HW_ExitStopMode:
+ 479              	.LFB105:
+ARM GAS  /tmp/ccKytYSe.s 			page 18
+
+
+ 285:./Src/stm32l0xx_hw.c **** /**
+ 286:./Src/stm32l0xx_hw.c ****   * @brief Exists Low Power Stop Mode
+ 287:./Src/stm32l0xx_hw.c ****   * @note Enable the pll at 32MHz
+ 288:./Src/stm32l0xx_hw.c ****   * @param none
+ 289:./Src/stm32l0xx_hw.c ****   * @retval none
+ 290:./Src/stm32l0xx_hw.c ****   */
+ 291:./Src/stm32l0xx_hw.c **** void HW_ExitStopMode( void)
+ 292:./Src/stm32l0xx_hw.c **** {
+ 480              		.loc 1 292 0
+ 481              		.cfi_startproc
+ 482              		@ args = 0, pretend = 0, frame = 0
+ 483              		@ frame_needed = 0, uses_anonymous_args = 0
+ 484 0000 10B5     		push	{r4, lr}
+ 485              	.LCFI6:
+ 486              		.cfi_def_cfa_offset 8
+ 487              		.cfi_offset 4, -8
+ 488              		.cfi_offset 14, -4
+ 489              	.LBB38:
+ 490              	.LBB39:
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 491              		.loc 2 203 0
+ 492              		.syntax divided
+ 493              	@ 203 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 494 0002 EFF31084 		MRS r4, primask
+ 495              	@ 0 "" 2
+ 496              		.thumb
+ 497              		.syntax unified
+ 498              	.LBE39:
+ 499              	.LBE38:
+ 500              	.LBB40:
+ 501              	.LBB41:
+  71:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 502              		.loc 2 71 0
+ 503              		.syntax divided
+ 504              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 505 0006 72B6     		cpsid i
+ 506              	@ 0 "" 2
+ 507              		.thumb
+ 508              		.syntax unified
+ 509              	.LBE41:
+ 510              	.LBE40:
+ 293:./Src/stm32l0xx_hw.c ****   /* Disable IRQ while the MCU is not running on HSI */
+ 294:./Src/stm32l0xx_hw.c **** 
+ 295:./Src/stm32l0xx_hw.c ****   BACKUP_PRIMASK();
+ 296:./Src/stm32l0xx_hw.c ****   
+ 297:./Src/stm32l0xx_hw.c ****   DISABLE_IRQ( );
+ 298:./Src/stm32l0xx_hw.c **** 
+ 299:./Src/stm32l0xx_hw.c ****   /* After wake-up from STOP reconfigure the system clock */
+ 300:./Src/stm32l0xx_hw.c ****   /* Enable HSI */
+ 301:./Src/stm32l0xx_hw.c ****   __HAL_RCC_HSI_ENABLE();
+ 511              		.loc 1 301 0
+ 512 0008 134A     		ldr	r2, .L30
+ 513 000a 1368     		ldr	r3, [r2]
+ 514 000c 0121     		movs	r1, #1
+ 515 000e 0B43     		orrs	r3, r1
+ 516 0010 1360     		str	r3, [r2]
+ 517              	.L27:
+ARM GAS  /tmp/ccKytYSe.s 			page 19
+
+
+ 302:./Src/stm32l0xx_hw.c **** 
+ 303:./Src/stm32l0xx_hw.c ****   /* Wait till HSI is ready */
+ 304:./Src/stm32l0xx_hw.c ****   while( __HAL_RCC_GET_FLAG(RCC_FLAG_HSIRDY) == RESET ) {}
+ 518              		.loc 1 304 0 discriminator 1
+ 519 0012 114B     		ldr	r3, .L30
+ 520 0014 1B68     		ldr	r3, [r3]
+ 521 0016 5B07     		lsls	r3, r3, #29
+ 522 0018 FBD5     		bpl	.L27
+ 305:./Src/stm32l0xx_hw.c ****   
+ 306:./Src/stm32l0xx_hw.c ****   /* Enable PLL */
+ 307:./Src/stm32l0xx_hw.c ****   __HAL_RCC_PLL_ENABLE();
+ 523              		.loc 1 307 0
+ 524 001a 0F4A     		ldr	r2, .L30
+ 525 001c 1168     		ldr	r1, [r2]
+ 526 001e 8023     		movs	r3, #128
+ 527 0020 5B04     		lsls	r3, r3, #17
+ 528 0022 0B43     		orrs	r3, r1
+ 529 0024 1360     		str	r3, [r2]
+ 530              	.L28:
+ 308:./Src/stm32l0xx_hw.c ****   /* Wait till PLL is ready */
+ 309:./Src/stm32l0xx_hw.c ****   while( __HAL_RCC_GET_FLAG( RCC_FLAG_PLLRDY ) == RESET ) {}
+ 531              		.loc 1 309 0 discriminator 1
+ 532 0026 0C4B     		ldr	r3, .L30
+ 533 0028 1B68     		ldr	r3, [r3]
+ 534 002a 9B01     		lsls	r3, r3, #6
+ 535 002c FBD5     		bpl	.L28
+ 310:./Src/stm32l0xx_hw.c ****   
+ 311:./Src/stm32l0xx_hw.c ****   /* Select PLL as system clock source */
+ 312:./Src/stm32l0xx_hw.c ****   __HAL_RCC_SYSCLK_CONFIG ( RCC_SYSCLKSOURCE_PLLCLK );
+ 536              		.loc 1 312 0
+ 537 002e 0A4A     		ldr	r2, .L30
+ 538 0030 D368     		ldr	r3, [r2, #12]
+ 539 0032 0321     		movs	r1, #3
+ 540 0034 0B43     		orrs	r3, r1
+ 541 0036 D360     		str	r3, [r2, #12]
+ 542              	.L29:
+ 313:./Src/stm32l0xx_hw.c ****   
+ 314:./Src/stm32l0xx_hw.c ****   /* Wait till PLL is used as system clock source */ 
+ 315:./Src/stm32l0xx_hw.c ****   while( __HAL_RCC_GET_SYSCLK_SOURCE( ) != RCC_SYSCLKSOURCE_STATUS_PLLCLK ) {}
+ 543              		.loc 1 315 0 discriminator 1
+ 544 0038 074B     		ldr	r3, .L30
+ 545 003a DA68     		ldr	r2, [r3, #12]
+ 546 003c 0C23     		movs	r3, #12
+ 547 003e 1340     		ands	r3, r2
+ 548 0040 0C2B     		cmp	r3, #12
+ 549 0042 F9D1     		bne	.L29
+ 550              	.LBB42:
+ 551              	.LBB43:
+ 152:./Src/stm32l0xx_hw.c ****   
+ 552              		.loc 1 152 0
+ 553 0044 FFF7FEFF 		bl	HW_SPI_IoInit
+ 554              	.LVL18:
+ 154:./Src/stm32l0xx_hw.c ****   
+ 555              		.loc 1 154 0
+ 556 0048 044B     		ldr	r3, .L30+4
+ 557 004a 1B68     		ldr	r3, [r3]
+ 558 004c 9847     		blx	r3
+ARM GAS  /tmp/ccKytYSe.s 			page 20
+
+
+ 559              	.LVL19:
+ 156:./Src/stm32l0xx_hw.c **** }
+ 560              		.loc 1 156 0
+ 561 004e FFF7FEFF 		bl	vcom_IoInit
+ 562              	.LVL20:
+ 563              	.LBE43:
+ 564              	.LBE42:
+ 565              	.LBB44:
+ 566              	.LBB45:
+ 567              		.loc 2 215 0
+ 568              		.syntax divided
+ 569              	@ 215 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 570 0052 84F31088 		MSR primask, r4
+ 571              	@ 0 "" 2
+ 572              	.LVL21:
+ 573              		.thumb
+ 574              		.syntax unified
+ 575              	.LBE45:
+ 576              	.LBE44:
+ 316:./Src/stm32l0xx_hw.c ****     
+ 317:./Src/stm32l0xx_hw.c ****   /*initilizes the peripherals*/
+ 318:./Src/stm32l0xx_hw.c ****   HW_IoInit( );
+ 319:./Src/stm32l0xx_hw.c **** 
+ 320:./Src/stm32l0xx_hw.c ****   RESTORE_PRIMASK( );
+ 321:./Src/stm32l0xx_hw.c **** }
+ 577              		.loc 1 321 0
+ 578              		@ sp needed
+ 579 0056 10BD     		pop	{r4, pc}
+ 580              	.L31:
+ 581              		.align	2
+ 582              	.L30:
+ 583 0058 00100240 		.word	1073876992
+ 584 005c 00000000 		.word	Radio
+ 585              		.cfi_endproc
+ 586              	.LFE105:
+ 588              		.section	.text.HW_EnterSleepMode,"ax",%progbits
+ 589              		.align	1
+ 590              		.global	HW_EnterSleepMode
+ 591              		.syntax unified
+ 592              		.code	16
+ 593              		.thumb_func
+ 594              		.fpu softvfp
+ 596              	HW_EnterSleepMode:
+ 597              	.LFB106:
+ 322:./Src/stm32l0xx_hw.c **** 
+ 323:./Src/stm32l0xx_hw.c **** /**
+ 324:./Src/stm32l0xx_hw.c ****   * @brief Enters Low Power Sleep Mode
+ 325:./Src/stm32l0xx_hw.c ****   * @note ARM exits the function when waking up
+ 326:./Src/stm32l0xx_hw.c ****   * @param none
+ 327:./Src/stm32l0xx_hw.c ****   * @retval none
+ 328:./Src/stm32l0xx_hw.c ****   */
+ 329:./Src/stm32l0xx_hw.c **** void HW_EnterSleepMode( void)
+ 330:./Src/stm32l0xx_hw.c **** {
+ 598              		.loc 1 330 0
+ 599              		.cfi_startproc
+ 600              		@ args = 0, pretend = 0, frame = 0
+ 601              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccKytYSe.s 			page 21
+
+
+ 602 0000 10B5     		push	{r4, lr}
+ 603              	.LCFI7:
+ 604              		.cfi_def_cfa_offset 8
+ 605              		.cfi_offset 4, -8
+ 606              		.cfi_offset 14, -4
+ 331:./Src/stm32l0xx_hw.c ****     HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+ 607              		.loc 1 331 0
+ 608 0002 0121     		movs	r1, #1
+ 609 0004 0020     		movs	r0, #0
+ 610 0006 FFF7FEFF 		bl	HAL_PWR_EnterSLEEPMode
+ 611              	.LVL22:
+ 332:./Src/stm32l0xx_hw.c **** }
+ 612              		.loc 1 332 0
+ 613              		@ sp needed
+ 614 000a 10BD     		pop	{r4, pc}
+ 615              		.cfi_endproc
+ 616              	.LFE106:
+ 618              		.section	.bss.McuInitialized,"aw",%nobits
+ 619              		.set	.LANCHOR0,. + 0
+ 622              	McuInitialized:
+ 623 0000 00       		.space	1
+ 624              		.section	.rodata.SystemClock_Config.str1.4,"aMS",%progbits,1
+ 625              		.align	2
+ 626              	.LC4:
+ 627 0000 2E2F5372 		.ascii	"./Src/stm32l0xx_hw.c\000"
+ 627      632F7374 
+ 627      6D33326C 
+ 627      3078785F 
+ 627      68772E63 
+ 628              		.text
+ 629              	.Letext0:
+ 630              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 631              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 632              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 633              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 634              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
+ 635              		.file 8 "/usr/arm-none-eabi/include/math.h"
+ 636              		.file 9 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 637              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 638              		.file 11 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h"
+ 639              		.file 12 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l0xx.h"
+ 640              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_def.h"
+ 641              		.file 14 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc.h"
+ 642              		.file 15 "Middlewares/Third_Party/Lora/Phy/radio.h"
+ 643              		.file 16 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr.h"
+ 644              		.file 17 "Inc/hw_spi.h"
+ 645              		.file 18 "Inc/vcom.h"
+ 646              		.file 19 "Inc/debug.h"
+ 647              		.file 20 "Inc/hw_rtc.h"
+ 648              		.file 21 "<built-in>"
+ARM GAS  /tmp/ccKytYSe.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32l0xx_hw.c
+     /tmp/ccKytYSe.s:16     .text.HW_Init:0000000000000000 $t
+     /tmp/ccKytYSe.s:23     .text.HW_Init:0000000000000000 HW_Init
+     /tmp/ccKytYSe.s:65     .text.HW_Init:0000000000000024 $d
+     /tmp/ccKytYSe.s:71     .text.HW_DeInit:0000000000000000 $t
+     /tmp/ccKytYSe.s:78     .text.HW_DeInit:0000000000000000 HW_DeInit
+     /tmp/ccKytYSe.s:110    .text.HW_DeInit:0000000000000018 $d
+     /tmp/ccKytYSe.s:116    .text.HW_GpioInit:0000000000000000 $t
+     /tmp/ccKytYSe.s:123    .text.HW_GpioInit:0000000000000000 HW_GpioInit
+     /tmp/ccKytYSe.s:137    .text.SystemClock_Config:0000000000000000 $t
+     /tmp/ccKytYSe.s:144    .text.SystemClock_Config:0000000000000000 SystemClock_Config
+     /tmp/ccKytYSe.s:260    .text.SystemClock_Config:0000000000000094 $d
+     /tmp/ccKytYSe.s:268    .text.HW_GetRandomSeed:0000000000000000 $t
+     /tmp/ccKytYSe.s:275    .text.HW_GetRandomSeed:0000000000000000 HW_GetRandomSeed
+     /tmp/ccKytYSe.s:297    .text.HW_GetRandomSeed:0000000000000014 $d
+     /tmp/ccKytYSe.s:304    .text.HW_GetUniqueId:0000000000000000 $t
+     /tmp/ccKytYSe.s:311    .text.HW_GetUniqueId:0000000000000000 HW_GetUniqueId
+     /tmp/ccKytYSe.s:374    .text.HW_GetUniqueId:0000000000000050 $d
+     /tmp/ccKytYSe.s:381    .text.HW_EnterStopMode:0000000000000000 $t
+     /tmp/ccKytYSe.s:388    .text.HW_EnterStopMode:0000000000000000 HW_EnterStopMode
+     /tmp/ccKytYSe.s:465    .text.HW_EnterStopMode:0000000000000030 $d
+     /tmp/ccKytYSe.s:471    .text.HW_ExitStopMode:0000000000000000 $t
+     /tmp/ccKytYSe.s:478    .text.HW_ExitStopMode:0000000000000000 HW_ExitStopMode
+     /tmp/ccKytYSe.s:583    .text.HW_ExitStopMode:0000000000000058 $d
+     /tmp/ccKytYSe.s:589    .text.HW_EnterSleepMode:0000000000000000 $t
+     /tmp/ccKytYSe.s:596    .text.HW_EnterSleepMode:0000000000000000 HW_EnterSleepMode
+     /tmp/ccKytYSe.s:622    .bss.McuInitialized:0000000000000000 McuInitialized
+     /tmp/ccKytYSe.s:623    .bss.McuInitialized:0000000000000000 $d
+     /tmp/ccKytYSe.s:625    .rodata.SystemClock_Config.str1.4:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HW_SPI_Init
+HW_RTC_Init
+vcom_Init
+Radio
+HW_SPI_DeInit
+vcom_DeInit
+memset
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+_Error_Handler
+HW_SPI_IoDeInit
+vcom_IoDeInit
+HAL_PWR_EnterSTOPMode
+HW_SPI_IoInit
+vcom_IoInit
+HAL_PWR_EnterSLEEPMode

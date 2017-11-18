@@ -1,0 +1,326 @@
+ARM GAS  /tmp/ccWwZZVi.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"debug.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.DBG_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	DBG_Init
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	DBG_Init:
+  24              	.LFB96:
+  25              		.file 1 "./Src/debug.c"
+   1:./Src/debug.c **** 
+   2:./Src/debug.c **** /******************************************************************************
+   3:./Src/debug.c ****   * @file    debug.c
+   4:./Src/debug.c ****   * @author  MCD Application Team
+   5:./Src/debug.c ****   * @version V1.1.2
+   6:./Src/debug.c ****   * @date    08-September-2017
+   7:./Src/debug.c ****   * @brief   debug API
+   8:./Src/debug.c ****   ******************************************************************************
+   9:./Src/debug.c ****   * @attention
+  10:./Src/debug.c ****   *
+  11:./Src/debug.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  12:./Src/debug.c ****   * All rights reserved.</center></h2>
+  13:./Src/debug.c ****   *
+  14:./Src/debug.c ****   * Redistribution and use in source and binary forms, with or without 
+  15:./Src/debug.c ****   * modification, are permitted, provided that the following conditions are met:
+  16:./Src/debug.c ****   *
+  17:./Src/debug.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  18:./Src/debug.c ****   *    this list of conditions and the following disclaimer.
+  19:./Src/debug.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  20:./Src/debug.c ****   *    this list of conditions and the following disclaimer in the documentation
+  21:./Src/debug.c ****   *    and/or other materials provided with the distribution.
+  22:./Src/debug.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  23:./Src/debug.c ****   *    contributors to this software may be used to endorse or promote products 
+  24:./Src/debug.c ****   *    derived from this software without specific written permission.
+  25:./Src/debug.c ****   * 4. This software, including modifications and/or derivative works of this 
+  26:./Src/debug.c ****   *    software, must execute solely and exclusively on microcontroller or
+  27:./Src/debug.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  28:./Src/debug.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  29:./Src/debug.c ****   *    this license is void and will automatically terminate your rights under 
+  30:./Src/debug.c ****   *    this license. 
+  31:./Src/debug.c ****   *
+  32:./Src/debug.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  33:./Src/debug.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+ARM GAS  /tmp/ccWwZZVi.s 			page 2
+
+
+  34:./Src/debug.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  35:./Src/debug.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  36:./Src/debug.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  37:./Src/debug.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  38:./Src/debug.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  39:./Src/debug.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  40:./Src/debug.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  41:./Src/debug.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  42:./Src/debug.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  43:./Src/debug.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  44:./Src/debug.c ****   *
+  45:./Src/debug.c ****   ******************************************************************************
+  46:./Src/debug.c ****   */
+  47:./Src/debug.c **** 
+  48:./Src/debug.c **** /* Includes ------------------------------------------------------------------*/
+  49:./Src/debug.c **** #include "hw.h"
+  50:./Src/debug.c **** 
+  51:./Src/debug.c **** /**
+  52:./Src/debug.c ****   * @brief Initializes the debug
+  53:./Src/debug.c ****   * @param None
+  54:./Src/debug.c ****   * @retval None
+  55:./Src/debug.c ****   */
+  56:./Src/debug.c **** void DBG_Init( void )
+  57:./Src/debug.c **** {
+  26              		.loc 1 57 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 24
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 30B5     		push	{r4, r5, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 12
+  33              		.cfi_offset 4, -12
+  34              		.cfi_offset 5, -8
+  35              		.cfi_offset 14, -4
+  36 0002 87B0     		sub	sp, sp, #28
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 40
+  58:./Src/debug.c **** #ifdef DEBUG
+  59:./Src/debug.c ****   GPIO_InitTypeDef  gpioinitstruct = {0};
+  60:./Src/debug.c ****   
+  61:./Src/debug.c ****   /* Enable the GPIO_B Clock */
+  62:./Src/debug.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
+  63:./Src/debug.c **** 
+  64:./Src/debug.c ****   /* Configure the GPIO pin */  
+  65:./Src/debug.c ****   gpioinitstruct.Mode   = GPIO_MODE_OUTPUT_PP;
+  66:./Src/debug.c ****   gpioinitstruct.Pull   = GPIO_PULLUP;
+  67:./Src/debug.c ****   gpioinitstruct.Speed  = GPIO_SPEED_HIGH;
+  68:./Src/debug.c ****   
+  69:./Src/debug.c ****   gpioinitstruct.Pin    = (GPIO_PIN_12 | GPIO_PIN_13| GPIO_PIN_14 | GPIO_PIN_15);
+  70:./Src/debug.c ****   HAL_GPIO_Init(GPIOB, &gpioinitstruct);
+  71:./Src/debug.c **** 
+  72:./Src/debug.c ****   /* Reset debug Pins */
+  73:./Src/debug.c ****   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+  74:./Src/debug.c ****   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
+  75:./Src/debug.c ****   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+  76:./Src/debug.c ****   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+  77:./Src/debug.c **** #if 0
+ARM GAS  /tmp/ccWwZZVi.s 			page 3
+
+
+  78:./Src/debug.c ****   HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);  
+  79:./Src/debug.c **** #endif
+  80:./Src/debug.c **** 
+  81:./Src/debug.c ****   __HAL_RCC_DBGMCU_CLK_ENABLE( );
+  82:./Src/debug.c **** 
+  83:./Src/debug.c ****   HAL_DBGMCU_EnableDBGSleepMode( );
+  84:./Src/debug.c ****   HAL_DBGMCU_EnableDBGStopMode( );
+  85:./Src/debug.c ****   HAL_DBGMCU_EnableDBGStandbyMode( );
+  86:./Src/debug.c ****   
+  87:./Src/debug.c **** #else /* DEBUG */
+  88:./Src/debug.c ****   /* sw interface off*/
+  89:./Src/debug.c ****   GPIO_InitTypeDef GPIO_InitStructure ={0};
+  39              		.loc 1 89 0
+  40 0004 0C22     		movs	r2, #12
+  41 0006 0021     		movs	r1, #0
+  42 0008 03A8     		add	r0, sp, #12
+  43 000a FFF7FEFF 		bl	memset
+  44              	.LVL0:
+  90:./Src/debug.c ****   
+  91:./Src/debug.c ****   GPIO_InitStructure.Mode   = GPIO_MODE_ANALOG;
+  45              		.loc 1 91 0
+  46 000e 0323     		movs	r3, #3
+  47 0010 0293     		str	r3, [sp, #8]
+  92:./Src/debug.c ****   GPIO_InitStructure.Pull   = GPIO_NOPULL;
+  93:./Src/debug.c ****   GPIO_InitStructure.Pin    = (GPIO_PIN_13 | GPIO_PIN_14);
+  48              		.loc 1 93 0
+  49 0012 C023     		movs	r3, #192
+  50 0014 DB01     		lsls	r3, r3, #7
+  51 0016 0193     		str	r3, [sp, #4]
+  52              	.LBB2:
+  94:./Src/debug.c ****   __GPIOA_CLK_ENABLE() ;  
+  53              		.loc 1 94 0
+  54 0018 104C     		ldr	r4, .L2
+  55 001a E36A     		ldr	r3, [r4, #44]
+  56 001c 0125     		movs	r5, #1
+  57 001e 2B43     		orrs	r3, r5
+  58 0020 E362     		str	r3, [r4, #44]
+  59 0022 E36A     		ldr	r3, [r4, #44]
+  60 0024 2B40     		ands	r3, r5
+  61 0026 0093     		str	r3, [sp]
+  62 0028 009B     		ldr	r3, [sp]
+  63              	.LBE2:
+  95:./Src/debug.c ****   HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+  64              		.loc 1 95 0
+  65 002a A020     		movs	r0, #160
+  66 002c 01A9     		add	r1, sp, #4
+  67 002e C005     		lsls	r0, r0, #23
+  68 0030 FFF7FEFF 		bl	HAL_GPIO_Init
+  69              	.LVL1:
+  96:./Src/debug.c ****   __GPIOA_CLK_DISABLE() ;
+  70              		.loc 1 96 0
+  71 0034 E36A     		ldr	r3, [r4, #44]
+  72 0036 AB43     		bics	r3, r5
+  73 0038 E362     		str	r3, [r4, #44]
+  97:./Src/debug.c ****   
+  98:./Src/debug.c ****   __HAL_RCC_DBGMCU_CLK_ENABLE( );
+  74              		.loc 1 98 0
+ARM GAS  /tmp/ccWwZZVi.s 			page 4
+
+
+  75 003a 626B     		ldr	r2, [r4, #52]
+  76 003c 8023     		movs	r3, #128
+  77 003e DB03     		lsls	r3, r3, #15
+  78 0040 1343     		orrs	r3, r2
+  79 0042 6363     		str	r3, [r4, #52]
+  99:./Src/debug.c ****   HAL_DBGMCU_DisableDBGSleepMode( );
+  80              		.loc 1 99 0
+  81 0044 FFF7FEFF 		bl	HAL_DBGMCU_DisableDBGSleepMode
+  82              	.LVL2:
+ 100:./Src/debug.c ****   HAL_DBGMCU_DisableDBGStopMode( );
+  83              		.loc 1 100 0
+  84 0048 FFF7FEFF 		bl	HAL_DBGMCU_DisableDBGStopMode
+  85              	.LVL3:
+ 101:./Src/debug.c ****   HAL_DBGMCU_DisableDBGStandbyMode( );
+  86              		.loc 1 101 0
+  87 004c FFF7FEFF 		bl	HAL_DBGMCU_DisableDBGStandbyMode
+  88              	.LVL4:
+ 102:./Src/debug.c ****   __HAL_RCC_DBGMCU_CLK_DISABLE( );
+  89              		.loc 1 102 0
+  90 0050 636B     		ldr	r3, [r4, #52]
+  91 0052 034A     		ldr	r2, .L2+4
+  92 0054 1340     		ands	r3, r2
+  93 0056 6363     		str	r3, [r4, #52]
+ 103:./Src/debug.c **** #endif
+ 104:./Src/debug.c **** }
+  94              		.loc 1 104 0
+  95 0058 07B0     		add	sp, sp, #28
+  96              		@ sp needed
+  97 005a 30BD     		pop	{r4, r5, pc}
+  98              	.L3:
+  99              		.align	2
+ 100              	.L2:
+ 101 005c 00100240 		.word	1073876992
+ 102 0060 FFFFBFFF 		.word	-4194305
+ 103              		.cfi_endproc
+ 104              	.LFE96:
+ 106              		.section	.text._Error_Handler,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	_Error_Handler
+ 109              		.syntax unified
+ 110              		.code	16
+ 111              		.thumb_func
+ 112              		.fpu softvfp
+ 114              	_Error_Handler:
+ 115              	.LFB97:
+ 105:./Src/debug.c **** 
+ 106:./Src/debug.c **** #if 0
+ 107:./Src/debug.c **** /**
+ 108:./Src/debug.c ****   * @brief Error_Handler
+ 109:./Src/debug.c ****   * @param None
+ 110:./Src/debug.c ****   * @retval None
+ 111:./Src/debug.c ****   */
+ 112:./Src/debug.c **** void Error_Handler(void)
+ 113:./Src/debug.c **** {
+ 114:./Src/debug.c ****   DBG_PRINTF("Error_Handler\n\r");
+ 115:./Src/debug.c ****   while(1);
+ 116:./Src/debug.c **** }
+ARM GAS  /tmp/ccWwZZVi.s 			page 5
+
+
+ 117:./Src/debug.c **** #endif
+ 118:./Src/debug.c **** 
+ 119:./Src/debug.c **** void _Error_Handler(char * file, int line)
+ 120:./Src/debug.c **** {
+ 116              		.loc 1 120 0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              	.LVL5:
+ 121 0000 10B5     		push	{r4, lr}
+ 122              	.LCFI2:
+ 123              		.cfi_def_cfa_offset 8
+ 124              		.cfi_offset 4, -8
+ 125              		.cfi_offset 14, -4
+ 121:./Src/debug.c ****   /* USER CODE BEGIN Error_Handler_Debug */
+ 122:./Src/debug.c ****   PRINTF("INIT ERROR, %s:%d", file, (uint16_t) line);
+ 126              		.loc 1 122 0
+ 127 0002 0A04     		lsls	r2, r1, #16
+ 128 0004 120C     		lsrs	r2, r2, #16
+ 129 0006 0100     		movs	r1, r0
+ 130              	.LVL6:
+ 131 0008 0148     		ldr	r0, .L5
+ 132              	.LVL7:
+ 133 000a FFF7FEFF 		bl	vcom_Send
+ 134              	.LVL8:
+ 123:./Src/debug.c ****   /* USER CODE END Error_Handler_Debug */
+ 124:./Src/debug.c **** }
+ 135              		.loc 1 124 0
+ 136              		@ sp needed
+ 137 000e 10BD     		pop	{r4, pc}
+ 138              	.L6:
+ 139              		.align	2
+ 140              	.L5:
+ 141 0010 00000000 		.word	.LC0
+ 142              		.cfi_endproc
+ 143              	.LFE97:
+ 145              		.section	.rodata._Error_Handler.str1.4,"aMS",%progbits,1
+ 146              		.align	2
+ 147              	.LC0:
+ 148 0000 494E4954 		.ascii	"INIT ERROR, %s:%d\000"
+ 148      20455252 
+ 148      4F522C20 
+ 148      25733A25 
+ 148      6400
+ 149              		.text
+ 150              	.Letext0:
+ 151              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 152              		.file 3 "/usr/arm-none-eabi/include/sys/lock.h"
+ 153              		.file 4 "/usr/arm-none-eabi/include/sys/_types.h"
+ 154              		.file 5 "/usr/lib/gcc/arm-none-eabi/7.2.0/include/stddef.h"
+ 155              		.file 6 "/usr/arm-none-eabi/include/sys/reent.h"
+ 156              		.file 7 "/usr/arm-none-eabi/include/math.h"
+ 157              		.file 8 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 158              		.file 9 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/system_stm32l0xx.h"
+ 159              		.file 10 "Drivers/CMSIS/Device/ST/STM32L0xx/Include/stm32l073xx.h"
+ 160              		.file 11 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_gpio.h"
+ 161              		.file 12 "Inc/vcom.h"
+ARM GAS  /tmp/ccWwZZVi.s 			page 6
+
+
+ 162              		.file 13 "Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal.h"
+ 163              		.file 14 "<built-in>"
+ARM GAS  /tmp/ccWwZZVi.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 debug.c
+     /tmp/ccWwZZVi.s:16     .text.DBG_Init:0000000000000000 $t
+     /tmp/ccWwZZVi.s:23     .text.DBG_Init:0000000000000000 DBG_Init
+     /tmp/ccWwZZVi.s:101    .text.DBG_Init:000000000000005c $d
+     /tmp/ccWwZZVi.s:107    .text._Error_Handler:0000000000000000 $t
+     /tmp/ccWwZZVi.s:114    .text._Error_Handler:0000000000000000 _Error_Handler
+     /tmp/ccWwZZVi.s:141    .text._Error_Handler:0000000000000010 $d
+     /tmp/ccWwZZVi.s:146    .rodata._Error_Handler.str1.4:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+memset
+HAL_GPIO_Init
+HAL_DBGMCU_DisableDBGSleepMode
+HAL_DBGMCU_DisableDBGStopMode
+HAL_DBGMCU_DisableDBGStandbyMode
+vcom_Send
