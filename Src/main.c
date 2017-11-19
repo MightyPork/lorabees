@@ -60,7 +60,6 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
 
 /* Includes ------------------------------------------------------------------*/
 #include <hw_i2c.h>
-#include <stm32l0xx_ll_i2c.h>
 #include "stm32l0xx_ll_i2c.h"
 #include "hw.h"
 #include "low_power.h"
@@ -69,6 +68,7 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
 #include "timeServer.h"
 #include "vcom.h"
 #include "voc_sensor.h"
+#include "payload_builder.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -76,9 +76,17 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
 #define LPP_APP_PORT 99
 
 /*!
- * Defines the application data transmission duty cycle. 5s, value in [ms].
+ * Defines the application data transmission duty cycle. value in [ms].
  */
-#define APP_TX_DUTYCYCLE                            10000
+#if 0
+#define APP_TX_DUTYCYCLE                            (2*60*1000)
+#define MEAS_TX_DELAY 								(15*1000) // offset of the first measurement (negative) to throw it off from sync with TX
+#define MEAS_INTERVAL_MS							(1*60*1000)
+#else
+#define APP_TX_DUTYCYCLE                            (15*60*1000)
+#define MEAS_TX_DELAY 								(   15*1000) // offset of the first measurement (negative) to throw it off from sync with TX
+#define MEAS_INTERVAL_MS							( 5*60*1000)
+#endif
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -92,7 +100,7 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
  */
-#define LORAWAN_APP_PORT                            42
+#define LORAWAN_APP_PORT                            68
 //2
 /*!
  * Number of trials for the join request.
@@ -132,193 +140,33 @@ static void OnTimerLedEvent( void );
  *Initialises the Lora Parameters
  */
 static LoRaParam_t LoRaParamInit = {TX_ON_TIMER,
-                                    APP_TX_DUTYCYCLE,
-                                    CLASS_A,
-                                    LORAWAN_ADR_ON,
-                                    DR_0,
-                                    LORAWAN_PUBLIC_NETWORK,
-                                    JOINREQ_NBTRIALS};
+									APP_TX_DUTYCYCLE,
+									CLASS_A,
+									(bool)LORAWAN_ADR_ON,
+									DR_0,
+									(bool)LORAWAN_PUBLIC_NETWORK,
+									JOINREQ_NBTRIALS};
 
 /* Private functions ---------------------------------------------------------*/
 
-#if 0
-typedef enum {
-	i2cSpeed_std,
-	i2cSpeed_fast,
-	i2cSpeed_fastPlus,
-	i2cSpeed_count,
-} i2cSpeed_t;
+static TimerEvent_t MeasurementStartTimer;
+static struct bme680_field_data voc_data;
 
-void i2cInit(I2C_TypeDef *i2c, i2cSpeed_t spd);
+void MeasurementStartTimerIrq(void)
+{
+	GPIOC->ODR |= 1<<7;
+	PRINTF("--- MEASUREMENT CALLBACK! --- \r\n");
 
-#define I2C_7BIT_ADDR (0 << 31)
-#define I2C_10BIT_ADDR (1 << 31)
+	TimerSetValue( &MeasurementStartTimer, MEAS_INTERVAL_MS );
+	TimerReset(&MeasurementStartTimer);
 
-// Returns number of bytes written
-uint32_t i2cWrite(I2C_TypeDef *i2c, uint32_t addr, uint8_t *txBuffer,
-				  uint32_t len);
+	uint32_t duration = voc_start_measure();
+	HAL_Delay(duration); // this is usually like 200 ms, not enough to worry about sleep
+	voc_read(&voc_data);
 
-// Returns number of bytes read
-uint32_t i2cRead(I2C_TypeDef *i2c, uint8_t addr, uint8_t *rxBuffer,
-				 uint32_t numBytes);
-
-#define I2C_READ 0
-#define I2C_WRITE 1
-
-static uint32_t setupTiming(i2cSpeed_t spd, uint32_t clockFreq) {
-	(void) spd;
-	(void) clockFreq;
-	uint32_t presc = 0;
-	uint32_t sdadel = 2;
-	uint32_t scldel = 2;
-	uint32_t scll = 6;
-	uint32_t sclh = 7;
-
-	return  presc << 28 |
-			scldel << 20 |
-			sdadel << 16 |
-			sclh << 8 |
-			scll;
+	// STUFF...
+	GPIOC->ODR &= ~(1<<7);
 }
-
-void i2cInit(I2C_TypeDef *i2c, i2cSpeed_t spd) {
-	// Setup timing register
-	i2c->TIMINGR = setupTiming(spd, SystemCoreClock);
-
-	// Reset state
-	i2c->CR1 &= ~I2C_CR1_PE;
-}
-
-static uint32_t i2cSetup(uint32_t addr, uint8_t direction) {
-	uint32_t ret = 0;
-	if (addr & I2C_10BIT_ADDR) {
-		ret = (addr & 0x000003FF) | I2C_CR2_ADD10;
-	} else {
-		// 7 Bit Address
-		ret = (addr & 0x0000007F) << 1;
-	}
-
-	if (direction == I2C_READ) {
-		ret |= I2C_CR2_RD_WRN;
-		if (addr & I2C_10BIT_ADDR) {
-			ret |= I2C_CR2_HEAD10R;
-		}
-	}
-
-	return ret;
-}
-
-// Will return the number of data bytes written to the device
-uint32_t i2cWrite(I2C_TypeDef *i2c, uint32_t addr, uint8_t *txBuffer,
-				  uint32_t len) {
-
-	uint32_t numTxBytes = 0;
-
-	i2c->CR1 &= ~I2C_CR1_PE;
-	i2c->CR2 = 0;
-
-	i2c->CR2 = i2cSetup(addr, I2C_WRITE);
-
-	if (len > 0xFF) {
-		i2c->CR2 |= 0x00FF0000 | I2C_CR2_RELOAD;
-	} else {
-		i2c->CR2 |= ((len & 0xFF) << 16) | I2C_CR2_AUTOEND;
-	}
-	i2c->CR1 |= I2C_CR1_PE;
-	i2c->CR2 |= I2C_CR2_START;
-	while(i2c->CR2 & I2C_CR2_START);
-	uint8_t done = 0;
-	uint32_t i = 0;
-	while (!done && i < 0x0000001F) {
-		i++;
-		if (i2c->ISR & I2C_ISR_NACKF) {
-			// Was not acknowledged, disable device and exit
-			done = 1;
-		}
-
-		if (i2c->ISR & I2C_ISR_TXIS) {
-			// Device acknowledged and we must send the next byte
-			if (numTxBytes < len){
-				i2c->TXDR = txBuffer[numTxBytes++];
-			}
-
-			i = 0;
-
-		}
-
-		if (i2c->ISR & I2C_ISR_TC) {
-			done = 1;
-		}
-
-		if (i2c->ISR & I2C_ISR_TCR) {
-			i = 0;
-			if ((len - numTxBytes) > 0xFF) {
-				i2c->CR2 |= 0x00FF0000 | I2C_CR2_RELOAD;
-			} else {
-				i2c->CR2 &= ~(0x00FF0000 | I2C_CR2_RELOAD);
-				i2c->CR2 |= ((len - numTxBytes) & 0xFF) << 16 |
-							I2C_CR2_AUTOEND;
-			}
-		}
-
-	}
-	i2c->CR1 &= ~I2C_CR1_PE;
-	return numTxBytes;
-}
-
-uint32_t i2cRead(I2C_TypeDef *i2c, uint8_t addr, uint8_t *rxBuffer,
-				 uint32_t numBytes) {
-
-	uint32_t numRxBytes = 0;
-
-	i2c->CR1 &= ~I2C_CR1_PE;
-	i2c->CR2 = 0;
-
-	i2c->CR2 = i2cSetup(addr, I2C_READ);
-
-	if (numBytes > 0xFF) {
-		i2c->CR2 |= 0x00FF0000 | I2C_CR2_RELOAD;
-	} else {
-		i2c->CR2 |= ((numBytes & 0xFF) << 16) | I2C_CR2_AUTOEND;
-	}
-	i2c->CR1 |= I2C_CR1_PE;
-	i2c->CR2 |= I2C_CR2_START;
-
-	while(i2c->CR2 & I2C_CR2_START);
-	uint8_t done = 0;
-	uint32_t i = 0;
-	while (!done && i < 0x0000001F) {
-		i++;
-
-		if (i2c->ISR & I2C_ISR_RXNE) {
-			// Device acknowledged and we must send the next byte
-			if (numRxBytes < numBytes){
-				rxBuffer[numRxBytes++] = i2c->RXDR;
-			}
-
-			i = 0;
-		}
-
-		if (i2c->ISR & I2C_ISR_TC) {
-			done = 1;
-		}
-
-		if (i2c->ISR & I2C_ISR_TCR) {
-			i = 0;
-			if ((numBytes - numRxBytes) > 0xFF) {
-				i2c->CR2 |= 0x00FF0000 | I2C_CR2_RELOAD;
-			} else {
-				i2c->CR2 &= ~(0x00FF0000 | I2C_CR2_RELOAD);
-				i2c->CR2 |= ((numBytes - numRxBytes) & 0xFF) << 16 |
-							I2C_CR2_AUTOEND;
-			}
-		}
-
-	}
-	i2c->CR1 &= ~I2C_CR1_PE;
-	return numRxBytes;
-}
-#endif
 
 
 /**
@@ -342,7 +190,6 @@ int main(void)
 
 	/* Configure the hardware*/
 	HW_Init();
-	MX_I2C1_Init();
 
 	// BLINKY
 	GPIO_InitTypeDef initStruct = { 0 };
@@ -355,19 +202,20 @@ int main(void)
 	/* USER CODE END 1 */
 	voc_init();
 
-	while(1) {
-		GPIOC->ODR ^= 1<<7;
-		voc_measure();
-	}
-#if 0
-
 	/* Configure the Lora Stack*/
 	lora_Init(&LoRaMainCallbacks, &LoRaParamInit);
 
-	PRINTF("starting!!!\n\r");
+    TimerInit( &MeasurementStartTimer, MeasurementStartTimerIrq );
+	TimerSetValue( &MeasurementStartTimer, MEAS_INTERVAL_MS - MEAS_TX_DELAY ); // first time with a delay, to get some offset
+	TimerStart( &MeasurementStartTimer );
+
+	PRINTF("Initial sensor measurement...\r\n");
+	MeasurementStartTimerIrq();
 
 	/* main loop*/
+	PRINTF("Main loop starting!!!\n\r");
 	while (1) {
+		GPIOC->ODR ^= 1<<7;
 
 		/* run the LoRa class A state machine*/
 		lora_fsm();
@@ -377,6 +225,8 @@ int main(void)
 		 * and cortex will not enter low power anyway  */
 		if (lora_getDeviceState() == DEVICE_STATE_SLEEP) {
 #ifndef LOW_POWER_DISABLE
+
+			GPIOC->ODR &= ~(1<<7); // LED off
 			LowPower_Handler();
 #endif
 		}
@@ -385,40 +235,28 @@ int main(void)
 		/* USER CODE BEGIN 2 */
 		/* USER CODE END 2 */
 	}
-#endif
 }
 
 static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 {
-	static uint8_t counter = 0;
 	/* USER CODE BEGIN 3 */
 	PRINTF("Lora TX\r\n");
 
 	AppData->Port = LORAWAN_APP_PORT;
 	*IsTxConfirmed = LORAWAN_CONFIRMED_MSG;
 
-	sprintf((char*)AppData->Buff, "HELLO-%02d", counter++);
-	AppData->BuffSize = 8;
+	PayloadBuilder pb = pb_start(AppData->Buff, AppData->BuffSize, true);
+	pb_i16(&pb, voc_data.temperature); // Cx100
+	pb_u16(&pb, (uint16_t) (voc_data.humidity / 10)); // discard one place -> %x100
+	pb_u16(&pb, (uint16_t) (voc_data.pressure - 85000)); // send offset from 850 hPa -> Pa
+	pb_u32(&pb, (uint16_t) (voc_data.gas_resistance)); // ohms, full size
+	AppData->BuffSize = (uint8_t) pb_length(&pb);
 
 	/* USER CODE END 3 */
 }
 
 static void LoraRxData(lora_AppData_t *AppData)
 {
-	/* USER CODE BEGIN 4 */
 	PRINTF("Lora RX\r\n");
-
-	switch (AppData->Port) {
-		case LORAWAN_APP_PORT:
-
-			break;
-		case LPP_APP_PORT: {
-
-			break;
-		}
-		default:
-			break;
-	}
-	/* USER CODE END 4 */
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

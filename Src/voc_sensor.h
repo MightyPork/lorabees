@@ -10,6 +10,7 @@
 extern struct bme680_dev gas_sensor;
 
 void voc_init(void);
-void voc_measure(void);
+uint32_t voc_start_measure(void);
+void voc_read(struct bme680_field_data *data);
 
 #endif //PROJ_VOC_SENSOR_H

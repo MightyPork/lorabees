@@ -127,6 +127,8 @@ C_SOURCES =  \
 ./Src/system_stm32l0xx.c \
 ./Src/stm32l0xx_it.c \
 Src/voc_sensor.c \
+Src/payload_builder.c \
+Src/payload_parser.c \
 Drivers/BME680/bme680.c
 
 
@@ -206,7 +208,7 @@ ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffuncti
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -ggdb -g -gdwarf-2
+CFLAGS += -ggdb -g -gdwarf-2 -DDEBUG=1
 endif
 
 
@@ -232,9 +234,9 @@ LDSCRIPT = STM32L073RZTx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys
+# Drivers/BME680/libalgobsec.a
 LIBDIR =
-LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
-# -specs=nano.specs
+LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -specs=nano.specs
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin

@@ -63,7 +63,7 @@ static inline uint32_t setupTiming(void)
 I2C_HandleTypeDef hi2c1;
 
 /* I2C1 init function */
-void MX_I2C1_Init(void)
+void HW_I2C_Init(void)
 {
 	hi2c1.Instance = I2C1;
 	hi2c1.Init.Timing = setupTiming(); //0x00000708;
@@ -93,6 +93,13 @@ void MX_I2C1_Init(void)
 		_Error_Handler(__FILE__, __LINE__);
 	}
 
+}
+
+
+/* I2C1 init function */
+void HW_I2C_DeInit(void)
+{
+	HAL_I2C_DeInit(&hi2c1);
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)

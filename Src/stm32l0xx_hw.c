@@ -21,42 +21,43 @@ Maintainer: Miguel Luis and Gregory Cristian
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
-  * Redistribution and use in source and binary forms, with or without 
+  * Redistribution and use in source and binary forms, with or without
   * modification, are permitted, provided that the following conditions are met:
   *
-  * 1. Redistribution of source code must retain the above copyright notice, 
+  * 1. Redistribution of source code must retain the above copyright notice,
   *    this list of conditions and the following disclaimer.
   * 2. Redistributions in binary form must reproduce the above copyright notice,
   *    this list of conditions and the following disclaimer in the documentation
   *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other 
-  *    contributors to this software may be used to endorse or promote products 
+  * 3. Neither the name of STMicroelectronics nor the names of other
+  *    contributors to this software may be used to endorse or promote products
   *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this 
+  * 4. This software, including modifications and/or derivative works of this
   *    software, must execute solely and exclusively on microcontroller or
   *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under 
-  *    this license is void and will automatically terminate your rights under 
-  *    this license. 
+  * 5. Redistribution and use of this software other than as permitted under
+  *    this license is void and will automatically terminate your rights under
+  *    this license.
   *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS"
+  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
+  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT
   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
   */
+#include <hw_i2c.h>
 #include "hw.h"
 #include "radio.h"
 #include "debug.h"
@@ -115,11 +116,13 @@ void HW_Init( void )
    // HW_AdcInit( );
 
     Radio.IoInit( );
-    
+
     HW_SPI_Init( );
 
     HW_RTC_Init( );
-    
+
+    HW_I2C_Init();
+
     vcom_Init( );
 
     McuInitialized = true;
@@ -134,11 +137,13 @@ void HW_Init( void )
 void HW_DeInit( void )
 {
   HW_SPI_DeInit( );
-  
+
   Radio.IoDeInit( );
-  
+
+  HW_I2C_DeInit();
+
   vcom_DeInit( );
-   
+
   McuInitialized = false;
 }
 
@@ -150,9 +155,10 @@ void HW_DeInit( void )
 static void HW_IoInit( void )
 {
   HW_SPI_IoInit( );
-  
+  HAL_I2C_MspInit(&hi2c1);
+
   Radio.IoInit( );
-  
+
   vcom_IoInit( );
 }
 
@@ -164,9 +170,10 @@ static void HW_IoInit( void )
 static void HW_IoDeInit( void )
 {
   HW_SPI_IoDeInit( );
-  
+  HAL_I2C_MspDeInit(&hi2c1);
+
   Radio.IoDeInit( );
-  
+
   vcom_IoDeInit( );
 }
 
@@ -215,7 +222,7 @@ void SystemClock_Config( void )
   /* Set Voltage scale1 as MCU will run at 32MHz */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-  
+
   /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
   while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
 
@@ -273,10 +280,10 @@ void HW_EnterStopMode( void)
   DISABLE_IRQ( );
 
   HW_IoDeInit( );
-  
+
   /*clear wake up flag*/
   SET_BIT(PWR->CR, PWR_CR_CWUF);
-  
+
   RESTORE_PRIMASK( );
 
   /* Enter Stop Mode */
@@ -293,7 +300,7 @@ void HW_ExitStopMode( void)
   /* Disable IRQ while the MCU is not running on HSI */
 
   BACKUP_PRIMASK();
-  
+
   DISABLE_IRQ( );
 
   /* After wake-up from STOP reconfigure the system clock */
@@ -302,18 +309,18 @@ void HW_ExitStopMode( void)
 
   /* Wait till HSI is ready */
   while( __HAL_RCC_GET_FLAG(RCC_FLAG_HSIRDY) == RESET ) {}
-  
+
   /* Enable PLL */
   __HAL_RCC_PLL_ENABLE();
   /* Wait till PLL is ready */
   while( __HAL_RCC_GET_FLAG( RCC_FLAG_PLLRDY ) == RESET ) {}
-  
+
   /* Select PLL as system clock source */
   __HAL_RCC_SYSCLK_CONFIG ( RCC_SYSCLKSOURCE_PLLCLK );
-  
-  /* Wait till PLL is used as system clock source */ 
+
+  /* Wait till PLL is used as system clock source */
   while( __HAL_RCC_GET_SYSCLK_SOURCE( ) != RCC_SYSCLKSOURCE_STATUS_PLLCLK ) {}
-    
+
   /*initilizes the peripherals*/
   HW_IoInit( );
 

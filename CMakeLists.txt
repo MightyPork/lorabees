@@ -3,7 +3,7 @@ project(proj)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_definitions(-DSTM32L073xx -DUSE_FULL_LL_DRIVER)
+add_definitions(-DSTM32L073xx -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT)
 
 set(SOURCE_FILES
         Src/system_stm32l0xx.c
@@ -18,6 +18,11 @@ set(SOURCE_FILES
         Drivers/CMSIS/Include/cmsis_gcc.h
         Drivers/CMSIS/Include/core_cm0.h
         Drivers/CMSIS/Include/core_cm0plus.h
+        Src/payload_builder.c
+        Src/payload_builder.h
+        Src/payload_parser.c
+        Src/payload_parser.h
+        Src/type_coerce.h
         Drivers/CMSIS/Include/core_cm3.h
         Drivers/CMSIS/Include/core_cm4.h
         Drivers/CMSIS/Include/core_cm7.h
@@ -364,7 +369,10 @@ set(SOURCE_FILES
         Drivers/BME680/bme680.h
         Drivers/BME680/bme680_defs.h
         Src/voc_sensor.c
-        Src/voc_sensor.h)
+        Src/voc_sensor.h
+        Drivers/BME680/bsec_datatypes.h
+        Drivers/BME680/bsec_interface.h
+        )
 
 include_directories(Drivers/CMSIS/Device/ST/STM32L0xx/Include)
 include_directories(Drivers/CMSIS/Include)

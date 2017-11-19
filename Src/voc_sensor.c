@@ -119,7 +119,8 @@ static int8_t user_i2c_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data
 	 * | Stop       | -                   |
 	 * |------------+---------------------|
 	 */
-	uint8_t data[64];
+	static uint8_t data[64];
+
 	data[0] = reg_addr;
 	for (int i = 0; i < len; i++) {
 		data[i+1] = reg_data[i];
@@ -169,7 +170,7 @@ void voc_init(void)
 	assert_param(rslt == BME680_OK);
 }
 
-void voc_measure(void)
+uint32_t voc_start_measure(void)
 {
 	/* Set the power mode */
 	int8_t rslt;
@@ -181,17 +182,22 @@ void voc_measure(void)
 	 * measurement is complete */
 	uint16_t meas_period;
 	bme680_get_profile_dur(&meas_period, &gas_sensor);
-	HAL_Delay(meas_period); /* Delay till the measurement is ready */
-	struct bme680_field_data data;
+	meas_period += 10; // add some extra safety margin
 
-	rslt = bme680_get_sensor_data(&data, &gas_sensor);
+	PRINTF("Measurement will take %d ms\r\n", meas_period);
+
+	return meas_period;
+}
+
+void voc_read(struct bme680_field_data *data)
+{
+	/* Set the power mode */
+	int8_t rslt;
+	rslt = bme680_get_sensor_data(data, &gas_sensor);
 	assert_param(rslt == BME680_OK);
 
-	PRINTF("T: %.2f degC, P: %.2f hPa, H %.2f %%rH ", data.temperature / 100.0f,
-		   data.pressure / 100.0f, data.humidity / 1000.0f );
+	PRINTF("T: %d/100 degC, P: %d/100 hPa, H %d/1000 %%rH ", data->temperature, data->pressure, data->humidity );
 	/* Avoid using measurements from an unstable heating setup */
-	if(data.status & BME680_GASM_VALID_MSK)
-		PRINTF(", G: %d ohms", data.gas_resistance);
-
+	if(data->status & BME680_GASM_VALID_MSK) PRINTF(", G: %d ohms", data->gas_resistance);
 	PRINTF("\r\n");
 }
