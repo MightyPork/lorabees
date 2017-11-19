@@ -2,9 +2,6 @@
 
 Beehive monitoring project with LoRa / P-NUCLEO-LRWAN1 (STM32L073RZ)
 
-**This is a seminar project, work in progress. Please DO NOT FORK.**<br>
-It's open source but not finished and I don't want broken copies floating around the internet before it's usable.
-
 ## Sensors
 
 - BME680 (Temperature, Relative Humidity, Atmospheric Pressure, Volatile Organic Compounds)
