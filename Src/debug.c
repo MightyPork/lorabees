@@ -123,6 +123,12 @@ void _Error_Handler(char * file, int line)
   /* USER CODE END Error_Handler_Debug */
 }
 
+void assert_failed(uint8_t* file, uint32_t line)
+{
+	  PRINTF("ASSERT FAILED, %s:%d", file, (uint16_t) line);
+
+}
+
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

@@ -103,6 +103,7 @@ void HW_SPI_Init( void )
   hspi.Init.FirstBit       = SPI_FIRSTBIT_MSB;
   hspi.Init.NSS            = SPI_NSS_SOFT;
   hspi.Init.TIMode         = SPI_TIMODE_DISABLE;
+  hspi.Init.CRCPolynomial  = 0;
 
 
   SPI_CLK_ENABLE(); 

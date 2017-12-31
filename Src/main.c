@@ -70,6 +70,11 @@ Maintainer: Miguel Luis, Gregory Cristian and Wael Guibene
 #include "voc_sensor.h"
 #include "payload_builder.h"
 
+#include "adc.h"
+#include "dma.h"
+#include "tim.h"
+#include "audio.h"
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
@@ -152,6 +157,11 @@ static LoRaParam_t LoRaParamInit = {TX_ON_TIMER,
 static TimerEvent_t MeasurementStartTimer;
 static struct bme680_field_data voc_data;
 
+#define PEAK_COUNT 10
+static struct peak peaks[PEAK_COUNT];
+static float au_noise;
+static float au_power;
+
 void MeasurementStartTimerIrq(void)
 {
 	GPIOC->ODR |= 1<<7;
@@ -163,6 +173,10 @@ void MeasurementStartTimerIrq(void)
 	uint32_t duration = voc_start_measure();
 	HAL_Delay(duration); // this is usually like 200 ms, not enough to worry about sleep
 	voc_read(&voc_data);
+
+	// now we also analyze the bee buzzing ...
+
+	audio_capture(peaks, PEAK_COUNT, &au_noise, &au_power);
 
 	// STUFF...
 	GPIOC->ODR &= ~(1<<7);
@@ -189,7 +203,14 @@ int main(void)
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 
 	/* Configure the hardware*/
+
+	  MX_DMA_Init();
+	  MX_ADC_Init();
+	  MX_TIM2_Init();
+
 	HW_Init();
+
+
 
 	// BLINKY
 	GPIO_InitTypeDef initStruct = { 0 };
@@ -202,14 +223,18 @@ int main(void)
 	/* USER CODE END 1 */
 	voc_init();
 
+	PRINTF("\r\n====== LORA BEE MONITOR ====== \r\n");
+	PRINTF("\r\n    ,-.\r\n    \\_/\r\n   {|||)< -{ sup im an IoT Bee }\r\n    / \\\r\n    `-' \r\n\r\n");
+
 	/* Configure the Lora Stack*/
+	PRINTF("Connecting to LoRa GW...\r\n");
 	lora_Init(&LoRaMainCallbacks, &LoRaParamInit);
 
     TimerInit( &MeasurementStartTimer, MeasurementStartTimerIrq );
 	TimerSetValue( &MeasurementStartTimer, MEAS_INTERVAL_MS - MEAS_TX_DELAY ); // first time with a delay, to get some offset
 	TimerStart( &MeasurementStartTimer );
 
-	PRINTF("Initial sensor measurement...\r\n");
+	PRINTF("Initial ambient sensor measurement...\r\n");
 	MeasurementStartTimerIrq();
 
 	/* main loop*/
@@ -250,6 +275,17 @@ static void LoraTxData(lora_AppData_t *AppData, FunctionalState *IsTxConfirmed)
 	pb_u16(&pb, (uint16_t) (voc_data.humidity / 10)); // discard one place -> %x100
 	pb_u16(&pb, (uint16_t) (voc_data.pressure - 85000)); // send offset from 850 hPa -> Pa
 	pb_u32(&pb, (uint16_t) (voc_data.gas_resistance)); // ohms, full size
+
+	// audio part of the payload
+	pb_float(&pb, au_power);
+	pb_float(&pb, au_noise);
+
+	pb_u8(&pb, PEAK_COUNT);
+	for(int i = 0; i < PEAK_COUNT; i++) {
+		pb_float(&pb, peaks[i].position);
+		pb_float(&pb, peaks[i].magnitude);
+	}
+
 	AppData->BuffSize = (uint8_t) pb_length(&pb);
 
 	/* USER CODE END 3 */
