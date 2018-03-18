@@ -1,0 +1,116 @@
+[
+    {
+        "id": "39e98fa5.fea9e8",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "fc3137ff.fc017",
+        "type": "mqtt in",
+        "z": "39e98fa5.fea9e8",
+        "name": "",
+        "topic": "students_201710/devices/ondrej_hruska/up",
+        "qos": "2",
+        "broker": "98e3cc43.3bd1e",
+        "x": 210.5,
+        "y": 137,
+        "wires": [
+            [
+                "5898399d.a1de7",
+                "da550cf8.6db248"
+            ]
+        ]
+    },
+    {
+        "id": "5898399d.a1de7",
+        "type": "debug",
+        "z": "39e98fa5.fea9e8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 611.5,
+        "y": 96,
+        "wires": []
+    },
+    {
+        "id": "da550cf8.6db248",
+        "type": "function",
+        "z": "39e98fa5.fea9e8",
+        "name": "Extract data",
+        "func": "const pld = JSON.parse(msg.payload);\n\nconst bytes = Buffer.from(pld.payload_raw, 'base64');\n\n\nlet resp = {\n    time_s: pld.metadata.time,\n    time: Math.round((+(new Date(pld.metadata.time)))/1000), // convert to unix\n    base64: pld.payload_raw\n};\n\nlet i = 0;\nlet du = () => {\n    return bytes[i++]\n};\n\nresp.temp = (du()<<8 | du()) / 100;\nresp.hum = (du()<<8 | du()) / 100;\nresp.press = (85000 + (du() << 8 | du())) / 100;\nresp.gas_r = du() << 24 | du() << 16 | du() << 8 | du();\n\nreturn {payload: resp};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 386.5,
+        "y": 224,
+        "wires": [
+            [
+                "e983b01f.348d78",
+                "697a6626.6df8b8"
+            ]
+        ]
+    },
+    {
+        "id": "e983b01f.348d78",
+        "type": "debug",
+        "z": "39e98fa5.fea9e8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 573.5,
+        "y": 184,
+        "wires": []
+    },
+    {
+        "id": "1daeac40.f9df74",
+        "type": "file",
+        "z": "39e98fa5.fea9e8",
+        "name": "",
+        "filename": "/home/ondra/NodeRED/bees.csv",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 776.5,
+        "y": 263,
+        "wires": []
+    },
+    {
+        "id": "697a6626.6df8b8",
+        "type": "csv",
+        "z": "39e98fa5.fea9e8",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "time,temp,hum,press,gas_r",
+        "x": 564.5,
+        "y": 264,
+        "wires": [
+            [
+                "1daeac40.f9df74"
+            ]
+        ]
+    },
+    {
+        "id": "98e3cc43.3bd1e",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "eu.thethings.network",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "usetls": true,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
