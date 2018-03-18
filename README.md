@@ -14,7 +14,7 @@ Beehive monitoring project with LoRa / P-NUCLEO-LRWAN1 (STM32L073RZ)
 - [x] MBE680 periodic reporting to LoRa
 - [ ] Try to use BSEC for better sensor compensation
 - [x] Design and build the microphone amplifier
-- [ ] Microphone capture via DMA and ADC
-- [ ] Waveform analysis (Fourier transform, peak detection, noise level..)
-- [ ] Waveform principal characteristics reporting to LoRa
-- [ ] Data analysis backend (Mosquitto on RPi receiving packets from The Things Network, storing to DB, some graphs)
+- [x] Microphone capture via DMA and ADC
+- [x] Waveform analysis (Fourier transform, peak detection, noise level..)
+- [x] Waveform principal characteristics reporting to LoRa
+- [x] Data analysis backend (Mosquitto on RPi receiving packets from The Things Network, storing to DB, some graphs)
